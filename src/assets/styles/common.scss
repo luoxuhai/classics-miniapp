@@ -1,0 +1,22 @@
+@import './_variable.scss';
+@import './_mixins.scss';
+
+ .hover-button {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+}
+
+.button {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 264px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #f67280;
+  text-align: center;
+  line-height: 40px;
+  font: {
+    size: 16px;
+  }
+  color: #fff;
+}

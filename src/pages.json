@@ -1,0 +1,141 @@
+{
+  "pages": [
+    {
+      "path": "pages/Home/index",
+      "style": {
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": "古典小说阅读"
+      }
+    },
+    {
+      "path": "pages/Login/index",
+      "style": { "navigationBarTitleText": "微信授权登录" }
+    },
+    {
+      "path": "pages/Guide/index",
+      "style": { "navigationBarTitleText": "微信授权登录" }
+    },
+    {
+      "path": "pages/HomeDetail/index"
+    },
+    {
+      "path": "pages/HomeSearch/index",
+      "style": {
+        "navigationBarTitleText": "搜索"
+      }
+    },
+    {
+      "path": "pages/Comment/index",
+      "style": {
+        "navigationBarTitleText": "评论",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/ReadView/index",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/BookRack/index",
+      "style": {
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": "我的书单"
+      }
+    },
+    {
+      "path": "pages/Personage/index",
+      "style": {
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "个人中心",
+        "navigationBarBackgroundColor": "#355c7d",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/PersonageSetting/index",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "设置"
+      }
+    },
+    {
+      "path": "pages/SettingCropper/index",
+      "style": {
+        "navigationBarTitleText": "头像剪切",
+        "navigationBarBackgroundColor": "#000",
+        "navigationBarTextStyle": "white"
+      }
+    },
+    {
+      "path": "pages/SettingName/index",
+      "style": { "navigationBarTitleText": "修改姓名" }
+    },
+    {
+      "path": "pages/PersonageBrowse/index",
+      "style": {
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": "我的浏览"
+      }
+    },
+    {
+      "path": "pages/PersonageComment/index",
+      "style": {
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": "我的评论"
+      }
+    },
+    {
+      "path": "pages/PersonageCommentDetail/index",
+      "style": { "enablePullDownRefresh": true, "navigationBarTitleText": "" }
+    },
+    {
+      "path": "pages/PersonageAbout/index",
+      "style": {
+        "enablePullDownRefresh": false,
+        "navigationBarTitleText": "设置"
+      }
+    },
+    {
+      "path": "pages/Affiche/index",
+      "style": {
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "公告",
+        "navigationBarBackgroundColor": "#355c7d"
+      }
+    }
+  ],
+
+  "globalStyle": {
+    "backgroundTextStyle": "dark",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f7f7",
+    "navigationBarBackgroundColor": "#fff",
+    "onReachBottomDistance": 100
+  },
+  "tabBar": {
+    "selectedColor": "#f67280",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/Home/index",
+        "text": "首页",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home-active.png"
+      },
+      {
+        "pagePath": "pages/BookRack/index",
+        "text": "书单",
+        "iconPath": "static/tabs/bookrack.png",
+        "selectedIconPath": "/static/tabs/bookrack-active.png"
+      },
+      {
+        "pagePath": "pages/Personage/index",
+        "text": "我的",
+        "iconPath": "static/tabs/my.png",
+        "selectedIconPath": "static/tabs/my-active.png"
+      }
+    ]
+  }
+}
