@@ -20,8 +20,8 @@ export default {
   onShow() {
     wx.hideLoading();
     this.$api.getUserInfo(this.$store.state.userID).then(res => {
-      this.$store.commit('setUserInfo', res.userInfo)
-    })
+      this.$store.commit("setUserInfo", res.userInfo);
+    });
   }
 };
 </script>

@@ -12,10 +12,6 @@
       "style": { "navigationBarTitleText": "微信授权登录" }
     },
     {
-      "path": "pages/Guide/index",
-      "style": { "navigationBarTitleText": "微信授权登录" }
-    },
-    {
       "path": "pages/HomeDetail/index"
     },
     {

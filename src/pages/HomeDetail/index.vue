@@ -57,6 +57,7 @@ export default {
       });
     },
     handleAddBookRack() {
+      this.detailBody.isStar = true;
       this.$api
         .addBookRack({
           bookID: this.bookInfo.bookID

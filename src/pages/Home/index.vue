@@ -105,8 +105,8 @@ export default {
     if (!token) {
       wx.redirectTo({ url: "/pages/Login/index" });
       return;
-		}
-		console.log();
+    }
+    console.log();
     this.$refs.filter.getTypes();
     this.getBanner();
     this.loadMore();

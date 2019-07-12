@@ -1,7 +1,12 @@
 <template>
   <div class="filter-container">
     <div class="nav-filter">
-      <scroll-view scroll-x class="filter-item-scroll">
+      <scroll-view
+        scroll-x
+        class="filter-item-scroll"
+        :scroll-left="scrollLeft"
+        @scroll="changeScroll"
+      >
         <text
           class="title"
           v-for="(item, index) of types"
@@ -73,7 +78,11 @@ export default {
       typeSelectArr: {},
       typeSelectIndex: null,
       sortList: ["默认", "评分", "阅读量", "浏览量"],
-      optionIndex: null
+      optionIndex: null,
+      scrollLeft: 0,
+      old: {
+        scrollLeft: 0
+      }
     };
   },
   methods: {
@@ -108,8 +117,17 @@ export default {
       for (const value of this.types)
         if (value.active) currentTypeArr.push(value.name);
 
-      if (currentTypeArr.length === 0) this.types[0].active = true;
+      if (currentTypeArr.length === 0) {
+        this.types[0].active = true;
+        this.scrollLeft = this.old.scrollLeft;
+        this.$nextTick(() => {
+          this.scrollLeft = 0;
+        });
+      }
       this.$emit("handleSelectType", currentTypeArr);
+    },
+    changeScroll(e) {
+      this.old.scrollLeft = e.detail.scrollLeft;
     },
     handleOptionItem(index) {
       index === this.optionIndex

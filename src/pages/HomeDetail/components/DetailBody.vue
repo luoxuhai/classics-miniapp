@@ -132,7 +132,7 @@ export default {
     ...mapMutations(["setBookInfo"]),
     handleOrderClick() {
       this.inverted = !this.inverted;
-      this.$emit('handleOrderClick')
+      this.$emit("handleOrderClick");
     },
     handleUnfold() {
       this.descUnfold = !this.descUnfold;
@@ -142,7 +142,6 @@ export default {
     },
     handleAddBookRack() {
       if (this.detailBody.isStar) return;
-      this.detailBody.isStar = true;
       this.$emit("handleAddBookRack");
     },
 
