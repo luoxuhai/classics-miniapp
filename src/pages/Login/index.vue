@@ -10,8 +10,9 @@
     <section>
       <p class="hint">请授权小程序以继续使用古典名著苑小程序服务</p>
       <div hover-class="hover-button" class="button-login">
-        <button open-type="getUserInfo" @getuserinfo="handleLogin" />
-        微信授权登录
+        <form :report-submit="true" @submit="formSubmit">
+          <button form-type="submit" open-type="getUserInfo" @getuserinfo="handleLogin" />
+        </form>微信授权登录
       </div>
     </section>
   </div>
@@ -24,11 +25,16 @@ export default {
   data() {
     return {
       share: false,
-      reqCount: 1
+      reqCount: 1,
+      formId: ""
     };
   },
+
   methods: {
     ...mapMutations(["setUserInfo", "setProduction"]),
+    formSubmit(e) {
+      this.formId = e.detail.formId;
+    },
     handleLogin() {
       wx.showLoading({
         title: "加载中"
@@ -48,17 +54,20 @@ export default {
       });
     },
     getUserInfo(year, month, day) {
+      // 普通用户
+      let userType = "common";
+      this.setProduction(true);
+      wx.setStorageSync("production", true);
       wx.getUserInfo({
         withCredentials: true,
         lang: "zh_CN",
         success: res => {
           let data = res.userInfo;
-          if (/mmopen/.test(data.avatarUrl)) {
-            this.setProduction(true);
-            wx.setStorageSync("production", true);
-          } else {
+          // 审核人员
+          if (/mmhead/.test(data.avatarUrl)) {
             this.setProduction(false);
             wx.setStorageSync("production", false);
+            userType = "temp";
           }
           wx.login({
             success: res => {
@@ -72,7 +81,9 @@ export default {
                 });
                 this.$api
                   .login({
-                    code: res.code
+                    code: res.code,
+                    formId: this.formId,
+                    userType
                   })
                   .then(res => {
                     const { userID, token } = res;

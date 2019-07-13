@@ -2,6 +2,7 @@
   <action class="list-container">
     <ul
       class="books-list"
+      :class="'book-' + index"
       v-for="(item, index) of booksList"
       :key="index"
       @click="handleEnterClick(item._id, item.bookName, item.author.name, item.bookCover, item.total)"
@@ -41,6 +42,7 @@
 import { mapMutations } from "vuex";
 import StarComment from "@/components/StarComment";
 import LoadingMore from "@/components/LoadingMore";
+var intersectionObserver;
 export default {
   name: "BookList",
   components: {
@@ -90,7 +92,20 @@ export default {
       wx.navigateTo({
         url: `/pages/PersonageCommentDetail/index?bookID=${bookID}&bookName=${bookName}&bookAuthor=${bookAuthor}&bookCover=${bookCover}&commentCount=${commentCount}`
       });
+    },
+    viewPort() {
+      intersectionObserver
+        .relativeToViewport({ bottom: 10 })
+        .observe(".book-" + 5, res => {
+          console.log("125584846162626");
+          if (res.boundingClientRect.top > 0) {
+            console.log("125584846162626");
+          }
+        });
     }
+  },
+  onReady() {
+    // intersectionObserver = wx.createIntersectionObserver()
   }
 };
 </script>

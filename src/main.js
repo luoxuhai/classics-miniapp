@@ -1,4 +1,4 @@
-// if (process.env.NODE_ENV === 'production') import './static/sdk/ald-stat'
+import './static/sdk/ald-stat'
 import Vue from 'vue'
 import App from './App'
 import store from './store'

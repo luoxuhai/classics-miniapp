@@ -179,6 +179,7 @@ export default {
         line-height: 1.4em;
         border: 2rpx solid $Place;
         border-radius: 2rpx;
+        white-space: nowrap;
         &.active {
           color: #f5f5f5;
           background-color: #f67280;

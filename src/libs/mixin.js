@@ -8,9 +8,11 @@ export const showShareMenu = {
     }
   },
   onLoad() {
+    // #ifdef MP-WEIXIN
     wx.showShareMenu({
       withShareTicket: true
     })
+    // #endif
   }
 }
 

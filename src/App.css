@@ -1,11 +1,12 @@
 @font-face {
-  font-family: 'iconfont';  /* project id 988933 */
+  font-family: 'iconfont'; /* project id 988933 */
   src: url('//at.alicdn.com/t/font_988933_4f7akd2drfe.eot');
-  src: url('//at.alicdn.com/t/font_988933_4f7akd2drfe.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_988933_4f7akd2drfe.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_988933_4f7akd2drfe.woff') format('woff'),
-  url('//at.alicdn.com/t/font_988933_4f7akd2drfe.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_988933_4f7akd2drfe.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_988933_4f7akd2drfe.eot?#iefix')
+      format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_988933_4f7akd2drfe.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_988933_4f7akd2drfe.woff') format('woff'),
+    url('//at.alicdn.com/t/font_988933_4f7akd2drfe.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_988933_4f7akd2drfe.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family: 'iconfont';

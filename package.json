@@ -52,7 +52,7 @@
   },
   "browserslist": [
     "last 3 versions",
-    "Android >= 5.1",
-    "ios >= 8"
+    "Android >= 6.0",
+    "ios >= 10"
   ]
 }

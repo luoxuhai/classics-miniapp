@@ -8,7 +8,7 @@
       @handleSelectType="handleSelectType"
       @handleSelectSort="handleSelectSort"
     />
-    <BookList :booksList="books" :loading="loading" :pageHome="true" />
+    <BookList :booksList="books" :loading="loading" :pageHome="true" ref="list" />
   </div>
 </template>
 
@@ -19,6 +19,7 @@ import HomeFilter from "./components/HomeFilter";
 import BookList from "@/components/BookList";
 import { showShareMenu } from "@/libs/mixin";
 import { mapState, mapMutations } from "vuex";
+let booksCache = [];
 export default {
   mixins: [showShareMenu],
   components: {
@@ -42,7 +43,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setBookInfo", "setProduction", "getUserInfo"]),
+    ...mapMutations(["setBookInfo", "setProduction", "setUserInfo"]),
     handleSelectSort(sortMethod) {
       this.sortMethod = sortMethod;
       this.changeRefresh();
@@ -77,12 +78,20 @@ export default {
         .then(res => {
           const { books, total, per_page } = res;
           if (this.page >= total) this.loading = false;
-          if (reachBottom) this.books = [...this.books, ...books];
-          else this.books = books;
+          if (reachBottom) {
+            // booksCache.concat(books);
+            this.books = [...this.books, ...books];
+            // this.books.forEach((e, i) => {
+            //   this.books[i] = {};
+            // });
+          } else this.books = books;
           this.page += 1;
           this.per_page = per_page;
           this.total = total || 1;
           wx.stopPullDownRefresh();
+          // this.$nextTick(() => {
+          //   this.$refs.list.viewPort();
+          // });
         })
         .catch(err => {
           this.loading = false;
@@ -99,19 +108,16 @@ export default {
     this.loadMore(true);
   },
   onLoad() {
-    // wx.redirectTo({ url: "/pages/Guide/index" });
-    // returnxxx
     const token = wx.getStorageSync("token");
     if (!token) {
       wx.redirectTo({ url: "/pages/Login/index" });
       return;
     }
-    console.log();
-    this.$refs.filter.getTypes();
     this.getBanner();
     this.loadMore();
+    this.$refs.filter.getTypes();
     this.$api.getUserInfo(this.$store.state.userID).then(res => {
-      // this.setUserInfo(res.userInfo);
+      this.setUserInfo(res.userInfo);
     });
   }
 };

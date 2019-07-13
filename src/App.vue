@@ -61,7 +61,9 @@ export default {
     }
   },
   onLaunch() {
+    // #ifdef MP-WEIXIN
     this.autoUpdate();
+    // #endif
     const production = wx.getStorage({
       key: "production",
       success: res => {
