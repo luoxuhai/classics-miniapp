@@ -181,6 +181,7 @@ export default {
 @import "@/assets/styles/common.scss";
 .float--button {
   position: fixed;
+  z-index: 999;
   bottom: 200rpx;
   right: 110rpx;
   background-color: #fff;

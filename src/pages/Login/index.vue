@@ -5,7 +5,7 @@
         src="https://classics.oss-cn-beijing.aliyuncs.com/app/logo.png?x-oss-process=style/o"
         mode="aspectFill"
       />
-      <text class="name">古典名著书单小程序</text>
+      <text class="name webfont">古典名著书单小程序</text>
     </section>
     <section>
       <p class="hint">请授权小程序以继续使用古典名著苑小程序服务</p>
@@ -136,18 +136,18 @@ export default {
     align-items: center;
   }
   img {
-    width: 90px;
-    height: 90px;
+    width: 180rpx;
+    height: 180rpx;
     border-radius: 50%;
   }
   .name {
-    margin-top: 20px;
-    font-size: 18px;
+    margin-top: 40rpx;
+    font-size: 46rpx;
     letter-spacing: 0.2em;
   }
   .hint {
-    margin-bottom: 10px;
-    font-size: 14px;
+    margin-bottom: 20rpx;
+    font-size: 28rpx;
     color: #888;
   }
   .button-login {

@@ -14,6 +14,8 @@ export default {
   bookName: '...',
   fileIndex: 0,
   join: false,
+  oldScrollTop: 0,
+  progress: [0,0],
   production: true,
   searchResult: Object,
   bookMarkIndex: [],
@@ -29,5 +31,6 @@ export default {
       backgroundColor: '#f9f9f9',
       fontColor: '#000'
     }
-  }
+  },
+  systemInfo: {}
 };

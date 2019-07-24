@@ -41,7 +41,7 @@
           @change="changeBrightness"
           :value="baseBrightness"
         />
-        <span  style="font-size: 50rpx" class="iconfont">&#xe748;</span>
+        <span style="font-size: 50rpx" class="iconfont">&#xe748;</span>
       </div>
       <div class="theme-color">
         <div
@@ -200,6 +200,12 @@ export default {
     handleControlMenu(scroll) {
       this.navBarIndex = null;
       scroll ? (this.showHeader = false) : (this.showHeader = !this.showHeader);
+    },
+    handleUnload() {
+      clearInterval(timing);
+      wx.setScreenBrightness({
+        value: this.baseBrightness
+      });
     }
   },
   watch: {
@@ -232,12 +238,6 @@ export default {
       success: res => {
         this.baseBrightness = res.value;
       }
-    });
-  },
-  onUnload() {
-    clearInterval(timing);
-    wx.setScreenBrightness({
-      value: this.baseBrightness
     });
   }
 };

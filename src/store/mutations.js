@@ -50,8 +50,6 @@ export default {
   },
 
   setSystemInfo(state, systemInfo) {
-    Object.keys(systemInfo).forEach(key => {
-      state[key] = systemInfo[key];
-    });
+    state.systemInfo = {...state.systemInfo, ...systemInfo}
   }
 };

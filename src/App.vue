@@ -8,6 +8,19 @@ export default {
       "setSystemInfo",
       "setSearchHistory"
     ]),
+    warn(updateManager) {
+      wx.showModal({
+        title: "温馨提示~",
+        content: "本次版本更新涉及到新的功能添加，旧版本无法正常访问的哦~",
+        showCancel: false,
+        confirmText: "确定更新",
+        success: res => {
+          if (res.confirm) {
+            this.downLoadAndUpdate(updateManager);
+          } else this.warn(updateManager);
+        }
+      });
+    },
     autoUpdate() {
       if (wx.canIUse("getUpdateManager")) {
         const updateManager = wx.getUpdateManager();
@@ -19,20 +32,7 @@ export default {
               success: res => {
                 if (res.confirm) {
                   this.downLoadAndUpdate(updateManager);
-                } else if (res.cancel) {
-                  wx.showModal({
-                    title: "温馨提示~",
-                    content:
-                      "本次版本更新涉及到新的功能添加，旧版本无法正常访问的哦~",
-                    showCancel: false,
-                    confirmText: "确定更新",
-                    success: res => {
-                      if (res.confirm) {
-                        this.downLoadAndUpdate(updateManager);
-                      }
-                    }
-                  });
-                }
+                } else this.warn(updateManager);
               }
             });
           }
@@ -87,6 +87,7 @@ export default {
       }
     });
     this.setUserInfo(userInfo);
+    this.setSystemInfo({ windowWidth: wx.getSystemInfoSync().windowWidth });
     const searchHistoryArr = wx.getStorageSync("searchHistoryArr") || [];
     searchHistoryArr.forEach(val => {
       this.setSearchHistory(val);

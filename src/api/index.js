@@ -86,6 +86,10 @@ export default {
     let url = '/v1/read'
     return request('GET', url, data)
   },
+  putReadProgress: data => {
+    let url = '/v1/read/progress'
+    return request('PUT', url, data)
+  },
   search: data => {
     let url = '/v1/book/search'
     return request('GET', url, data)

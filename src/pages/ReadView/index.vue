@@ -124,6 +124,8 @@ export default {
       "userID",
       "join",
       "bookMarkIndex",
+      "oldScrollTop",
+      "systemInfo",
       "bookFile",
       "catalogueSum"
     ]),
@@ -145,25 +147,32 @@ export default {
     };
   },
   onLoad(options) {
-    const fileIndex = Number(options.fileIndex);
-    // 首先加载文件
-    const bookFileUrl = `https://classics.oss-cn-beijing.aliyuncs.com/books/contents/${this.bookID}`;
-    this.$refs.contentView.getBookFile(fileIndex, bookFileUrl);
+    wx.setNavigationBarTitle({
+      title: this.bookName
+    });
+    let fileIndex = Number(options.fileIndex);
 
     this.$api
       .getBookContentInfo({
         bookID: this.bookID
       })
       .then(res => {
-        //加载文件失败重新加载
-        if (bookFileUrl !== res.bookFile)
-          this.$refs.contentView.getBookFile(fileIndex, res.bookFile);
-        this.setBookInfo({ ...res, fileIndex: fileIndex });
+        const { progress, bookFile } = res;
+        //记住上次位置
+        if (fileIndex === 0 && progress[0] !== 0 && progress[1] !== 0)
+          fileIndex = progress[0];
+        this.$refs.contentView.getBookFile(fileIndex, bookFile);
+        this.setBookInfo({ ...res, fileIndex });
       });
-
-    wx.setNavigationBarTitle({
-      title: this.bookName
+  },
+  onUnload() {
+    // 更新阅读进度
+    this.$api.putReadProgress({
+      bookID: this.bookID,
+      progress: [this.fileIndex, this.oldScrollTop, this.systemInfo.windowWidth]
     });
+    // 清除计时器
+    this.$refs.menuBar.handleUnload();
   }
 };
 </script>

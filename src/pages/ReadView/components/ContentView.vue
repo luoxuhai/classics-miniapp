@@ -47,9 +47,6 @@ export default {
       bookContent: "",
       bookFileSavePath: [],
       scrollTop: 0,
-      old: {
-        scrollTop: 0
-      },
       buttonList: ["上一章", "下一章"]
     };
   },
@@ -73,7 +70,7 @@ export default {
       }
     },
     changeScroll(e) {
-      this.old.scrollTop = e.detail.scrollTop;
+      this.setBookInfo({ oldScrollTop: e.detail.scrollTop });
       this.handleControlNav(e, true);
     },
     //'e'为点击事件参数
@@ -88,9 +85,10 @@ export default {
       this.$api.getBookContent(`${bookFile}/${fileIndex}.html`).then(res => {
         this.bookContent = res;
         //监听scroll事件，记录组件内部变化的值，在设置新值之前先设置为记录的当前值
-        this.scrollTop = this.old.scrollTop;
+        this.scrollTop = this.oldScrollTop;
         this.$nextTick(() => {
-          this.scrollTop = 0;
+          this.scrollTop = this.progress[1] * (this.progress[2] / this.systemInfo.windowWidth);
+          this.setBookInfo({progress: [0, 0, 0] });
           wx.hideLoading();
         });
       });
@@ -107,14 +105,18 @@ export default {
     ...mapState([
       "catalogueList",
       "catalogueSum",
+      "bookID",
       "bookFile",
       "readTheme",
+      "oldScrollTop",
+      "progress",
+      "systemInfo",
       "fileIndex"
     ]),
     disableCutIndex(val) {
       return this.disableCut();
     }
-  }
+  },
 };
 </script>
 
@@ -137,10 +139,10 @@ export default {
     width: auto;
     height: calc(100vh - 100rpx);
     .scroll-continer {
-      padding: 0 25rpx;
+      padding: 0 12px;
       .title {
         display: block;
-        margin: 50rpx auto;
+        margin: 25px auto;
         font-size: 16px;
         text-align: center;
       }
