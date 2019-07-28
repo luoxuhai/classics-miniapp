@@ -171,6 +171,8 @@ export default {
       bookID: this.bookID,
       progress: [this.fileIndex, this.oldScrollTop, this.systemInfo.windowWidth]
     });
+    //重置oldScrollTop
+    this.setBookInfo({ oldScrollTop: 0 });
     // 清除计时器
     this.$refs.menuBar.handleUnload();
   }

@@ -1,7 +1,7 @@
 <template>
   <article
     class="content-container"
-    :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+    :style="{ opacity, backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
   >
     <header class="header">{{ catalogueList[fileIndex] }}</header>
     <scroll-view scroll-y :scroll-top="scrollTop" class="scroll-view" @scroll="changeScroll">
@@ -11,15 +11,14 @@
           :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
           class="title"
         >{{ catalogueList[fileIndex] }}</text>
-        <!-- <text selectable>{{ bookContent }}
-        </text>-->
-        <rich-text
+        <div
           class="content"
           :style="{fontSize: readTheme.fontSize + 'px'}"
-          space="nbsp"
-          :nodes="bookContent"
           @click="handleControlNav"
-        />
+        >
+          <HtmlParse :content="bookContent" />
+        </div>
+
         <footer v-if="bookContent" class="toggle-button">
           <div
             class="last"
@@ -38,12 +37,19 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { setTimeout } from "timers";
+import HtmlParse from "@/components/HtmlParse/parse.vue";
 export default {
   props: {
     themeColor: String
   },
+
+  components: {
+    HtmlParse
+  },
+
   data() {
     return {
+      opacity: 0,
       bookContent: "",
       bookFileSavePath: [],
       scrollTop: 0,
@@ -64,9 +70,7 @@ export default {
         } else {
           this.setBookInfo({ fileIndex: ++this.fileIndex });
         }
-        console.log(this.bookFile);
         this.getBookFile(this.fileIndex, this.bookFile);
-        console.log(this.fileIndex);
       }
     },
     changeScroll(e) {
@@ -78,18 +82,25 @@ export default {
       this.$emit("handleControlNav", scroll);
     },
     getBookFile(fileIndex, bookFile) {
+      this.opacity = 0;
       wx.showLoading({
         title: "加载中",
         mask: true
       });
+
       this.$api.getBookContent(`${bookFile}/${fileIndex}.html`).then(res => {
         this.bookContent = res;
         //监听scroll事件，记录组件内部变化的值，在设置新值之前先设置为记录的当前值
         this.scrollTop = this.oldScrollTop;
         this.$nextTick(() => {
-          this.scrollTop = this.progress[1] * (this.progress[2] / this.systemInfo.windowWidth);
-          this.setBookInfo({progress: [0, 0, 0] });
           wx.hideLoading();
+          setTimeout(() => {
+            this.scrollTop =
+              this.progress[1] *
+              (this.progress[2] / this.systemInfo.windowWidth);
+            this.setBookInfo({ progress: [0, 0, 0] });
+            this.opacity = 1;
+          }, 16);
         });
       });
     },
@@ -116,7 +127,7 @@ export default {
     disableCutIndex(val) {
       return this.disableCut();
     }
-  },
+  }
 };
 </script>
 
@@ -124,6 +135,7 @@ export default {
 @import "@/assets/styles/common.scss";
 .content-container {
   height: 100vh;
+  transition: opacity 0.16s;
   .header {
     display: block;
     height: 100rpx;

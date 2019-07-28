@@ -95,3 +95,6 @@ export default {
   }
 };
 </script>
+<style>
+@import url("/components/HtmlParse/parse.css");
+</style>

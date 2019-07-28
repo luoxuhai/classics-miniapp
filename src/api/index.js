@@ -126,9 +126,9 @@ export default {
     let url = '/v1/app/types'
     return request('get', url, data)
   },
-  getAffiche: data => {
-    let url = '/v1/push/affiche'
-    return request('get', url, data)
+  getAffiche: id => {
+    let url = `/v1/push/affiche/${id}`
+    return request('get', url)
   },
   about: data => {
     let url = '/v1/push/about'

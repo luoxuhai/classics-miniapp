@@ -1,19 +1,20 @@
 <template>
-  <main v-html="content" />
+  <main v-html="affiche.content" />
 </template>
 <script>
 export default {
   data() {
     return {
-      content: ""
+      affiche: {}
     };
   },
-  onLoad() {
-    this.$api.getAffiche().then(res => {
-      this.content = res.content.replace(
+  onLoad(options) {
+    this.$api.getAffiche(options.id).then(res => {
+      res.affiche.content = res.affiche.content.replace(
         /\<img/gi,
         '<img style="max-width:100%;height:auto;margin: 8px auto;"'
       );
+      this.affiche = res.affiche;
     });
   }
 };

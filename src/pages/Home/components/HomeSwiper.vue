@@ -11,7 +11,7 @@
   >
     <block v-for="item of banners" :key="item._id">
       <swiper-item>
-        <img mode="aspectFill" :src="item.bannerImg" @click="handleEnter(item.type, item.bannerID)" />
+        <img mode="aspectFill" :src="item.bannerImg" @click="handleEnter(item.type, item._id)" />
       </swiper-item>
     </block>
   </swiper>
