@@ -4,33 +4,32 @@
     :style="{ opacity, backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
   >
     <header class="header">{{ catalogueList[fileIndex] }}</header>
-    <scroll-view scroll-y :scroll-top="scrollTop" class="scroll-view" @scroll="changeScroll">
-      <div class="scroll-continer">
-        <text
-          selectable
-          :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
-          class="title"
-        >{{ catalogueList[fileIndex] }}</text>
-        <div
-          class="content"
-          :style="{fontSize: readTheme.fontSize + 'px'}"
-          @click="handleControlNav"
-        >
-          <HtmlParse :content="bookContent" />
-        </div>
-
-        <footer v-if="bookContent" class="toggle-button">
-          <div
-            class="last"
-            :style="{color: disableCutIndex === index ? '#ccc' : ''}"
-            v-for="(item, index) of buttonList"
-            :key="index"
-            @click="handleCut(index)"
-            :hover-class="disableCutIndex === index ? '' : 'hover-button'"
-          >{{ item }}</div>
-        </footer>
+    <div class="scroll-continer">
+      <text
+        selectable
+        :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
+        class="title"
+      >{{ catalogueList[fileIndex] }}</text>
+      <div
+        class="content"
+        :style="{fontSize: readTheme.fontSize + 'px'}"
+        @click="handleControlNav"
+        @touchmove="handleControlNavHide"
+      >
+        <HtmlParse :content="bookContent" />
       </div>
-    </scroll-view>
+
+      <footer v-if="bookContent" class="toggle-button">
+        <div
+          class="last"
+          :style="{color: disableCutIndex === index ? '#ccc' : ''}"
+          v-for="(item, index) of buttonList"
+          :key="index"
+          @click="handleCut(index)"
+          :hover-class="disableCutIndex === index ? '' : 'hover-button'"
+        >{{ item }}</div>
+      </footer>
+    </div>
   </article>
 </template>
 
@@ -52,7 +51,6 @@ export default {
       opacity: 0,
       bookContent: "",
       bookFileSavePath: [],
-      scrollTop: 0,
       buttonList: ["上一章", "下一章"]
     };
   },
@@ -73,14 +71,15 @@ export default {
         this.getBookFile(this.fileIndex, this.bookFile);
       }
     },
-    changeScroll(e) {
-      this.setBookInfo({ oldScrollTop: e.detail.scrollTop });
-      this.handleControlNav(e, true);
+
+    handleControlNav() {
+      this.$emit("handleControlNav", false);
     },
-    //'e'为点击事件参数
-    handleControlNav(e, scroll = false) {
-      this.$emit("handleControlNav", scroll);
+
+    handleControlNavHide() {
+      this.$emit("handleControlNav", true);
     },
+
     getBookFile(fileIndex, bookFile) {
       this.opacity = 0;
       wx.showLoading({
@@ -90,14 +89,15 @@ export default {
 
       this.$api.getBookContent(`${bookFile}/${fileIndex}.html`).then(res => {
         this.bookContent = res;
-        //监听scroll事件，记录组件内部变化的值，在设置新值之前先设置为记录的当前值
-        this.scrollTop = this.oldScrollTop;
         this.$nextTick(() => {
           wx.hideLoading();
-          this.scrollTop =
-            this.progress[1] * (this.progress[2] / this.systemInfo.windowWidth);
+          wx.pageScrollTo({
+            scrollTop:
+              this.progress[1] *
+              (this.progress[2] / this.systemInfo.windowWidth),
+            duration: 0
+          });
           this.setBookInfo({ progress: [0, 0, 0] });
-
           this.opacity = 1;
         });
       });
@@ -117,7 +117,6 @@ export default {
       "bookID",
       "bookFile",
       "readTheme",
-      "oldScrollTop",
       "progress",
       "systemInfo",
       "fileIndex"
@@ -133,9 +132,13 @@ export default {
 @import "@/assets/styles/common.scss";
 .content-container {
   height: 100vh;
+  padding-top: 100rpx;
   transition: opacity 0.16s;
   .header {
     display: block;
+    position: fixed;
+    top: 0;
+    width: 100vw;
     height: 100rpx;
     padding: 0 55rpx 0 25rpx;
     background-color: #fff;
@@ -145,47 +148,47 @@ export default {
     @include ellipsis;
     color: #a0a5ab;
   }
-  .scroll-view {
-    width: auto;
-    height: calc(100vh - 100rpx);
-    .scroll-continer {
-      padding: 0 12px;
-      .title {
-        display: block;
-        margin: 25px auto;
-        font-size: 16px;
-        text-align: center;
-      }
-      .content {
-        display: block;
-        line-height: 40px;
-        text-align: justify;
-        &::first-letter {
-          font: {
-            size: 26px;
-            weight: 600;
-          }
-        }
-      }
-      .toggle-button {
-        @include flex(space-around, center);
-        width: 100%;
-        height: 140rpx;
-        .last,
-        .next {
-          width: 220rpx;
-          height: 70rpx;
-          border-radius: 10rpx;
-          background-color: #fff;
-          text-align: center;
-          line-height: 70rpx;
+  // .scroll-view {
+  //   width: auto;
+  //   height: calc(100vh - 100rpx);
+  .scroll-continer {
+    padding: 0 12px;
+    .title {
+      display: block;
+      margin: 25px auto;
+      font-size: 16px;
+      text-align: center;
+    }
+    .content {
+      display: block;
+      line-height: 40px;
+      text-align: justify;
+      &::first-letter {
+        font: {
+          size: 26px;
+          weight: 600;
         }
       }
     }
-    .footer {
-      @extend .header;
-      text-align: right;
+    .toggle-button {
+      @include flex(space-around, center);
+      width: 100%;
+      height: 140rpx;
+      .last,
+      .next {
+        width: 220rpx;
+        height: 70rpx;
+        border-radius: 10rpx;
+        background-color: #fff;
+        text-align: center;
+        line-height: 70rpx;
+      }
     }
   }
+  .footer {
+    @extend .header;
+    text-align: right;
+  }
 }
+// }
 </style>

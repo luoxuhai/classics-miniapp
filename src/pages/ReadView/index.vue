@@ -94,6 +94,7 @@ export default {
             icon: "success",
             duration: 2000
           });
+          this.setBookInfo({ isStar: true });
         });
     },
     handleToCommentClick() {
@@ -142,6 +143,10 @@ export default {
         this.setBookInfo({ fileIndex: this.catalogueSum - 1 });
     }
   },
+  onPageScroll(e) {
+    this.setBookInfo({ oldScrollTop: e.scrollTop });
+  },
+
   onShareAppMessage(res) {
     return {
       title: this.bookName,

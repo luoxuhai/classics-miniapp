@@ -8,7 +8,7 @@
     <span class="iconfont nav-item" @click="handleToCommentClick">&#xe62d;</span>
     <div class="iconfont nav-item share" @click="handleShareClick">
       &#xe624;
-      <button open-type="share"></button>
+      <button open-type="share" />
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
 @import "@/assets/styles/common.scss";
 .nav {
   @include flex(flex-end, center);
-  position: absolute;
+  position: fixed;
   z-index: 99;
   width: 100%;
   height: 120rpx;
