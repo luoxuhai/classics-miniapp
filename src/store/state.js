@@ -18,6 +18,7 @@ export default {
   progress: [0,0],
   production: true,
   searchResult: Object,
+  isStar: false,
   bookMarkIndex: [],
   catalogueList: [],
   catalogueSum: null,

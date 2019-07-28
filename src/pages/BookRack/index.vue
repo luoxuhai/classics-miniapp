@@ -88,9 +88,9 @@ export default {
       let url = `/pages/HomeDetail/index?bookID=${bookID}&bookName=${bookName}`;
       this.setBookInfo({
         bookID,
-        bookName
+        bookName  
       });
-      if (this.production) url = `/pages/ReadView/index?fileIndex=0`;
+      if (this.production) url = `/pages/ReadView/index`;
       wx.navigateTo({
         url
       });

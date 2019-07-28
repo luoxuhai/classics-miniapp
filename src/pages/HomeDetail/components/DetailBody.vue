@@ -94,7 +94,7 @@
         v-if="production"
         class="navbar-read"
         hover-class="hover-button"
-        @click="handleReadClick(0)"
+        @click="handleReadClick"
       >阅读</div>
     </div>
   </div>

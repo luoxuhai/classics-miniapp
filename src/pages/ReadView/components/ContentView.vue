@@ -94,13 +94,11 @@ export default {
         this.scrollTop = this.oldScrollTop;
         this.$nextTick(() => {
           wx.hideLoading();
-          setTimeout(() => {
-            this.scrollTop =
-              this.progress[1] *
-              (this.progress[2] / this.systemInfo.windowWidth);
-            this.setBookInfo({ progress: [0, 0, 0] });
-            this.opacity = 1;
-          }, 16);
+          this.scrollTop =
+            this.progress[1] * (this.progress[2] / this.systemInfo.windowWidth);
+          this.setBookInfo({ progress: [0, 0, 0] });
+
+          this.opacity = 1;
         });
       });
     },

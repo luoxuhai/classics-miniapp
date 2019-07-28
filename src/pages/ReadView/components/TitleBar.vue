@@ -1,33 +1,40 @@
 <template>
-  <div class="nav"
-       :class="{show: showHeader}">
-    <span class="iconfont nav-item"
-          @click="handleAddToRackClick">&#xe630;</span>
-    <span class="iconfont nav-item"
-          @click="handleToCommentClick">&#xe62d;</span>
-    <div class="iconfont nav-item share"
-         @click="handleShareClick">&#xe624;
+  <div class="nav" :class="{show: showHeader}">
+    <span
+      class="iconfont nav-item"
+      :style="{color: isStar ? '#b2b2b2' : ''}"
+      @click="handleAddToRackClick"
+    >&#xe630;</span>
+    <span class="iconfont nav-item" @click="handleToCommentClick">&#xe62d;</span>
+    <div class="iconfont nav-item share" @click="handleShareClick">
+      &#xe624;
       <button open-type="share"></button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       showHeader: false
     };
   },
+
+  computed: {
+    ...mapState(["isStar"])
+  },
+
   methods: {
     handleAddToRackClick() {
-      this.$emit('handleAddToRackClick')
+      this.$emit("handleAddToRackClick");
     },
     handleToCommentClick() {
-      this.$emit('handleToCommentClick')
+      this.$emit("handleToCommentClick");
     },
     handleShareClick() {
-      this.$emit('handleShareClick')
+      this.$emit("handleShareClick");
     },
     handleControlTitle(scroll) {
       if (scroll) this.showHeader = false;

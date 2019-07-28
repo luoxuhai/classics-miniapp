@@ -83,6 +83,7 @@ export default {
         .then();
     },
     handleAddToRackClick() {
+      if (this.isStar) return;
       this.$api
         .addBookRack({
           bookID: this.bookID
@@ -123,6 +124,7 @@ export default {
       "bookID",
       "userID",
       "join",
+      "isStar",
       "bookMarkIndex",
       "oldScrollTop",
       "systemInfo",
@@ -150,6 +152,7 @@ export default {
     wx.setNavigationBarTitle({
       title: this.bookName
     });
+
     let fileIndex = Number(options.fileIndex);
 
     this.$api
@@ -157,20 +160,34 @@ export default {
         bookID: this.bookID
       })
       .then(res => {
-        const { progress, bookFile } = res;
-        //记住上次位置
-        if (fileIndex === 0 && progress[0] !== 0 && progress[1] !== 0)
+        const { progress, bookFile, isStar } = res;
+        // 选择章节进入
+        if (fileIndex >= 0) {
+          res.progress = [0, 0, 0];
+          //点击阅读进入记住上次位置
+        } else if (isStar) {
           fileIndex = progress[0];
+          // 未加入书架而点击阅读进入
+        } else {
+          fileIndex = 0;
+        }
+
         this.$refs.contentView.getBookFile(fileIndex, bookFile);
         this.setBookInfo({ ...res, fileIndex });
       });
   },
   onUnload() {
-    // 更新阅读进度
-    this.$api.putReadProgress({
-      bookID: this.bookID,
-      progress: [this.fileIndex, this.oldScrollTop, this.systemInfo.windowWidth]
-    });
+    if (this.isStar)
+      // 更新阅读进度
+      this.$api.putReadProgress({
+        bookID: this.bookID,
+        progress: [
+          this.fileIndex,
+          this.oldScrollTop,
+          this.systemInfo.windowWidth
+        ]
+      });
+
     //重置oldScrollTop
     this.setBookInfo({ oldScrollTop: 0 });
     // 清除计时器
