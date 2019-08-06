@@ -1,18 +1,35 @@
 <template>
-  <div>
-    <div class="nav" :class="{show: showHeader}">
-      <span
+  <view>
+    <view
+      class="nav"
+      :class="{show: showHeader}"
+      :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+    >
+      <!-- #ifdef MP-WEIXIN || MP-QQ -->
+      <view
         class="iconfont nav-item"
         v-for="(item, index) of menuIcon"
         :key="index"
         v-html="item"
         @click="handleNavBarItem(index)"
-      ></span>
-    </div>
-    <div class="schedule" v-if="navBarIndex === 0 && showHeader">
+      />
+      <!-- #endif -->
+
+      <!-- #ifdef MP-ALIPAY || MP-TOUTIAO -->
+      <label class="iconfont nav-item" @click="handleNavBarItem(0)">&#xe696;</label>
+      <label class="iconfont nav-item" @click="handleNavBarItem(1)">&#xe748;</label>
+      <label class="iconfont nav-item" @click="handleNavBarItem(2)">&#xe636;</label>
+      <label class="iconfont nav-item" @click="handleNavBarItem(3)">&#xe601;</label>
+      <!-- #endif -->
+    </view>
+    <view
+      class="schedule"
+      v-if="navBarIndex === 0 && showHeader"
+      :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+    >
       <text class="time">已阅读{{readTotal}}分钟</text>
-      <div class="progress-bar">
-        <span class="iconfont" @click="handleCut(0)">&#xe669;</span>
+      <view class="progress-bar">
+        <label class="iconfont" @click="handleCut(0)">&#xe669;</label>
         <progress
           :percent="percent"
           :active="false"
@@ -22,13 +39,18 @@
           activeColor="#6e757f"
           active-mode="forwards"
         />
-        <span class="iconfont" @click="handleCut(1)">&#xe667;</span>
-      </div>
+        <label class="iconfont" @click="handleCut(1)">&#xe667;</label>
+      </view>
       <text class="section">{{ catalogueList[fileIndex] }}</text>
-    </div>
-    <div class="theme" v-if="navBarIndex === 1 && showHeader">
-      <div class="luminance">
-        <span class="iconfont">&#xe748;</span>
+    </view>
+    <view
+      class="theme"
+      v-if="navBarIndex === 1 && showHeader"
+      :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+    >
+      <!-- #ifndef MP-TOUTIAO -->
+      <view class="luminance">
+        <label class="iconfont">&#xe748;</label>
         <slider
           :step="0.1"
           :min="0.1"
@@ -41,20 +63,28 @@
           @change="changeBrightness"
           :value="baseBrightness"
         />
-        <span style="font-size: 50rpx" class="iconfont">&#xe748;</span>
-      </div>
-      <div class="theme-color">
-        <div
+        <label style="font-size: 50rpx" class="iconfont">&#xe748;</label>
+      </view>
+      <!-- #endif -->
+      <view
+        class="theme-color"
+        :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+      >
+        <view
           class="color-item"
           :style="{backgroundColor: item, border: index === readTheme.viewColor.index ? border : ''}"
           @click="handleThemeItem(index)"
           v-for="(item, index) of themeColorList"
           :key="index"
-        ></div>
-      </div>
-    </div>
-    <div class="text-font" v-if="navBarIndex === 2 && showHeader">
-      <span style="font-size: 40rpx">A</span>
+        ></view>
+      </view>
+    </view>
+    <view
+      class="text-font"
+      v-if="navBarIndex === 2 && showHeader"
+      :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+    >
+      <text style="font-size: 40rpx">A</text>
       <slider
         show-value
         :step="2"
@@ -68,63 +98,64 @@
         @change="changeFontSize"
         @changing="changeFontSize"
       />
-      <span>A</span>
-    </div>
-    <div class="more" :class="{show: navBarIndex === 3}">
-      <div class="header-nav">
-        <div
+      <text>A</text>
+    </view>
+    <view
+      class="more"
+      :class="{show: navBarIndex === 3}"
+      :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+    >
+      <view class="header-nav">
+        <view
           class="header-item"
           :class="{select: index === selectIndex}"
           v-for="(item, index) of navList"
           :key="index"
           @click="handleToggleNavClick(index)"
-        >{{ item }}</div>
-      </div>
+        >{{ item }}</view>
+      </view>
       <swiper class="swiper" :duration="300" :current="selectIndex" @change="changeTab">
         <swiper-item class="swiper-item">
           <scroll-view scroll-y class="scorll-view" style="height: calc(100vh - 210rpx)">
-            <div
+            <view
               class="item"
               :style="{color: fileIndex === index ? '#f67280' : ''}"
               v-for="(item, index) of catalogueList"
               :key="index"
               hover-class="hover-button"
               @click="handleToCataClick(index)"
-            >{{ item }}</div>
+            >{{ item }}</view>
           </scroll-view>
         </swiper-item>
         <swiper-item class="swiper-item">
-          <div class="bookmark-title">书签 • {{ bookMarkList.length }}个</div>
+          <view class="bookmark-title">书签 • {{ bookMarkList.length }}个</view>
           <scroll-view scroll-y class="scorll-view" style="height: calc(100vh - 310rpx)">
-            <div
+            <view
               class="bookmark-item"
               v-for="(item, index) of bookMarkList"
               :key="index"
               @click="handleBookMarkClick(index)"
               hover-class="hover-button"
-            >{{ item }}</div>
+            >{{ item }}</view>
           </scroll-view>
         </swiper-item>
       </swiper>
-      <div class="button-close" @click="handleNavBarItem(null)" hover-class="hover-button">关闭</div>
-    </div>
-    <div
+      <view class="button-close" @click="handleNavBarItem(null)" hover-class="hover-button">关闭</view>
+    </view>
+    <view
       class="mask"
       :class="{show: navBarIndex === 3}"
       v-if="navBarIndex === 3"
+      catchtouchmove="move"
       @click="handleNavBarItem(null)"
-    ></div>
-  </div>
+    />
+  </view>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import HomeSearch from "@/components/HomeSearch";
 let timing;
 export default {
-  components: {
-    HomeSearch
-  },
   data() {
     return {
       menuIcon: ["&#xe696;", "&#xe748;", "&#xe636;", "&#xe601;"],
@@ -142,6 +173,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setBookInfo", "setReadView"]),
+    move() {},
     handleToggleNavClick(index) {
       this.selectIndex = index;
     },
@@ -150,13 +182,13 @@ export default {
     },
     handleThemeItem(index) {
       this.themeIndex = index;
-      let fontColor = "#000";
+      let fontColor = "#000000";
       switch (index) {
         case 0:
         case 1:
         case 2:
         case 3:
-          if (index === 3) fontColor = "#f9f9f9";
+          if (index === 3) fontColor = "#000000";
           this.setReadView({
             viewColor: {
               index,
@@ -164,6 +196,18 @@ export default {
               fontColor
             }
           });
+          // #ifdef MP-ALIPAY
+          my.setNavigationBar({
+            backgroundColor: this.readTheme.viewColor.backgroundColor
+          });
+          // #endif
+
+          // #ifdef MP-WEIXIN || MP-QQ
+          wx.setNavigationBarColor({
+            frontColor: this.readTheme.viewColor.fontColor,
+            backgroundColor: this.readTheme.viewColor.backgroundColor
+          });
+          // #endif
           break;
         default:
           break;
@@ -378,8 +422,8 @@ export default {
 }
 .theme {
   @include flex(space-around, center, column);
-  position: absolute;
-  z-index: 99;
+  position: fixed;
+  z-index: 999;
   bottom: 120rpx;
   width: 100%;
   height: 240rpx;

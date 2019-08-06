@@ -3,14 +3,24 @@
     <img :src="about.QRcode" mode="aspectFill" />
     <h1 class="about__title">古典名著苑</h1>
     <p class="about__version">v{{ about.version }}</p>
-    <rich-text class="about__log" :nodes="about.log" />
-    <rich-text class="about__desc" :nodes="about.intro" />
+    <article class="about__log">
+      <HtmlParse :content="about.log" />
+    </article>
+    <article class="about__desc">
+      <HtmlParse :content="about.intro" />
+    </article>
   </div>
 </template>
 
 <script>
+import HtmlParse from "@/components/HtmlParse/parse.vue";
 export default {
   name: "about",
+
+  components: {
+    HtmlParse
+  },
+
   data() {
     return {
       about: {}

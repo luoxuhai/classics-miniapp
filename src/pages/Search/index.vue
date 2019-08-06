@@ -1,6 +1,6 @@
 <template>
   <div class="search-container">
-    <HomeSearch
+    <BookSearch
       @handleClickSearch="handleClickSearch"
       @changeInputValue="changeInputValue"
       ref="search"
@@ -17,7 +17,7 @@
         <main class="history-item" v-for="(item, index) of searchHistoryArr" :key="index">
           <span class="iconfont">&#xe631;</span>
           <p class="content" @click="handleHistoryItem(index)">{{ item }}</p>
-          <span class="iconfont" @click="handleClearItem(index)">&#xe654;</span>
+          <span class="iconfont" @click="handleClearItem(index)">&#xe625;</span>
         </main>
       </scroll-view>
     </section>
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import HomeSearch from "@/components/HomeSearch";
+import BookSearch from "@/components/BookSearch";
 import BookList from "@/components/BookList";
 import { mapState, mapMutations } from "vuex";
 export default {
   components: {
-    HomeSearch,
+    BookSearch,
     BookList
   },
   data() {

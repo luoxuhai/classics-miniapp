@@ -18,7 +18,7 @@
           <StarComment :score="item.bookScore || 1.5" />
         </view>
         <view class="sundry-count">
-          <label class="iconfont">&#xe603;</label>
+          <text class="iconfont">&#xe603;</text>
           {{item.browseSum}}
         </view>
         <view v-if="pageHome" class="sundry-tag">
@@ -75,7 +75,7 @@ export default {
         return;
       }
       wx.navigateTo({
-        url: `/pages/BookDetail/index?bookID=${bookID}&bookName=${bookName}`
+        url: `/pages/HomeDetail/index?bookID=${bookID}&bookName=${bookName}`
       });
     },
     enterUserCommentDetail(
@@ -86,7 +86,7 @@ export default {
       commentCount
     ) {
       wx.navigateTo({
-        url: `/pages/UserCommentDetail/index?bookID=${bookID}&bookName=${bookName}&bookAuthor=${bookAuthor}&bookCover=${bookCover}&commentCount=${commentCount}`
+        url: `/pages/PersonageCommentDetail/index?bookID=${bookID}&bookName=${bookName}&bookAuthor=${bookAuthor}&bookCover=${bookCover}&commentCount=${commentCount}`
       });
     },
   },

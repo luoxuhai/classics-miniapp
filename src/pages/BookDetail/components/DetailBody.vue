@@ -16,7 +16,7 @@
         <swiper-item>
           <scroll-view :scroll-y="scrollY" style="height: 100vh; -webkit-overflow-scrolling: touch">
             <div class="content-detail">
-              <div class="detail-syn" :class="[descUnfold ? 'syn-shrink' : 'syn-unfold']">
+              <div class="detail-syn" :class="[descUnfold ? 'syn-shrink' : 'syn-unfold']" @click="handleUnfold">
                 {{ detailBody.bookDesc || '' }}
                 <p class="unfold" @click="handleUnfold">
                   <span class="iconfont" :class="[descUnfold ? 'shrink' : 'unfold']">&#xe63f;</span>
@@ -48,7 +48,7 @@
                     mode="aspectFill"
                     class="content-img"
                   />
-                  <div class="content-text">{{ author.intro }}</div>
+                  <text selectable class="content-text">{{ author.intro }}</text>
                 </div>
               </div>
             </div>

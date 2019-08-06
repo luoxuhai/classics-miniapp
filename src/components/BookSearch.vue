@@ -2,7 +2,7 @@
   <main class="search-container">
     <section class="search-frame">
       <span class="iconfont">&#xe631;</span>
-      <p v-if="homeSearch" class="hot-search" @click="handleSearch">{{ '红楼梦' }}</p>
+      <p v-if="homeSearch" class="hot-search" @click="handleSearch">{{hotSearch}}</p>
       <input
         v-if="!homeSearch"
         type="text"
@@ -37,14 +37,11 @@ export default {
       type: Boolean,
       default: true
     },
-    hotSearch: {
-      type: String,
-      default: "红楼梦"
-    }
   },
   data() {
     return {
-      inputValue: ""
+      inputValue: "",
+      hotSearch: "红楼梦"
     };
   },
   methods: {
@@ -57,7 +54,7 @@ export default {
     },
     handleSearch() {
       wx.navigateTo({
-        url: `/pages/HomeSearch/index`
+        url: `/pages/Search/index`
       });
     },
     handleScanCode() {
@@ -81,7 +78,7 @@ export default {
           this.$api.searchByIsbn({ isbn: res.result }).then(res => {
             wx.hideLoading();
             wx.navigateTo({
-              url: `/pages/HomeSearch/index?code=1&name=${res.name}`
+              url: `/pages/Search/index?code=1&name=${res.name}`
             });
             this.$store.commit("setSearchResult", res);
           });
@@ -96,6 +93,11 @@ export default {
     inputValue(val) {
       this.$emit("changeInputValue", val);
     }
+  },
+  onReady() {
+    this.$api.getHotSearch().then(res => {
+      this.hotSearch = res.hotSearch
+    });
   }
 };
 </script>

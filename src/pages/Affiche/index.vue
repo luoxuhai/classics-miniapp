@@ -1,8 +1,14 @@
 <template>
-  <main v-html="affiche.content" />
+  <view>
+    <HtmlParse :content="affiche.content" />
+  </view>
 </template>
 <script>
+import HtmlParse from "@/components/HtmlParse/parse.vue";
 export default {
+  components: {
+    HtmlParse
+  },
   data() {
     return {
       affiche: {}
@@ -10,10 +16,6 @@ export default {
   },
   onLoad(options) {
     this.$api.getAffiche(options.id).then(res => {
-      res.affiche.content = res.affiche.content.replace(
-        /\<img/gi,
-        '<img style="max-width:100%;height:auto;margin: 8px auto;"'
-      );
       this.affiche = res.affiche;
     });
   }
@@ -21,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-main {
+view {
   padding: 30rpx;
 }
 </style>

@@ -4,7 +4,7 @@
       "path": "pages/Home/index",
       "style": {
         "enablePullDownRefresh": true,
-        "navigationBarTitleText": "古典小说阅读"
+        "navigationBarTitleText": "古典名著苑"
       }
     },
     {
@@ -12,10 +12,10 @@
       "style": { "navigationBarTitleText": "微信授权登录" }
     },
     {
-      "path": "pages/HomeDetail/index"
+      "path": "pages/BookDetail/index"
     },
     {
-      "path": "pages/HomeSearch/index",
+      "path": "pages/Search/index",
       "style": {
         "navigationBarTitleText": "搜索"
       }
@@ -50,14 +50,14 @@
       }
     },
     {
-      "path": "pages/PersonageSetting/index",
+      "path": "pages/Setting/index",
       "style": {
         "enablePullDownRefresh": false,
         "navigationBarTitleText": "设置"
       }
     },
     {
-      "path": "pages/SettingCropper/index",
+      "path": "pages/ImageCropper/index",
       "style": {
         "navigationBarTitleText": "头像剪切",
         "navigationBarBackgroundColor": "#000",
@@ -69,25 +69,25 @@
       "style": { "navigationBarTitleText": "修改姓名" }
     },
     {
-      "path": "pages/PersonageBrowse/index",
+      "path": "pages/UserBrowse/index",
       "style": {
         "enablePullDownRefresh": true,
         "navigationBarTitleText": "我的浏览"
       }
     },
     {
-      "path": "pages/PersonageComment/index",
+      "path": "pages/UserComment/index",
       "style": {
         "enablePullDownRefresh": true,
         "navigationBarTitleText": "我的评论"
       }
     },
     {
-      "path": "pages/PersonageCommentDetail/index",
+      "path": "pages/UserCommentDetail/index",
       "style": { "enablePullDownRefresh": true, "navigationBarTitleText": "" }
     },
     {
-      "path": "pages/PersonageAbout/index",
+      "path": "pages/About/index",
       "style": {
         "enablePullDownRefresh": false,
         "navigationBarTitleText": "设置"
@@ -96,9 +96,7 @@
     {
       "path": "pages/Affiche/index",
       "style": {
-        "navigationBarTextStyle": "white",
-        "navigationBarTitleText": "公告",
-        "navigationBarBackgroundColor": "#355c7d"
+        "navigationBarTitleText": "通知"
       }
     }
   ],
@@ -110,9 +108,11 @@
     "navigationBarBackgroundColor": "#fff",
     "onReachBottomDistance": 100
   },
+  "style": "v2",
   "tabBar": {
+    "color": "#6f7782",
     "selectedColor": "#f67280",
-    "backgroundColor": "#fff",
+    "backgroundColor": "#ffffff",
     "list": [
       {
         "pagePath": "pages/Home/index",

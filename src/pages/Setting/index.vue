@@ -1,6 +1,7 @@
 <template>
   <div class="setting-container">
     <div class="setting-list">
+      <!-- #ifndef MP-TOUTIAO -->
       <div class="list-item" hover-class="hover-button" @click="handleEnterClick(0)">
         <h1>头像</h1>
         <div class="footer">
@@ -8,6 +9,7 @@
           <span class="iconfont">&#xe667;</span>
         </div>
       </div>
+      <!-- #endif -->
       <div class="list-item" hover-class="hover-button" @click="handleEnterClick(1)">
         <h1>昵称</h1>
         <div class="footer">
@@ -121,7 +123,7 @@ export default {
         sizeType: ["original"],
         success: res => {
           wx.navigateTo({
-            url: `/pages/SettingCropper/index?imagePath=${res.tempFilePaths[0]}`
+            url: `/pages/ImageCropper/index?imagePath=${res.tempFilePaths[0]}`
           });
         },
         complete: () => {

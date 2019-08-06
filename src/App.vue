@@ -6,7 +6,8 @@ export default {
       "setProduction",
       "setUserInfo",
       "setSystemInfo",
-      "setSearchHistory"
+      "setSearchHistory",
+      "setReadView"
     ]),
     warn(updateManager) {
       wx.showModal({
@@ -61,32 +62,46 @@ export default {
     }
   },
   onLaunch() {
+    // #ifdef MP-QQ || MP-TOUTIAO || MP-ALIPAY
+    this.$api.getEnv().then(res => {
+      this.setProduction(res.production);
+      wx.setStorageSync("production", res.production);
+    });
+    // #endif
+
     // #ifdef MP-WEIXIN
     this.autoUpdate();
-    // #endif
     const production = wx.getStorage({
       key: "production",
       success: res => {
         this.setProduction(res);
       }
     });
-    let userInfo = {
-      userID: "",
-      token: "",
-      nickName: "",
-      avatarUrl: "",
-      gender: "",
-      birthday: "",
-      province: "",
-      city: ""
+    // #endif
+    let storage = {
+      userInfo: {
+        userID: "",
+        token: "",
+        nickName: "",
+        avatarUrl: "",
+        gender: "",
+        birthday: "",
+        province: "",
+        city: ""
+      }
     };
-    Object.keys(userInfo).forEach(key => {
+    Object.keys(storage.userInfo).forEach(key => {
       const value = wx.getStorageSync(key);
       if (value) {
-        userInfo[key] = value;
+        storage.userInfo[key] = value;
       }
     });
-    this.setUserInfo(userInfo);
+
+    this.setUserInfo(storage.userInfo);
+
+    const readTheme = wx.getStorageSync("readTheme");
+    if (readTheme) this.setReadView(readTheme);
+
     this.setSystemInfo({ windowWidth: wx.getSystemInfoSync().windowWidth });
     const searchHistoryArr = wx.getStorageSync("searchHistoryArr") || [];
     searchHistoryArr.forEach(val => {

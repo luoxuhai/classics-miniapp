@@ -1,5 +1,10 @@
 <template>
-  <div class="nav" :class="{show: showHeader}">
+  <div
+    class="nav"
+    :class="{show: showHeader}"
+    :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+  >
+    <header class="header">{{ catalogueList[fileIndex] }}</header>
     <span
       class="iconfont nav-item"
       :style="{color: isStar ? '#b2b2b2' : ''}"
@@ -23,7 +28,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["isStar"])
+    ...mapState(["isStar", "catalogueList", "fileIndex", "readTheme"])
   },
 
   methods: {
@@ -58,12 +63,18 @@ export default {
   opacity: 0;
   transition: all 0.3s ease-out;
   transform: translateY(-120rpx);
+  .header {
+    width: 100%;
+    font-size: 14px;
+    @include ellipsis;
+    color: #a0a5ab;
+  }
   &.show {
     transform: translateY(0);
     opacity: 1;
   }
   .nav-item {
-    margin: 0 30rpx;
+    margin: 0 20rpx;
     font-size: 24px;
     color: #444c57;
   }

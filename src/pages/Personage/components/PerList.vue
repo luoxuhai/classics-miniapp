@@ -64,12 +64,12 @@ export default {
       switch (index) {
         case 0:
           wx.navigateTo({
-            url: `/pages/PersonageComment/index`
+            url: `/pages/UserComment/index`
           });
           break;
         case 1:
           wx.navigateTo({
-            url: `/pages/PersonageBrowse/index`
+            url: `/pages/UserBrowse/index`
           });
           break;
         case 2:
@@ -77,7 +77,7 @@ export default {
           break;
         case 3:
           wx.navigateTo({
-            url: "/pages/PersonageSetting/index"
+            url: "/pages/Setting/index"
           });
           break;
         case 4:
@@ -92,7 +92,7 @@ export default {
           break;
         case 6:
           wx.navigateTo({
-            url: `/pages/PersonageAbout/index`
+            url: `/pages/About/index`
           });
       }
     }

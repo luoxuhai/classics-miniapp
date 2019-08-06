@@ -91,6 +91,9 @@ export default {
       height: 100%;
       .book-name {
         @include ellipsis;
+        /* #ifdef MP-TOUTIAO */
+        overflow: visible;
+        /* #endif */
         font: {
           size: 20px;
           weight: 700;

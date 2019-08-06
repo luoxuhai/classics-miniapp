@@ -40,10 +40,12 @@
 </template>
 
 <script>
+import moment from 'moment';
+import { mapState } from "vuex";
 import StarComment from "@/components/StarComment";
 import LoadingMore from "@/components/LoadingMore";
-import { getRelativeTime } from "@/libs/tools";
-import { mapState } from "vuex";
+
+moment.locale('zh-cn');
 export default {
   name: "CommentList",
   components: {
@@ -86,7 +88,7 @@ export default {
       }
     },
     relativeTime(createdAt) {
-      return getRelativeTime(createdAt);
+      return moment.utc(createdAt, 'YYYYMMDDHHmmss').fromNow();
     }
   },
   computed: {

@@ -46,10 +46,12 @@ export default {
   methods: {
     move() {},
     handleOrderClick() {
-      this.detailBody.catalogueList = this.detailBody.catalogueList.reverse()
+      this.detailBody.catalogueList = this.detailBody.catalogueList.reverse();
     },
     changeImgLoad() {
+      // #ifndef MP-TOUTIAO
       wx.hideNavigationBarLoading();
+      // #endif
     },
     handleGradeClick() {
       wx.navigateTo({
@@ -109,12 +111,11 @@ export default {
             bookCover,
             bookAuthor: author.name
           });
-          setTimeout(() => {
-            wx.hideNavigationBarLoading();
-          }, 100);
         })
         .catch(err => {
+          // #ifndef MP-TOUTIAO
           wx.hideNavigationBarLoading();
+          // #endif
         });
     },
 
@@ -144,7 +145,7 @@ export default {
   onShareAppMessage() {
     return {
       title: `${this.bookInfo.bookName}-古典名著苑`,
-      path: `/pages/HomeDetail/index?share=1&bookID=${this.bookInfo.bookID}&bookName=${this.bookInfo.bookName}`
+      path: `/pages/BookDetail/index?share=1&bookID=${this.bookInfo.bookID}&bookName=${this.bookInfo.bookName}`
     };
   },
   computed: {
@@ -155,7 +156,11 @@ export default {
     wx.setNavigationBarTitle({
       title: options.bookName
     });
+
+    // #ifndef MP-TOUTIAO
     wx.showNavigationBarLoading();
+    // #endif
+
     this.bookInfo = options;
     this.getBookDetail(this.bookInfo.bookID, this.bookInfo.bookName);
   },
@@ -209,6 +214,7 @@ export default {
 }
 .detail-container {
   transition: opacity 0.16s;
+  overflow: hidden;
   .mask {
     position: fixed;
     z-index: 999;

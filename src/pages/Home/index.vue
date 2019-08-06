@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <HomeSearch hotSearch="红楼梦" :homeSearch="homeSearch" />
+    <StarTip />
+    <BookSearch :homeSearch="homeSearch" />
     <HomeSwiper :banners="banners" />
     <HomeFilter
-      :types="types"
       ref="filter"
       @handleSelectType="handleSelectType"
       @handleSelectSort="handleSelectSort"
@@ -13,24 +13,24 @@
 </template>
 
 <script>
-import HomeSearch from "@/components/HomeSearch";
+import BookSearch from "@/components/BookSearch";
 import HomeSwiper from "./components/HomeSwiper";
 import HomeFilter from "./components/HomeFilter";
 import BookList from "@/components/BookList";
+import StarTip from "@/components/StarTip";
 import { showShareMenu } from "@/libs/mixin";
 import { mapState, mapMutations } from "vuex";
-let booksCache = [];
 export default {
   mixins: [showShareMenu],
   components: {
-    HomeSearch,
+    BookSearch,
     HomeSwiper,
     HomeFilter,
-    BookList
+    BookList,
+    StarTip
   },
   data() {
     return {
-      types: [],
       loading: true,
       homeSearch: true,
       page: 1,
@@ -79,19 +79,12 @@ export default {
           const { books, total, per_page } = res;
           if (this.page >= total) this.loading = false;
           if (reachBottom) {
-            // booksCache.concat(books);
             this.books = [...this.books, ...books];
-            // this.books.forEach((e, i) => {
-            //   this.books[i] = {};
-            // });
           } else this.books = books;
           this.page += 1;
           this.per_page = per_page;
           this.total = total || 1;
           wx.stopPullDownRefresh();
-          // this.$nextTick(() => {
-          //   this.$refs.list.viewPort();
-          // });
         })
         .catch(err => {
           this.loading = false;
@@ -113,12 +106,17 @@ export default {
       wx.redirectTo({ url: "/pages/Login/index" });
       return;
     }
+    if (wx.getStorageSync("isFirst") !== false) wx.setStorageSync("isFirst", true);
     this.getBanner();
     this.loadMore();
-    this.$refs.filter.getTypes();
     this.$api.getUserInfo(this.$store.state.userID).then(res => {
       this.setUserInfo(res.userInfo);
     });
   }
 };
 </script>
+<style lang="scss" scoped>
+.container {
+  overflow: hidden;
+}
+</style>

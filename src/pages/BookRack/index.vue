@@ -20,7 +20,7 @@
         v-for="(item, index) of books"
         :key="index"
         @longpress="handleTaggleAction(item.book._id,item.bookFile, item.bookName)"
-        @click="handleBookRackItem(item.book._id, item.book.bookName)"
+        @click="handleBookRackItem(item.book._id, item.book.bookName, item.book.bookCover)"
       >
         <img
           class="book-cover"
@@ -63,7 +63,7 @@ export default {
         success: res => {
           switch (res.tapIndex) {
             case 0:
-              this.handleBookRackItem(bookID, bookName);
+              this.handleBookRackItem(bookID, bookName, bookCover);
               break;
             case 1:
               wx.showModal({
@@ -84,11 +84,12 @@ export default {
       });
     },
     ...mapMutations(["setBookInfo"]),
-    handleBookRackItem(bookID, bookName) {
+    handleBookRackItem(bookID, bookName, bookCover) {
       let url = `/pages/HomeDetail/index?bookID=${bookID}&bookName=${bookName}`;
       this.setBookInfo({
         bookID,
-        bookName  
+        bookName,
+        bookCover
       });
       if (this.production) url = `/pages/ReadView/index`;
       wx.navigateTo({

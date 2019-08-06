@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <GlobalLoad :isLoading="isLoading"/> -->
     <header class="header">
       <img class="book-cover" :src="bookCover + '?x-oss-process=style/m'" mode="aspectFill" />
       <div class="syn">
@@ -26,12 +25,13 @@
 </template>
 
 <script>
+
+import { mapState } from "vuex";
+import { showToast } from "@/libs/utils";
+import { deleteComment, pagingLoadMixin } from "@/libs/mixin";
 import StarComment from "@/components/StarComment";
 import PublishGrade from "@/components/PublishGrade";
 import CommentList from "@/components/CommentList";
-import { showToast } from "@/libs/utils";
-import { mapState } from "vuex";
-import { deleteComment, pagingLoadMixin } from "@/libs/mixin";
 export default {
   mixins: [deleteComment, pagingLoadMixin],
   components: {

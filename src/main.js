@@ -1,8 +1,8 @@
-import './static/sdk/ald-stat'
+// import './static/sdk/ald-stat'
 import Vue from 'vue'
 import App from './App'
 import store from './store'
-import api from '@/api'
+import api from '@/services/api'
 import './App.css'
 
 Vue.config.productionTip = false

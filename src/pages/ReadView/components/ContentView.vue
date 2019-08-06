@@ -1,36 +1,36 @@
 <template>
-  <article
+  <main
     class="content-container"
     :style="{ opacity, backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
   >
-    <header class="header">{{ catalogueList[fileIndex] }}</header>
-    <div class="scroll-continer">
-      <text
-        selectable
-        :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
-        class="title"
-      >{{ catalogueList[fileIndex] }}</text>
-      <div
-        class="content"
-        :style="{fontSize: readTheme.fontSize + 'px'}"
-        @click="handleControlNav"
-        @touchmove="handleControlNavHide"
-      >
-        <HtmlParse :content="bookContent" />
-      </div>
-
-      <footer v-if="bookContent" class="toggle-button">
-        <div
-          class="last"
-          :style="{color: disableCutIndex === index ? '#ccc' : ''}"
-          v-for="(item, index) of buttonList"
-          :key="index"
-          @click="handleCut(index)"
-          :hover-class="disableCutIndex === index ? '' : 'hover-button'"
-        >{{ item }}</div>
-      </footer>
+    <text
+      selectable
+      :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
+      class="title"
+    >{{ catalogueList[fileIndex] }}</text>
+    <div
+      class="content"
+      :style="{fontSize: readTheme.fontSize + 'px'}"
+      @click="handleControlNav"
+      @touchmove="handleControlNavHide"
+    >
+      <HtmlParse
+        :content="bookContent"
+        :className="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+      />
     </div>
-  </article>
+
+    <footer v-if="bookContent" class="toggle-button">
+      <div
+        class="last"
+        :style="{color: disableCutIndex === index ? '#ccc' : ''}"
+        v-for="(item, index) of buttonList"
+        :key="index"
+        @click="handleCut(index)"
+        :hover-class="disableCutIndex === index ? '' : 'hover-button'"
+      >{{ item }}</div>
+    </footer>
+  </main>
 </template>
 
 <script>
@@ -95,7 +95,9 @@ export default {
             scrollTop:
               this.progress[1] *
               (this.progress[2] / this.systemInfo.windowWidth),
+            // #ifdef MP-WEIXIN || MP-QQ
             duration: 0
+            // #endif
           });
           this.setBookInfo({ progress: [0, 0, 0] });
           this.opacity = 1;
@@ -131,8 +133,8 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
 .content-container {
-  height: 100vh;
-  padding-top: 100rpx;
+  padding: 0 12px;
+  padding-top: 20px;
   transition: opacity 0.16s;
   .header {
     display: block;
@@ -148,47 +150,42 @@ export default {
     @include ellipsis;
     color: #a0a5ab;
   }
-  // .scroll-view {
-  //   width: auto;
-  //   height: calc(100vh - 100rpx);
-  .scroll-continer {
-    padding: 0 12px;
-    .title {
-      display: block;
-      margin: 25px auto;
-      font-size: 16px;
-      text-align: center;
-    }
-    .content {
-      display: block;
-      line-height: 40px;
-      text-align: justify;
-      &::first-letter {
-        font: {
-          size: 26px;
-          weight: 600;
-        }
-      }
-    }
-    .toggle-button {
-      @include flex(space-around, center);
-      width: 100%;
-      height: 140rpx;
-      .last,
-      .next {
-        width: 220rpx;
-        height: 70rpx;
-        border-radius: 10rpx;
-        background-color: #fff;
-        text-align: center;
-        line-height: 70rpx;
+
+  .title {
+    display: block;
+    margin: 25px auto;
+    font-size: 16px;
+    text-align: center;
+  }
+  .content {
+    display: block;
+    line-height: 40px;
+    text-align: justify;
+    &::first-letter {
+      font: {
+        size: 26px;
+        weight: 600;
       }
     }
   }
+  .toggle-button {
+    @include flex(space-around, center);
+    width: 100%;
+    height: 140rpx;
+    .last,
+    .next {
+      width: 220rpx;
+      height: 70rpx;
+      border-radius: 10rpx;
+      background-color: #fff;
+      text-align: center;
+      line-height: 70rpx;
+    }
+  }
+
   .footer {
     @extend .header;
     text-align: right;
   }
 }
-// }
 </style>

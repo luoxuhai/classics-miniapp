@@ -30,6 +30,7 @@ import { mapState, mapMutations } from "vuex";
 import TitleBar from "./components/TitleBar";
 import MenuBar from "./components/MenuBar";
 import ContentView from "./components/ContentView";
+let fileIndex = null;
 export default {
   components: {
     TitleBar,
@@ -49,6 +50,7 @@ export default {
     showBookMarkFunc(val) {
       this.showBookMark = val;
     },
+
     handleJoinBookMarkClick() {
       let bookMarkIndex = this.bookMarkIndex;
       if (this.bookMarkIndex.includes(this.fileIndex)) {
@@ -60,6 +62,7 @@ export default {
       }
       this.setBookInfo({ bookMarkIndex });
     },
+
     addBookMark(bookMarkIndex) {
       this.$api
         .addBookMark({
@@ -74,6 +77,7 @@ export default {
           });
         });
     },
+
     deleteBookMark(bookMarkIndex) {
       this.$api
         .deleteBookMark({
@@ -82,6 +86,7 @@ export default {
         })
         .then();
     },
+
     handleAddToRackClick() {
       if (this.isStar) return;
       this.$api
@@ -97,22 +102,28 @@ export default {
           this.setBookInfo({ isStar: true });
         });
     },
+
     handleToCommentClick() {
       wx.navigateTo({ url: "/pages/Comment/index" });
     },
+
     handleShareClick() {
       //分享
     },
+
     handleThemeItem(themeColor) {
       this.themeColor = themeColor;
     },
+
     handleToCataClick(fileIndex) {
       this.setBookInfo({ fileIndex });
       this.$refs.contentView.handleToCataClick(fileIndex);
     },
+
     handleCut(index) {
       this.$refs.contentView.handleCut(index);
     },
+
     handleControlNav(scroll) {
       this.$refs.titleBar.handleControlTitle(scroll);
       this.$refs.menuBar.handleControlMenu(scroll);
@@ -130,7 +141,8 @@ export default {
       "oldScrollTop",
       "systemInfo",
       "bookFile",
-      "catalogueSum"
+      "catalogueSum",
+      "readTheme"
     ]),
     join() {
       return this.bookMarkIndex.includes(this.fileIndex);
@@ -150,16 +162,25 @@ export default {
   onShareAppMessage(res) {
     return {
       title: this.bookName,
-      path: `/pages/HomeDetail/index?bookID=${this.bookID}&bookName=${this.bookName}`
+      path: `/pages/BookDetail/index?bookID=${this.bookID}&bookName=${this.bookName}`
     };
   },
   onLoad(options) {
+    fileIndex = Number(options.fileIndex);
+
+    // #ifdef MP-ALIPAY
+    my.setNavigationBar({
+      title: this.bookName
+    });
+    // #endif
+
+    // #ifdef MP-WEIXIN || MP-QQ || MP-TOUTIAO
     wx.setNavigationBarTitle({
       title: this.bookName
     });
-
-    let fileIndex = Number(options.fileIndex);
-
+    // #endif
+  },
+  onReady() {
     this.$api
       .getBookContentInfo({
         bookID: this.bookID
@@ -176,9 +197,20 @@ export default {
         } else {
           fileIndex = 0;
         }
-
         this.$refs.contentView.getBookFile(fileIndex, bookFile);
         this.setBookInfo({ ...res, fileIndex });
+        // #ifdef MP-ALIPAY
+        my.setNavigationBar({
+          backgroundColor: this.readTheme.viewColor.backgroundColor
+        });
+        // #endif
+
+        // #ifdef MP-WEIXIN || MP-QQ
+        wx.setNavigationBarColor({
+          frontColor: this.readTheme.viewColor.fontColor,
+          backgroundColor: this.readTheme.viewColor.backgroundColor
+        });
+        // #endif
       });
   },
   onUnload() {

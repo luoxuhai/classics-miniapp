@@ -91,11 +91,6 @@ export default {
       this.sortActiveIndex = index;
       this.$emit("handleSelectSort", index);
     },
-    getTypes() {
-      this.$api.getTypes().then(res => {
-        this.types = res.types;
-      });
-    },
     handleSelectType(index) {
       this.optionIndex = null;
       //TODO '全部'选项特殊处理
@@ -134,6 +129,11 @@ export default {
         ? (this.optionIndex = null)
         : (this.optionIndex = index);
     }
+  },
+  onReady() {
+    this.$api.getTypes().then(res => {
+      this.types = res.types;
+    });
   }
 };
 </script>

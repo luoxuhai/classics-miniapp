@@ -1,39 +1,44 @@
 <template>
   <header class="header">
-    <img mode="aspectFill"
-         class="book-cover"
-         :src="detailHeader.bookCover + '?x-oss-process=style/m'"
-         @load="changeImgLoad">
-    <div class="book-syn">
-      <h1 class="syn-name">{{ detailHeader.bookName }}</h1>
-      <h2 class="syn-author">{{ detailHeader.bookAuthor }}</h2>
-      <p class="syn-count">{{ detailHeader.readSum || '' }}人在读<span class="iconfont">&#xe72e;</span></p>
-      <p class="syn-word">字数: {{ detailHeader.wordSum || '' }}</p>
-      <div class="sundry-tag">
-        <span class="title">类型: </span>
-        <span class="tag-item"
-              v-for="(_item, _index) of detailHeader.bookTypeList"
-              :key="_index">
-          {{_item}}</span>
-      </div>
-    </div>
+    <img
+      mode="aspectFill"
+      class="book-cover"
+      :src="detailHeader.bookCover + '?x-oss-process=style/m'"
+      @load="changeImgLoad"
+    />
+    <view class="book-syn">
+      <view class="syn-name">{{ detailHeader.bookName }}</view>
+      <view class="syn-author">{{ detailHeader.bookAuthor }}</view>
+      <view class="syn-count">
+        {{ detailHeader.readSum || '' }}人在读
+        <label class="iconfont">&#xe72e;</label>
+      </view>
+      <view class="syn-word">字数: {{ detailHeader.wordSum || '' }}</view>
+      <view class="sundry-tag">
+        <text class="title">类型:</text>
+        <text
+          class="tag-item"
+          v-for="(_item, _index) of detailHeader.bookTypeList"
+          :key="_index"
+        >{{_item}}</text>
+      </view>
+    </view>
   </header>
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
   props: {
-    detailHeader: Object
+    detailHeader: {
+      type: Object,
+      default: {}
+    }
   },
   methods: {
     changeImgLoad() {
-      this.$emit('changeImgLoad')
+      this.$emit("changeImgLoad");
     }
-  },
-    computed: {
-    ...mapState(['production'])
-  },
+  }
 };
 </script>
 
