@@ -16,11 +16,7 @@
       <view class="syn-word">字数: {{ detailHeader.wordSum || '' }}</view>
       <view class="sundry-tag">
         <text class="title">类型:</text>
-        <text
-          class="tag-item"
-          v-for="(_item, _index) of detailHeader.bookTypeList"
-          :key="_index"
-        >{{_item}}</text>
+        <text class="tag-item">{{detailHeader.bookType || '未知'}}</text>
       </view>
     </view>
   </header>

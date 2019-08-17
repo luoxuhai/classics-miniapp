@@ -104,6 +104,7 @@
       class="more"
       :class="{show: navBarIndex === 3}"
       :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+      catchtouchmove="move"
     >
       <view class="header-nav">
         <view
@@ -188,8 +189,9 @@ export default {
         case 1:
         case 2:
         case 3:
-          if (index === 3) fontColor = "#000000";
+          if (index === 3) fontColor = "#f9f9f9";
           this.setReadView({
+            ...this.readTheme,
             viewColor: {
               index,
               backgroundColor: this.themeColorList[index],
@@ -204,7 +206,10 @@ export default {
 
           // #ifdef MP-WEIXIN || MP-QQ
           wx.setNavigationBarColor({
-            frontColor: this.readTheme.viewColor.fontColor,
+            frontColor:
+              this.readTheme.viewColor.fontColor === "#f9f9f9"
+                ? "#ffffff"
+                : this.readTheme.viewColor.fontColor,
             backgroundColor: this.readTheme.viewColor.backgroundColor
           });
           // #endif
@@ -233,6 +238,7 @@ export default {
     },
     changeFontSize(e) {
       this.setReadView({
+        ...this.readTheme,
         fontSize: e.mp.detail.value
       });
     },
@@ -266,7 +272,7 @@ export default {
       "bookMarkIndex"
     ]),
     percent() {
-      return ((this.fileIndex / this.catalogueSum) * 100).toFixed();
+      return ((this.fileIndex / (this.catalogueList.length - 1)) * 100).toFixed();
     },
     bookMarkList() {
       return this.bookMarkIndex.map(item => {
@@ -303,7 +309,7 @@ export default {
   transition: all 0.3s ease-out;
   transform: translateY(120rpx);
   .nav-item {
-    margin: 0 20rpx;
+    padding: 40rpx;
     font-size: 24px;
     color: #444c57;
   }

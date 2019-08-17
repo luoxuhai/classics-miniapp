@@ -30,7 +30,7 @@ import { mapState, mapMutations } from "vuex";
 import TitleBar from "./components/TitleBar";
 import MenuBar from "./components/MenuBar";
 import ContentView from "./components/ContentView";
-let fileIndex = null;
+let oldScrollTop = 0;
 export default {
   components: {
     TitleBar,
@@ -138,7 +138,6 @@ export default {
       "join",
       "isStar",
       "bookMarkIndex",
-      "oldScrollTop",
       "systemInfo",
       "bookFile",
       "catalogueSum",
@@ -155,8 +154,10 @@ export default {
         this.setBookInfo({ fileIndex: this.catalogueSum - 1 });
     }
   },
+
   onPageScroll(e) {
-    this.setBookInfo({ oldScrollTop: e.scrollTop });
+    oldScrollTop = e.scrollTop;
+    
   },
 
   onShareAppMessage(res) {
@@ -166,7 +167,7 @@ export default {
     };
   },
   onLoad(options) {
-    fileIndex = Number(options.fileIndex);
+    let fileIndex = Number(options.fileIndex);
 
     // #ifdef MP-ALIPAY
     my.setNavigationBar({
@@ -179,7 +180,40 @@ export default {
       title: this.bookName
     });
     // #endif
+
+    // #ifdef MP-WEIXIN || MP-QQ
+    this.$api
+      .getBookContentInfo({
+        bookID: this.bookID
+      })
+      .then(res => {
+        const { progress, bookFile, isStar } = res;
+        // 选择章节进入
+        if (fileIndex >= 0) {
+          res.progress = [0, 0, 0];
+          //点击阅读进入记住上次位置
+        } else if (isStar) {
+          fileIndex = progress[0];
+          // 未加入书架而点击阅读进入
+        } else {
+          fileIndex = 0;
+        }
+        this.$refs.contentView.getBookFile(fileIndex, bookFile);
+        wx.setNavigationBarColor({
+          frontColor:
+            this.readTheme.viewColor.fontColor === "#f9f9f9"
+              ? "#ffffff"
+              : this.readTheme.viewColor.fontColor,
+          backgroundColor: this.readTheme.viewColor.backgroundColor
+        });
+        this.setBookInfo({ ...res, fileIndex });
+      });
+    // #endif
+    wx.setKeepScreenOn({
+  keepScreenOn: true
+})
   },
+  // #ifdef MP-ALIPAY
   onReady() {
     this.$api
       .getBookContentInfo({
@@ -199,36 +233,27 @@ export default {
         }
         this.$refs.contentView.getBookFile(fileIndex, bookFile);
         this.setBookInfo({ ...res, fileIndex });
-        // #ifdef MP-ALIPAY
         my.setNavigationBar({
           backgroundColor: this.readTheme.viewColor.backgroundColor
         });
-        // #endif
-
-        // #ifdef MP-WEIXIN || MP-QQ
-        wx.setNavigationBarColor({
-          frontColor: this.readTheme.viewColor.fontColor,
-          backgroundColor: this.readTheme.viewColor.backgroundColor
-        });
-        // #endif
       });
   },
+  // #endif
   onUnload() {
     if (this.isStar)
       // 更新阅读进度
       this.$api.putReadProgress({
         bookID: this.bookID,
-        progress: [
-          this.fileIndex,
-          this.oldScrollTop,
-          this.systemInfo.windowWidth
-        ]
+        progress: [this.fileIndex, oldScrollTop, this.systemInfo.windowWidth]
       });
 
     //重置oldScrollTop
-    this.setBookInfo({ oldScrollTop: 0 });
+    oldScrollTop = 0;
     // 清除计时器
     this.$refs.menuBar.handleUnload();
+        wx.setKeepScreenOn({
+  keepScreenOn: false
+})
   }
 };
 </script>

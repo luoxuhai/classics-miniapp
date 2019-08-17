@@ -1,30 +1,24 @@
 <template>
-  <div class="about">
+  <view class="about">
     <img :src="about.QRcode" mode="aspectFill" />
     <h1 class="about__title">古典名著苑</h1>
     <p class="about__version">v{{ about.version }}</p>
-    <article class="about__log">
-      <HtmlParse :content="about.log" />
-    </article>
-    <article class="about__desc">
-      <HtmlParse :content="about.intro" />
-    </article>
-  </div>
+    <parser v-if="production" class="about__log" :html="about.log" selectable />
+    <parser class="about__desc" :html="about.intro" selectable />
+  </view>
 </template>
 
 <script>
-import HtmlParse from "@/components/HtmlParse/parse.vue";
+import { mapState } from "vuex";
 export default {
   name: "about",
-
-  components: {
-    HtmlParse
-  },
-
   data() {
     return {
       about: {}
     };
+  },
+  computed: {
+    ...mapState(["production"])
   },
   onLoad() {
     this.about = wx.getStorageSync("about");

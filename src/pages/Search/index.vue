@@ -28,6 +28,7 @@
 import BookSearch from "@/components/BookSearch";
 import BookList from "@/components/BookList";
 import { mapState, mapMutations } from "vuex";
+import { setTimeout } from "timers";
 export default {
   components: {
     BookSearch,
@@ -94,7 +95,10 @@ export default {
   onLoad(options) {
     const { code, name } = options;
     if (code === "1") {
-      if (name) this.$refs.search.handleInputValue(name);
+      if (name)
+        setTimeout(() => {
+          this.$refs.search.handleInputValue(name);
+        }, 100);
       this.searchSucc(name, this.searchResult);
     }
   }

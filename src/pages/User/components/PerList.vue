@@ -1,24 +1,19 @@
 <template>
-  <div>
-    <div class="select-list">
-      <div
-        class="list-item"
-        hover-class="hover-button"
-        @click="handleSelectItem(index)"
-        v-for="(item, index) of selectList"
-        :key="index"
-      >
-        <img :src="item.icon">
-        <button v-if="index === 4" open-type="feedback"></button>
-        <button
-          v-if="index === 5"
-          open-type="contact"
-        ></button>
-        <p>{{item.text}}</p>
-        <span v-if="index != 3" class="iconfont">&#xe667;</span>
-      </div>
-    </div>
-  </div>
+  <view class="select-list">
+    <view
+      class="list-item"
+      hover-class="hover-button"
+      @click="handleSelectItem(index)"
+      v-for="(item, index) of selectList"
+      :key="index"
+    >
+      <img :src="item.icon" />
+      <button v-if="index === 4" open-type="feedback"></button>
+      <button v-if="index === 5" open-type="contact"></button>
+      <p>{{item.text}}</p>
+      <span v-if="index != 3" class="iconfont">&#xe667;</span>
+    </view>
+  </view>
 </template>
 
 <script>

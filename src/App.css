@@ -31,6 +31,8 @@ span {
 span {
   display: inline-block;
 }
+/* #ifdef MP-ALIPAY */
 page {
   background-color: #fff;
 }
+/* #endif */

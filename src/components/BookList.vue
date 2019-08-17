@@ -13,23 +13,26 @@
         <text class="syn-author">{{ '[' + item.author.dynasty + '] ' + item.author.name}}</text>
         <text v-if="pageHome" class="syn-detail">{{item.bookDesc}}</text>
       </view>
-      <view v-if="!pageComment" class="books-sundry">
+      <view v-if="!pageComment || !pageRanking" class="books-sundry">
         <view class="sundry-grade">
           <StarComment :score="item.bookScore || 1.5" />
         </view>
-        <view class="sundry-count">
+        <view v-if="!pageRanking" class="sundry-count">
           <label class="iconfont">&#xe603;</label>
           {{item.browseSum}}
         </view>
-        <view v-if="pageHome" class="sundry-tag">
-          <text
-            class="tag-item"
-            v-for="(_item, _index) of item.bookTypeList"
-            :key="_index"
-          >{{_item}}</text>
+        <view v-if="pageRanking" class="sundry-count">
+          <label class="iconfont">&#xe72e;</label>
+          {{item.readSum}}
         </view>
+        <text v-if="pageHome" class="sundry-tag">{{item.bookType || '未知'}}</text>
       </view>
       <text v-if="pageComment" class="comment-count">{{ item.total }}</text>
+      <text
+        v-if="pageRanking"
+        class="ranking-count"
+        :style="{color: index < 3 ? '#f67280' : ''}"
+      >{{ index + 1 }}</text>
     </view>
     <LoadingMore :loading="loading" :tip="tip" />
   </view>
@@ -47,6 +50,10 @@ export default {
   },
   props: {
     pageComment: {
+      type: Boolean,
+      default: false
+    },
+    pageRanking: {
       type: Boolean,
       default: false
     },
@@ -88,8 +95,8 @@ export default {
       wx.navigateTo({
         url: `/pages/UserCommentDetail/index?bookID=${bookID}&bookName=${bookName}&bookAuthor=${bookAuthor}&bookCover=${bookCover}&commentCount=${commentCount}`
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -97,6 +104,7 @@ export default {
 @import "@/assets/styles/common.scss";
 .list-item {
   display: flex;
+  justify-content: space-between;
   height: 260rpx;
   margin: 10rpx 0;
   padding: 20rpx 20rpx 0;
@@ -111,7 +119,7 @@ export default {
     justify-content: space-around;
     width: 360rpx;
     height: calc(150rpx / 0.65);
-    padding: 0 20rpx;
+    padding: 0 10rpx;
     .syn-title {
       @include ellipsis;
       font-size: 36rpx;
@@ -133,7 +141,7 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     width: 160rpx;
-    height: 200rpx;
+    height: calc(150rpx / 0.65);
     .sundry-grade {
       width: 100%;
       height: 50rpx;
@@ -143,22 +151,21 @@ export default {
       height: 50rpx;
       font-size: 28rpx;
       color: $Grey;
+      .iconfont {
+        margin-right: 10rpx;
+      }
     }
 
     .sundry-tag {
-      flex: 1;
-      width: 100%;
-      .tag-item {
-        height: 30rpx;
-        padding: 0 8rpx;
-        margin-right: 10rpx;
-        border-radius: 2rpx;
-        text-align: center;
-        font-size: 22rpx;
-        line-height: 30rpx;
-        color: #fff;
-        background-color: #f8b195;
-      }
+      width: max-content;
+      height: 35rpx;
+      padding: 0 10rpx;
+      border-radius: 2rpx;
+      text-align: center;
+      font-size: 22rpx;
+      line-height: 35rpx;
+      color: #fff;
+      background-color: #f8b195;
     }
   }
   .comment-count {
@@ -169,6 +176,16 @@ export default {
       weight: 600;
     }
     color: #f67280;
+  }
+  .ranking-count {
+    @extend .comment-count;
+    width: 140rpx;
+    align-items: center;
+    font: {
+      size: 40rpx;
+      weight: 600;
+    }
+    color: $Grey;
   }
 }
 </style>

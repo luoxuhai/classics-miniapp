@@ -17,7 +17,7 @@ export default {
     fontSize: 18,
     viewColor: {
       index: 0,
-      backgroundColor: '#ffffff',
+      backgroundColor: '#f9f9f9',
       fontColor: '#000000'
     }
   },

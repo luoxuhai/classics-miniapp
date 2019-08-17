@@ -199,6 +199,9 @@ export default {
       padding: 0 35rpx;
       background-color: #fff;
       border-bottom: 1px solid#eee;
+      &:first-child {
+        height: 130rpx;
+      }
       .footer {
         display: flex;
         align-items: center;

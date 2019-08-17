@@ -3,11 +3,13 @@
     <StarTip />
     <BookSearch :homeSearch="homeSearch" />
     <HomeSwiper :banners="banners" />
-    <HomeFilter
+    <HomeBlock />
+    <!-- <HomeFilter
       ref="filter"
       @handleSelectType="handleSelectType"
       @handleSelectSort="handleSelectSort"
-    />
+    />-->
+    <view class="recommend">热门推荐</view>
     <BookList :booksList="books" :loading="loading" :pageHome="true" ref="list" />
   </div>
 </template>
@@ -15,7 +17,8 @@
 <script>
 import BookSearch from "@/components/BookSearch";
 import HomeSwiper from "./components/HomeSwiper";
-import HomeFilter from "./components/HomeFilter";
+import HomeFilter from "@/components/HomeFilter";
+import HomeBlock from "./components/HomeBlock";
 import BookList from "@/components/BookList";
 import StarTip from "@/components/StarTip";
 import { showShareMenu } from "@/libs/mixin";
@@ -26,6 +29,7 @@ export default {
     BookSearch,
     HomeSwiper,
     HomeFilter,
+    HomeBlock,
     BookList,
     StarTip
   },
@@ -59,7 +63,8 @@ export default {
     getBanner() {
       this.$api.getBanner({}).then(res => {
         const { types, banners } = res;
-        this.banners = banners;
+        if (this.production) this.banners = banners;
+        else this.banners = banners.splice(-1,1)
       });
     },
     loadMore(reachBottom = false) {
@@ -69,12 +74,10 @@ export default {
       } else this.loading = true;
       let data = {
         page: this.page,
-        per_page: this.per_page,
-        type: this.currentTypeArr.join(","),
-        sortMethod: this.sortMethod
+        per_page: this.per_page
       };
       this.$api
-        .getBook(data)
+        .getRecommend(data)
         .then(res => {
           const { books, total, per_page } = res;
           if (this.page >= total) this.loading = false;
@@ -100,13 +103,17 @@ export default {
   onReachBottom() {
     this.loadMore(true);
   },
+  computed: {
+    ...mapState(["production"])
+  },
   onLoad() {
     const token = wx.getStorageSync("token");
     if (!token) {
       wx.redirectTo({ url: "/pages/Login/index" });
       return;
     }
-    if (wx.getStorageSync("isFirst") !== false) wx.setStorageSync("isFirst", true);
+    if (wx.getStorageSync("isFirst") !== false)
+      wx.setStorageSync("isFirst", true);
     this.getBanner();
     this.loadMore();
     this.$api.getUserInfo(this.$store.state.userID).then(res => {
@@ -116,7 +123,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/assets/styles/common.scss";
+
 .container {
   overflow: hidden;
+  .recommend {
+    padding: 40rpx 0 20rpx 20rpx;
+    font-size: 40rpx;
+    font-weight: 600;
+    color: #355c7d;
+  }
 }
 </style>

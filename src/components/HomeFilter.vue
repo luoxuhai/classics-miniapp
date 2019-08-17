@@ -1,12 +1,7 @@
 <template>
   <div class="filter-container">
     <div class="nav-filter">
-      <scroll-view
-        scroll-x
-        class="filter-item-scroll"
-        :scroll-left="scrollLeft"
-        @scroll="changeScroll"
-      >
+      <scroll-view scroll-x class="filter-item-scroll">
         <text
           class="title"
           v-for="(item, index) of types"
@@ -15,7 +10,7 @@
           @click="handleSelectType(index)"
         >{{ item.name }}</text>
       </scroll-view>
-      <div class="filter-item-sort" @click="handleOptionItem(1)">
+      <div v-if="!pageNewBook" class="filter-item-sort" @click="handleOptionItem(1)">
         <span class="iconfont">&#xe648;</span>
       </div>
     </div>
@@ -34,6 +29,13 @@
 <script>
 export default {
   name: "HomeFilter",
+  props: {
+    pageNewBook: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   data() {
     return {
       types: [
@@ -42,47 +44,34 @@ export default {
           active: true
         },
         {
-          name: "世情",
+          name: "鬼怪神魔",
           active: false
         },
         {
-          name: "志怪",
+          name: "历史演义",
           active: false
         },
         {
-          name: "言情",
+          name: "英雄传奇",
           active: false
         },
         {
-          name: "公案",
+          name: "世态人情",
           active: false
         },
         {
-          name: "狭邪",
+          name: "谴责公案",
           active: false
         },
         {
           name: "才子佳人",
           active: false
-        },
-        {
-          name: "历史",
-          active: false
-        },
-        {
-          name: "神魔",
-          active: false
         }
       ],
       sortActiveIndex: 0,
-      typeSelectArr: {},
       typeSelectIndex: null,
       sortList: ["默认", "评分", "阅读量", "浏览量"],
-      optionIndex: null,
-      scrollLeft: 0,
-      old: {
-        scrollLeft: 0
-      }
+      optionIndex: null
     };
   },
   methods: {
@@ -93,36 +82,14 @@ export default {
     },
     handleSelectType(index) {
       this.optionIndex = null;
-      //TODO '全部'选项特殊处理
-      if (index === 0) {
-        if (this.types[0].active) return;
-        else {
-          this.types = this.types.map((e, i) => {
-            if (i === 0) e.active = true;
-            else e.active = false;
-            return e;
-          });
-          this.$emit("handleSelectType", []);
-          return;
-        }
-      } else this.types[0].active = false;
-      this.types[index].active = !this.types[index].active;
-      const currentTypeArr = [];
-
-      for (const value of this.types)
-        if (value.active) currentTypeArr.push(value.name);
-
-      if (currentTypeArr.length === 0) {
-        this.types[0].active = true;
-        this.scrollLeft = this.old.scrollLeft;
-        this.$nextTick(() => {
-          this.scrollLeft = 0;
-        });
+      let currentType = "";
+      for (const [i, value] of this.types.entries()) {
+        if (i === index) this.types[i].active = !value.active;
+        else this.types[i].active = false;
+        if (this.types[i].active) currentType = i !== 0 ? value.name : "";
       }
-      this.$emit("handleSelectType", currentTypeArr);
-    },
-    changeScroll(e) {
-      this.old.scrollLeft = e.detail.scrollLeft;
+
+      this.$emit("handleSelectType", currentType);
     },
     handleOptionItem(index) {
       index === this.optionIndex
@@ -144,7 +111,7 @@ export default {
   @include flex(start, center);
   position: relative;
   height: 100rpx;
-  widows: 100%;
+  width: 100vw;
   background-color: #fff;
   .nav-filter {
     position: relative;
@@ -163,7 +130,7 @@ export default {
     }
     .filter-item-scroll {
       @include flex(start, center);
-      width: 90%;
+      width: 100%;
       height: 100%;
       position: relative;
       white-space: nowrap;

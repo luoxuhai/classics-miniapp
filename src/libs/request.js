@@ -37,7 +37,7 @@ function errorHandle(statusCode) {
   } else
     wx.showModal({
       title: '错误',
-      content: errCodeMessage[statusCode],
+      content: `${statusCode}: ${errCodeMessage[statusCode]}`,
       showCancel: false,
       confirmText: '确定',
       confirmColor: '#3CC51F',

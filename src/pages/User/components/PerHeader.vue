@@ -23,7 +23,7 @@ export default {
   methods: {
     handelEnterSetting() {
       wx.navigateTo({
-        url: "/pages/PersonageSetting/index"
+        url: "/pages/Setting/index"
       });
     }
   },

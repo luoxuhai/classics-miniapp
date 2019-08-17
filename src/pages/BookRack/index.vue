@@ -19,7 +19,7 @@
         class="book-item"
         v-for="(item, index) of books"
         :key="index"
-        @longpress="handleTaggleAction(item.book._id,item.bookFile, item.bookName)"
+        @longpress="handleTaggleAction(item.book._id, item.book.bookName, item.book.bookCover)"
         @click="handleBookRackItem(item.book._id, item.book.bookName, item.book.bookCover)"
       >
         <img
@@ -57,7 +57,7 @@ export default {
     handleToHome() {
       wx.switchTab({ url: `/pages/Home/index` });
     },
-    handleTaggleAction(bookID, bookName) {
+    handleTaggleAction(bookID, bookName, bookCover) {
       wx.showActionSheet({
         itemList: ["打开", "删除"],
         success: res => {
@@ -85,7 +85,7 @@ export default {
     },
     ...mapMutations(["setBookInfo"]),
     handleBookRackItem(bookID, bookName, bookCover) {
-      let url = `/pages/HomeDetail/index?bookID=${bookID}&bookName=${bookName}`;
+      let url = `/pages/BookDetail/index?bookID=${bookID}&bookName=${bookName}`;
       this.setBookInfo({
         bookID,
         bookName,

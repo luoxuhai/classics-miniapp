@@ -30,7 +30,10 @@
     {
       "path": "pages/ReadView/index",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "",
+        "usingComponents": {
+          "parser": "/wxcomponents/Parser/index"
+        }
       }
     },
     {
@@ -41,7 +44,7 @@
       }
     },
     {
-      "path": "pages/Personage/index",
+      "path": "pages/User/index",
       "style": {
         "navigationBarTextStyle": "white",
         "navigationBarTitleText": "个人中心",
@@ -90,13 +93,25 @@
       "path": "pages/About/index",
       "style": {
         "enablePullDownRefresh": false,
-        "navigationBarTitleText": "设置"
+        "navigationBarTitleText": "设置",
+        "usingComponents": {
+          "parser": "/wxcomponents/Parser/index"
+        }
       }
     },
     {
       "path": "pages/Affiche/index",
       "style": {
-        "navigationBarTitleText": "通知"
+        "enablePullDownRefresh": true,
+        "usingComponents": {
+          "parser": "/wxcomponents/Parser/index"
+        }
+      }
+    },
+    {
+      "path": "pages/HomeBlock/index",
+      "style": {
+        "enablePullDownRefresh": true
       }
     }
   ],
@@ -127,7 +142,7 @@
         "selectedIconPath": "/static/tabs/bookrack-active.png"
       },
       {
-        "pagePath": "pages/Personage/index",
+        "pagePath": "pages/User/index",
         "text": "我的",
         "iconPath": "static/tabs/my.png",
         "selectedIconPath": "static/tabs/my-active.png"

@@ -14,6 +14,15 @@ export default {
   getUserInfo: (id) => {
     return request.get(`/v1/users/${id}`)
   },
+  getRecommend: data => {
+    return request.get('/v1/books/recommend', data)
+  },
+  getNewbook: data => {
+    return request.get('/v1/books/newbook', data)
+  },
+  getRanking: data => {
+    return request.get('/v1/books/ranking', data)
+  },
   getBook: data => {
     return request.get('/v1/books', data)
   },
@@ -70,10 +79,10 @@ export default {
     return request.put('/v1/read/progress', data)
   },
   search: data => {
-    return request.get('/v1/book/search', data)
+    return request.get('/v1/books/search', data)
   },
   searchByIsbn: data => {
-    return request.get('/v1/book/search/isbn', data)
+    return request.get('/v1/books/search/isbn', data)
   },
   getUserComment: data => {
     return request.get('/v1/comment/user', data)

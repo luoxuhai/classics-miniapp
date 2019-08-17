@@ -84,7 +84,7 @@ export default {
             author,
             bookCover,
             bookDesc,
-            bookTypeList,
+            bookType,
             wordSum,
             readSum,
             isStar,
@@ -96,7 +96,7 @@ export default {
             bookCover,
             wordSum,
             readSum,
-            bookTypeList
+            bookType
           };
           this.detailBody = {
             catalogueSum,

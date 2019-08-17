@@ -1,14 +1,8 @@
 <template>
-  <view>
-    <HtmlParse :content="affiche.content" />
-  </view>
+  <parser class="about__desc" :html="affiche.content" selectable showWithAnimation />
 </template>
 <script>
-import HtmlParse from "@/components/HtmlParse/parse.vue";
 export default {
-  components: {
-    HtmlParse
-  },
   data() {
     return {
       affiche: {}
@@ -23,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-view {
+parser {
   padding: 30rpx;
 }
 </style>

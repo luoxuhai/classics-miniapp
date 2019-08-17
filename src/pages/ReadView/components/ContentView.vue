@@ -1,51 +1,70 @@
 <template>
-  <main
+  <view
     class="content-container"
     :style="{ opacity, backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
   >
     <text
-      selectable
-      :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
+      v-if="opacity"
       class="title"
+      :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
+      selectable
     >{{ catalogueList[fileIndex] }}</text>
-    <div
+     <!-- #ifdef MP-WEIXIN -->
+    <view
       class="content"
-      :style="{fontSize: readTheme.fontSize + 'px'}"
+      :style="{ fontSize: readTheme.fontSize + 'px'}"
+      :class="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
       @click="handleControlNav"
       @touchmove="handleControlNavHide"
     >
+     <!-- #endif -->
+    <!-- #ifdef MP-QQ -->
+    <view
+      class="content"
+      :style="{ fontSize: readTheme.fontSize + 'px'}"
+      @click="handleControlNav"
+      @touchmove="handleControlNavHide"
+    >
+    <!-- #endif -->
+      <!-- #ifdef MP-QQ -->
       <HtmlParse
         :content="bookContent"
         :className="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
       />
-    </div>
+      <!-- #endif -->
+      <!-- #ifdef MP-WEIXIN -->
+      <parser :html="bookContent" selectable @ready="onReady" />
+      <!-- #endif -->
+    </view>
 
-    <footer v-if="bookContent" class="toggle-button">
-      <div
+    <view v-if="opacity" class="toggle-button">
+      <view
         class="last"
         :style="{color: disableCutIndex === index ? '#ccc' : ''}"
         v-for="(item, index) of buttonList"
         :key="index"
         @click="handleCut(index)"
         :hover-class="disableCutIndex === index ? '' : 'hover-button'"
-      >{{ item }}</div>
-    </footer>
-  </main>
+      >{{ item }}</view>
+    </view>
+  </view>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import { setTimeout } from "timers";
+// #ifdef MP-QQ
 import HtmlParse from "@/components/HtmlParse/parse.vue";
+// #endif
+import { setTimeout } from "timers";
 export default {
-  props: {
-    themeColor: String
-  },
-
+  // #ifdef MP-QQ
   components: {
     HtmlParse
   },
-
+  // #endif
+  props: {
+    themeColor: String
+  },
   data() {
     return {
       opacity: 0,
@@ -89,8 +108,8 @@ export default {
 
       this.$api.getBookContent(`${bookFile}/${fileIndex}.html`).then(res => {
         this.bookContent = res;
-        this.$nextTick(() => {
-          wx.hideLoading();
+        // #ifdef MP-QQ
+        setTimeout(() => {
           wx.pageScrollTo({
             scrollTop:
               this.progress[1] *
@@ -101,7 +120,8 @@ export default {
           });
           this.setBookInfo({ progress: [0, 0, 0] });
           this.opacity = 1;
-        });
+        }, 50);
+        // #endif
       });
     },
     disableCut() {
@@ -110,6 +130,18 @@ export default {
       } else if (this.fileIndex >= this.catalogueSum - 1) {
         return 1;
       } else return null;
+    },
+    onReady() {
+      wx.hideLoading();
+      wx.pageScrollTo({
+        scrollTop:
+          this.progress[1] * (this.progress[2] / this.systemInfo.windowWidth),
+        // #ifdef MP-WEIXIN || MP-QQ
+        duration: 0
+        // #endif
+      });
+      this.setBookInfo({ progress: [0, 0, 0] });
+      this.opacity = 1;
     }
   },
   computed: {
@@ -133,33 +165,20 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
 .content-container {
-  padding: 0 12px;
-  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px 12px 0 12px;
   transition: opacity 0.16s;
-  .header {
-    display: block;
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    height: 100rpx;
-    padding: 0 55rpx 0 25rpx;
-    background-color: #fff;
-    box-shadow: 0 4rpx 12rpx 0 rgba(0, 0, 0, 0.12);
-    font-size: 14px;
-    line-height: 50px;
-    @include ellipsis;
-    color: #a0a5ab;
-  }
-
   .title {
-    display: block;
     margin: 25px auto;
     font-size: 16px;
-    text-align: center;
   }
   .content {
-    display: block;
-    line-height: 40px;
+    min-height: 70vh;
+    line-height: 1.8em;
     text-align: justify;
     &::first-letter {
       font: {
@@ -178,14 +197,10 @@ export default {
       height: 70rpx;
       border-radius: 10rpx;
       background-color: #fff;
+      color: $Title;
       text-align: center;
       line-height: 70rpx;
     }
-  }
-
-  .footer {
-    @extend .header;
-    text-align: right;
   }
 }
 </style>
