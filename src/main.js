@@ -2,7 +2,7 @@ import './static/sdk/ald-stat'
 import Vue from 'vue'
 import App from './App'
 import store from './store'
-import api from '@/services/api'
+import api from '@/services'
 import './App.css'
 
 Vue.config.productionTip = false

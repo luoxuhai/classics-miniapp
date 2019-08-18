@@ -1,19 +1,6 @@
-import {request, upload} from '@/libs/request'
+import { request } from '@/libs/request'
 
 export default {
-  login: data => {
-    return request.post('/v1/users', data)
-  },
-
-  updateUserInfo: (id, data) => {
-    return request.put(`/v1/users/${id}`, data)
-  },
-  updateAvatar: (fileInfo, formData) => {
-    return upload('/v1/upload', fileInfo, formData)
-  },
-  getUserInfo: (id) => {
-    return request.get(`/v1/users/${id}`)
-  },
   getRecommend: data => {
     return request.get('/v1/books/recommend', data)
   },
@@ -107,6 +94,9 @@ export default {
   },
   getAffiche: id => {
     return request.get(`/v1/push/affiche/${id}`)
+  },
+  getArticle: id => {
+    return request.get(`/v1/articles/${id}`)
   },
   getHotSearch: () => {
     return request.get('/v1/push/hot')

@@ -25,8 +25,15 @@ export default {
   methods: {
     handleEnter(type, id) {
       let url;
-      if (type === "book") url = `/pages/HomeDetail/index?bookID=${id}`;
-      else url = `/pages/Affiche/index?id=${id}`;
+      switch (type) {
+        case "article":
+        case "affiche":
+          url = `/pages/RichContent/index?id=${id}&type=${type}`;
+          break;
+        case "book":
+          url = `/pages/HomeDetail/index?bookID=${id}`;
+          break;
+      }
       wx.navigateTo({ url });
     }
   }

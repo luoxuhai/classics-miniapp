@@ -99,8 +99,7 @@ export default {
           // 审核人员
           if (
             /mmhead/.test(data.avatarUrl) ||
-            this.formId === "the formId is a mock one" ||
-            !data.avatarUrl
+            this.formId === "the formId is a mock one"
           ) {
             this.setProduction(false);
             wx.setStorageSync("production", false);

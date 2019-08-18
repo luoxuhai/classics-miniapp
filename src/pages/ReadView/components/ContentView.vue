@@ -171,6 +171,7 @@ export default {
   align-items: center;
   min-height: 100vh;
   padding: 20px 12px 0 12px;
+  opacity: 0;
   transition: opacity 0.16s;
   .title {
     margin: 25px auto;

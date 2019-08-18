@@ -213,6 +213,7 @@ export default {
   }
 }
 .detail-container {
+  opacity: 0;
   transition: opacity 0.16s;
   overflow: hidden;
   .mask {

@@ -100,7 +100,7 @@
       }
     },
     {
-      "path": "pages/Affiche/index",
+      "path": "pages/RichContent/index",
       "style": {
         "enablePullDownRefresh": true,
         "usingComponents": {

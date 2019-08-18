@@ -35,13 +35,20 @@ function errorHandle(statusCode) {
       }
     })
   } else
-    if (process.env.NODE_ENV === 'development')
+    if (process.env.NODE_ENV === 'development' || statusCode >= 500)
       wx.showModal({
         title: '错误',
         content: `${statusCode}: ${errCodeMessage[statusCode]}`,
         showCancel: false,
-        confirmText: '确定',
+        confirmText: '返回',
         confirmColor: '#3CC51F',
+        success: res => {
+          if (res.confirm) {
+            wx.navigateBack({
+              delta: 1
+            });
+          }
+        }
       });
 }
 //实例级配置
