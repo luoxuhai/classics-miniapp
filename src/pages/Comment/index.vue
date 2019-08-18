@@ -25,7 +25,6 @@
 </template>
 
 <script>
-
 import { mapState } from "vuex";
 import { showToast } from "@/libs/utils";
 import { deleteComment, pagingLoadMixin } from "@/libs/mixin";
@@ -77,6 +76,20 @@ export default {
           })
           .catch(err => {
             wx.hideNavigationBarLoading();
+            if (err.response.data.errcode === 87014) {
+              wx.showModal({
+                title: "提示",
+                content: "评论含有违法违规内容",
+                showCancel: false,
+                confirmText: "重写",
+                success: res => {
+                  if (res.confirm) {
+                    this.$refs.publishGrade.inputValue = "";
+                  }
+                }
+              });
+              return;
+            }
             showToast({
               title: "评论失败",
               type: "error"

@@ -159,11 +159,27 @@ export default {
           const { avatarUrl } = JSON.parse(res)
           this.$api.updateUserInfo(this.$store.state.userID, {avatarUrl});
           this.$store.commit('setUserInfo', { avatarUrl })
+          wx.hideLoading(); 
           wx.navigateBack({
             delta: 1
           });
-        }).catch(() => {
+        }).catch((err) => {
           wx.hideLoading();
+            if (JSON.parse(err.data).errcode === 87014) {
+              wx.showModal({
+                title: "提示",
+                content: "头像含有违法违规内容",
+                showCancel: false,
+                confirmText: "返回",
+                success: res => {
+                  if (res.confirm) {
+                    wx.navigateBack({
+                      delta: 1
+                    });
+                  }
+                }
+              });
+            }
         })
     },
     setData: function (obj) {

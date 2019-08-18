@@ -35,13 +35,14 @@ function errorHandle(statusCode) {
       }
     })
   } else
-    wx.showModal({
-      title: '错误',
-      content: `${statusCode}: ${errCodeMessage[statusCode]}`,
-      showCancel: false,
-      confirmText: '确定',
-      confirmColor: '#3CC51F',
-    });
+    if (process.env.NODE_ENV === 'development')
+      wx.showModal({
+        title: '错误',
+        content: `${statusCode}: ${errCodeMessage[statusCode]}`,
+        showCancel: false,
+        confirmText: '确定',
+        confirmColor: '#3CC51F',
+      });
 }
 //实例级配置
 _request.config.baseURL = BASE_URL;
@@ -81,7 +82,10 @@ export const request = _request
 
 function successHandle(resolve, reject, res) {
   if (res.statusCode >= 200 && res.statusCode < 400) resolve(res.data)
-  else errorHandle(res.statusCode)
+  else {
+    reject(res);
+    errorHandle(res.statusCode);
+  }
 }
 
 function failHandle(reject, err) {

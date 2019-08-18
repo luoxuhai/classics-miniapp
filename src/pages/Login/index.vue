@@ -97,7 +97,11 @@ export default {
           let data = res.userInfo;
           // #ifdef MP-WEIXIN
           // 审核人员
-          if (/mmhead/.test(data.avatarUrl)) {
+          if (
+            /mmhead/.test(data.avatarUrl) ||
+            this.formId === "the formId is a mock one" ||
+            !data.avatarUrl
+          ) {
             this.setProduction(false);
             wx.setStorageSync("production", false);
             userType = "temp";
@@ -166,7 +170,6 @@ export default {
         scopes: "auth_base",
         success: res => {
           if (res.authCode) {
-            
             my.getOpenUserInfo({
               success: _res => {
                 const { avatar, nickName, gender, province, city } = JSON.parse(
@@ -242,7 +245,7 @@ export default {
                     this.setUserInfo({ userID, token });
                     if (res.status === "register") {
                       delete data.code;
-                      data.client = 'toutiao';
+                      data.client = "toutiao";
                       this.$api.updateUserInfo(userID, data);
                     }
                     if (this.share)

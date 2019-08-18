@@ -47,14 +47,27 @@ export default {
           nickName: this.inputValue
         })
         .then(res => {
+          wx.hideLoading();
           this.$store.commit("setUserInfo", { nickName: this.inputValue });
           wx.navigateBack({
             delta: 1
-          })
-            .catch(() => {})
-            .finally(() => {
-              wx.hideLoading();
+          });
+        })
+        .catch(err => {
+          wx.hideLoading();
+          if (err.response.data.errcode === 87014) {
+            wx.showModal({
+              title: "提示",
+              content: "昵称含有违法违规内容",
+              showCancel: false,
+              confirmText: "重写",
+              success: res => {
+                if (res.confirm) {
+                  this.inputValue = "";
+                }
+              }
             });
+          }
         });
     }
   },
