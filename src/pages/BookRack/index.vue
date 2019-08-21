@@ -30,7 +30,7 @@
         <text space="nbsp" decode class="book-name">{{item.book.bookName}}</text>
       </div>
     </main>
-    <footer class="tip" @click="handleToHome">{{load ? '没有更多书单了, 点我查找更多' : ''}}</footer>
+    <view class="tip" @click="handleToHome">没有更多书单了, 点我查找更多</view>
   </div>
 </template>
 <script>
@@ -167,9 +167,9 @@ export default {
     .header-date {
       @include flex(start, center);
       .date {
-        font-size: 14px;
+        font-size: 28rpx;
         text {
-          font-size: 26px;
+          font-size: 52rpx;
           font-weight: 700;
         }
       }
@@ -177,11 +177,11 @@ export default {
         @include flex(space-between, start, column);
         margin-left: 20rpx;
         padding-left: 20rpx;
-        border-left: 2px solid #000;
-        font-size: 14px;
+        border-left: 4rpx solid #000;
+        font-size: 28rpx;
         color: $Title;
         &:first-child {
-          font-size: 15px;
+          font-size: 30rpx;
         }
       }
     }
@@ -227,6 +227,7 @@ export default {
   .tip {
     @include flex(center);
     width: 100%;
+    margin-bottom: 50rpx;
     color: $Grey;
   }
 }

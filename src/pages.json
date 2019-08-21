@@ -113,6 +113,13 @@
       "style": {
         "enablePullDownRefresh": true
       }
+    },
+    {
+      "path": "pages/Discover/index",
+      "style": {
+        "enablePullDownRefresh": true,
+        "navigationBarTitleText": "发现"
+      }
     }
   ],
 
@@ -140,6 +147,12 @@
         "text": "书单",
         "iconPath": "static/tabs/bookrack.png",
         "selectedIconPath": "/static/tabs/bookrack-active.png"
+      },
+      {
+        "pagePath": "pages/Discover/index",
+        "text": "发现",
+        "iconPath": "static/tabs/discover.png",
+        "selectedIconPath": "/static/tabs/discover-active.png"
       },
       {
         "pagePath": "pages/User/index",

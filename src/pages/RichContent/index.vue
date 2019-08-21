@@ -5,22 +5,32 @@
 export default {
   data() {
     return {
-      content: ''
+      content: ""
     };
   },
   onLoad(options) {
+    wx.showNavigationBarLoading();
     if (options.type === "affiche") {
       wx.setNavigationBarTitle({ title: "公告" });
       this.$api.getAffiche(options.id).then(res => {
         this.content = res.affiche.content;
+        wx.hideNavigationBarLoading();
       });
     } else {
-      this.$api.getArticle(options.id).then(res => {
-        const { content, title } = res;
+      this.$api
+        .getArticle(options.id)
+        .then(res => {
+          const { content, title } = res;
 
-        this.content = content;
-        wx.setNavigationBarTitle({ title });
-      });
+          wx.setNavigationBarTitle({ title });
+          return content;
+        })
+        .then(content => {
+          this.$api.getOSSContent(content).then(res => {
+            this.content = res;
+            wx.hideNavigationBarLoading();
+          });
+        });
     }
   }
 };

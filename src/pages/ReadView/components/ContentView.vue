@@ -106,7 +106,7 @@ export default {
         mask: true
       });
 
-      this.$api.getBookContent(`${bookFile}/${fileIndex}.html`).then(res => {
+      this.$api.getOSSContent(`${bookFile}/${fileIndex}.html`).then(res => {
         this.bookContent = res;
         // #ifdef MP-QQ
         setTimeout(() => {

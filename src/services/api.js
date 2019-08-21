@@ -98,13 +98,16 @@ export default {
   getArticle: id => {
     return request.get(`/v1/articles/${id}`)
   },
+  getArticles: data => {
+    return request.get('/v1/articles', data)
+  },
   getHotSearch: () => {
     return request.get('/v1/push/hot')
   },
   about: data => {
     return request.get('/v1/push/about', data)
   },
-  getBookContent: url => {
+  getOSSContent: url => {
     return request.get(url)
   }
 }
