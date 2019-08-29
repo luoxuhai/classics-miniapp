@@ -84,21 +84,23 @@
       v-if="navBarIndex === 2 && showHeader"
       :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
     >
-      <text style="font-size: 40rpx">A</text>
-      <slider
-        show-value
-        :step="2"
-        :min="14"
-        :max="22"
-        :value="readTheme.fontSize"
-        :block-size="20"
-        backgroundColor="#eee"
-        activeColor="#6e757f"
-        aria-label="fontsize"
-        @change="changeFontSize"
-        @changing="changeFontSize"
-      />
-      <text>A</text>
+      <view class="font__size">
+        <text style="font-size: 40rpx">A</text>
+        <slider
+          show-value
+          :step="2"
+          :min="14"
+          :max="26"
+          :value="readTheme.fontSize"
+          :block-size="20"
+          backgroundColor="#eee"
+          activeColor="#6e757f"
+          aria-label="fontsize"
+          @change="changeFontSize"
+          @changing="changeFontSize"
+        />
+        <text>A</text>
+      </view>
     </view>
     <view
       class="more"
@@ -166,7 +168,7 @@ export default {
       navBarIndex: null,
       showHeader: false,
       navList: ["目录", "书签"],
-      themeColorList: ["#f9f9f9", "#f1ecd9", "#c7eaca", "#202731"],
+      themeColorList: ["#f9f9f9", "#f1ecd9", "#c7eaca", "#000000"],
       scheduleValue: null,
       baseBrightness: null,
       themeIndex: null
@@ -272,7 +274,10 @@ export default {
       "bookMarkIndex"
     ]),
     percent() {
-      return ((this.fileIndex / (this.catalogueList.length - 1)) * 100).toFixed();
+      return (
+        (this.fileIndex / (this.catalogueList.length - 1)) *
+        100
+      ).toFixed();
     },
     bookMarkList() {
       return this.bookMarkIndex.map(item => {
@@ -296,7 +301,9 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
 .nav {
-  @include flex(space-around, center);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   position: fixed;
   z-index: 99;
   bottom: 0;
@@ -319,7 +326,9 @@ export default {
   }
 }
 .more {
-  @include flex(space-between, start, column);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   right: 0;
@@ -382,7 +391,9 @@ export default {
     }
   }
   .header-nav {
-    @include flex(space-around, center);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
     height: 110rpx;
     color: #b6b6b6;
@@ -427,7 +438,10 @@ export default {
   }
 }
 .theme {
-  @include flex(space-around, center, column);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   position: fixed;
   z-index: 999;
   bottom: 120rpx;
@@ -435,19 +449,24 @@ export default {
   height: 240rpx;
   padding: 0 40rpx;
   background-color: #fff;
+  box-shadow: 0 -3px 3px 0 rgba(0, 0, 0, 0.05);
   .luminance {
-    @include flex(space-around, center);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
-    font-size: 24px;
+    font-size: 48rpx;
     slider {
       width: 460rpx;
     }
     &:first-child {
-      font-size: 20px;
+      font-size: 40rpx;
     }
   }
   .theme-color {
-    @include flex(space-between, center);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     .color-item {
       width: 160rpx;
@@ -458,14 +477,24 @@ export default {
 
 .text-font {
   @extend .theme;
-  @include flex(space-around, center);
-  height: 130rpx;
-  font-size: 24px;
-  slider {
-    width: 460rpx;
+  height: 220rpx;
+  .font__size {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    font-size: 48rpx;
+    slider {
+      width: 460rpx;
+    }
+    text:first-child {
+      font-size: 40rpx;
+    }
   }
-  &:first-child {
-    font-size: 20px;
+  .font__family {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -474,18 +503,20 @@ export default {
   .section {
     display: block;
     width: 100%;
-    font-size: 16px;
+    font-size: 32rpx;
     text-align: center;
     @include ellipsis;
   }
   .progress-bar {
-    @include flex(space-around, center);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
     progress {
       width: 460rpx;
     }
     .iconfont {
-      padding: 10px;
+      padding: 20rpx;
     }
   }
 }

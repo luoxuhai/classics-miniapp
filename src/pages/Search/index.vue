@@ -111,10 +111,12 @@ export default {
   .search-history {
     padding: 0 40rpx;
     .header {
-      @include flex(space-between, center);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       height: 80rpx;
-      border-top: 1px solid #ededee;
-      font-size: 16px;
+      border-top: 2rpx solid #ededee;
+      font-size: 32rpx;
       .button-clear {
         color: $Theme;
       }
@@ -123,7 +125,9 @@ export default {
       color: #6f7782;
       height: calc(100vh - 260rpx);
       .history-item {
-        @include flex(space-around, center);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
         line-height: 2em;
         .content {
           flex: 1;

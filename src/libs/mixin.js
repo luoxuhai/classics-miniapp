@@ -1,18 +1,8 @@
 export const showShareMenu = {
-  onShareAppMessage() {
-    return {
-      title: '古典名著苑-免费看海量古典小说',
-      path: `/pages/Home/index`,
-      imageUrl:
-        'https://classics.oss-cn-beijing.aliyuncs.com/app/shareCover.jpg'
-    }
-  },
   onLoad() {
-    // #ifdef MP-WEIXIN
     wx.showShareMenu({
       withShareTicket: true
     })
-    // #endif
   }
 }
 

@@ -134,6 +134,7 @@ export default {
           setTimeout(() => {
             this.isLoading = false;
           }, 16);
+          this.loading = false;
           wx.hideNavigationBarLoading();
           wx.stopPullDownRefresh();
         })
@@ -204,7 +205,8 @@ export default {
   }
 }
 .publish-grade {
-  @include flex(start, center);
+  display: flex;
+  align-items: center;
   position: fixed;
   bottom: 0;
   left: 0;

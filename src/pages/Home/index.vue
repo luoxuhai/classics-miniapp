@@ -1,17 +1,12 @@
 <template>
-  <div class="container">
+  <view class="container">
     <StarTip />
     <BookSearch :homeSearch="homeSearch" />
     <HomeSwiper :banners="banners" />
     <HomeBlock />
-    <!-- <HomeFilter
-      ref="filter"
-      @handleSelectType="handleSelectType"
-      @handleSelectSort="handleSelectSort"
-    />-->
     <view class="recommend">热门推荐</view>
     <BookList :booksList="books" :loading="loading" :pageHome="true" ref="list" />
-  </div>
+  </view>
 </template>
 
 <script>
@@ -48,6 +43,11 @@ export default {
   },
   methods: {
     ...mapMutations(["setBookInfo", "setProduction", "setUserInfo"]),
+    formSubmit(e) {
+      this.formId = e.detail.formId;
+      console.log(e.detail.formId);
+      console.log("e.detail.formId");
+    },
     handleSelectSort(sortMethod) {
       this.sortMethod = sortMethod;
       this.changeRefresh();
@@ -63,8 +63,7 @@ export default {
     getBanner() {
       this.$api.getBanner({}).then(res => {
         const { types, banners } = res;
-        if (this.production) this.banners = banners;
-        else this.banners = banners.splice(-1,1)
+        this.banners = banners;
       });
     },
     loadMore(reachBottom = false) {
@@ -106,19 +105,24 @@ export default {
   computed: {
     ...mapState(["production"])
   },
+  onShareAppMessage() {
+    return {
+      title: "古典名著苑-免费看海量中国古典小说",
+      path: `/pages/Home/index`,
+      imageUrl:
+        "https://classics.oss-cn-beijing.aliyuncs.com/app/%E6%89%B9%E6%B3%A8%202019-08-29%2021584.jpg"
+    };
+  },
   onLoad() {
     const token = wx.getStorageSync("token");
-    if (!token) {
-      wx.redirectTo({ url: "/pages/Login/index" });
-      return;
-    }
     if (wx.getStorageSync("isFirst") !== false)
       wx.setStorageSync("isFirst", true);
     this.getBanner();
     this.loadMore();
-    this.$api.getUserInfo(this.$store.state.userID).then(res => {
-      this.setUserInfo(res.userInfo);
-    });
+    if (token)
+      this.$api.getUserInfo(this.$store.state.userID).then(res => {
+        this.setUserInfo(res.userInfo);
+      });
   }
 };
 </script>

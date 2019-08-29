@@ -52,6 +52,7 @@ export default {
           this.commentCount = commentCount;
           this.per_page = per_page;
           this.total = total || 1;
+          this.loading = false;
           wx.stopPullDownRefresh();
         })
         .catch(err => {

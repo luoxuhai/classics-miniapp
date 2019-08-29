@@ -40,12 +40,12 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 import { mapState } from "vuex";
 import StarComment from "@/components/StarComment";
 import LoadingMore from "@/components/LoadingMore";
 
-moment.locale('zh-cn');
+moment.locale("zh-cn");
 export default {
   name: "CommentList",
   components: {
@@ -88,7 +88,7 @@ export default {
       }
     },
     relativeTime(createdAt) {
-      return moment.utc(createdAt, 'YYYYMMDDHHmmss').fromNow();
+      return moment.utc(createdAt, "YYYYMMDDHHmmss").fromNow();
     }
   },
   computed: {
@@ -101,7 +101,8 @@ export default {
 @import "@/assets/styles/common.scss";
 .container {
   .grade-list {
-    @include flex(space-between);
+    display: flex;
+    justify-content: space-between;
     padding: 25rpx;
     & + ul {
       border-top: 10rpx solid $Divider;
@@ -114,7 +115,9 @@ export default {
       overflow: hidden;
     }
     .grade-top {
-      @include flex(space-between, center);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       width: 100%;
       font-size: 32rpx;
       p {
@@ -126,9 +129,13 @@ export default {
     }
     .grade-body {
       flex: 1;
-      @include flex(space-between, start, column);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       .grade-stars {
-        @include flex(space-between, center);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
         height: 50rpx;
         font-size: 28rpx;

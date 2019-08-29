@@ -1,9 +1,12 @@
 <template>
-  <div class="container" :style="{paddingTop: title !== 'ranking' ? '100rpx' : 0}">
-    <view class="filter" v-if="title !== 'ranking'">
+  <div class="container" :style="{paddingTop: title === 'classify' ? '100rpx' : 0}">
+    <view
+      class="filter"
+      :style="{boxShadow: scrolltoupper ? '' : '0 4rpx 12rpx 0 rgba(0, 0, 0, 0.05)'}"
+      v-if="title === 'classify'"
+    >
       <HomeFilter
         ref="filter"
-        :pageNewBook="title === 'newbook' ? true : false"
         @handleSelectType="handleSelectType"
         @handleSelectSort="handleSelectSort"
       />
@@ -38,11 +41,24 @@ export default {
       per_page: 10,
       books: [],
       currentType: "",
-      sortMethod: 0
+      sortMethod: 0,
+      scrolltoupper: true
     };
   },
   methods: {
     ...mapMutations(["setBookInfo", "setProduction", "setUserInfo"]),
+    successHandle(reachBottom, res) {
+      const { books, total, per_page } = res;
+      if (this.page >= total) this.loading = false;
+      if (reachBottom) {
+        this.books = [...this.books, ...books];
+      } else this.books = books;
+      this.page += 1;
+      this.per_page = per_page;
+      this.total = total || 1;
+      this.loading = false;
+      wx.stopPullDownRefresh();
+    },
     handleSelectSort(sortMethod) {
       this.sortMethod = sortMethod;
       this.changeRefresh();
@@ -61,24 +77,13 @@ export default {
         this.loading = false;
         return;
       } else this.loading = true;
- 
+
       this.$api
         .getNewbook({
           page: this.page,
-          per_page: this.per_page,
-          type: this.currentType
+          per_page: this.per_page
         })
-        .then(res => {
-          const { books, total, per_page } = res;
-          if (this.page >= total) this.loading = false;
-          if (reachBottom) {
-            this.books = [...this.books, ...books];
-          } else this.books = books;
-          this.page += 1;
-          this.per_page = per_page;
-          this.total = total || 1;
-          wx.stopPullDownRefresh();
-        })
+        .then(this.successHandle.bind(this, reachBottom))
         .catch(err => {
           this.loading = false;
           wx.stopPullDownRefresh();
@@ -94,17 +99,7 @@ export default {
           page: this.page,
           per_page: this.per_page
         })
-        .then(res => {
-          const { books, total, per_page } = res;
-          if (this.page >= total) this.loading = false;
-          if (reachBottom) {
-            this.books = [...this.books, ...books];
-          } else this.books = books;
-          this.page += 1;
-          this.per_page = per_page;
-          this.total = total || 1;
-          wx.stopPullDownRefresh();
-        })
+        .then(this.successHandle.bind(this, reachBottom))
         .catch(err => {
           this.loading = false;
           wx.stopPullDownRefresh();
@@ -123,17 +118,7 @@ export default {
       };
       this.$api
         .getBook(data)
-        .then(res => {
-          const { books, total, per_page } = res;
-          if (this.page >= total) this.loading = false;
-          if (reachBottom) {
-            this.books = [...this.books, ...books];
-          } else this.books = books;
-          this.page += 1;
-          this.per_page = per_page;
-          this.total = total || 1;
-          wx.stopPullDownRefresh();
-        })
+        .then(this.successHandle.bind(this, reachBottom))
         .catch(err => {
           this.loading = false;
           wx.stopPullDownRefresh();
@@ -146,6 +131,10 @@ export default {
   },
   onReachBottom() {
     this["loadMore_" + this.title](true);
+  },
+  onPageScroll(e) {
+    if (e.scrollTop < 10) this.scrolltoupper = true;
+    else this.scrolltoupper = false;
   },
   onLoad(options) {
     let title = "分类";
@@ -171,6 +160,7 @@ export default {
   .filter {
     position: fixed;
     top: 0;
+    z-index: 9999;
   }
 }
 </style>

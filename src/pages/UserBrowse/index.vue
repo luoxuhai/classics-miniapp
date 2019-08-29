@@ -39,6 +39,7 @@ export default {
           this.per_page = per_page;
           this.total = total || 1;
           wx.stopPullDownRefresh();
+          this.loading = false;
         })
         .catch(() => {
           wx.stopPullDownRefresh();

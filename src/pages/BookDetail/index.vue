@@ -128,8 +128,9 @@ export default {
       wx.showModal({
         title: "提示",
         content: "登录后查看更多内容",
-        showCancel: false,
+        showCancel: true,
         confirmText: "登录",
+        cancelText: "暂不登录",
         confirmColor: "#f67280",
         success: res => {
           if (res.confirm)

@@ -4,7 +4,7 @@
       class="wrapper__image"
       v-for="(item, index) of articles"
       :key="index"
-      :src="item.cover"
+      :src="item.cover + '?x-oss-process=style/fade'"
       @click="handleEnterClick(item._id)"
       mode="aspectFill"
       lazy-load
@@ -16,6 +16,7 @@
 <script>
 import LoadingMore from "@/components/LoadingMore";
 import { showShareMenu, pagingLoadMixin } from "@/libs/mixin";
+
 export default {
   mixins: [showShareMenu, pagingLoadMixin],
   components: {
@@ -24,7 +25,7 @@ export default {
   data() {
     return {
       loading: false,
-      tip: "暂无数据",
+      tip: "",
       page: 1,
       total: 1,
       per_page: 10,
@@ -37,10 +38,6 @@ export default {
         this.loading = false;
         return;
       } else this.loading = true;
-      let data = {
-        page: this.page,
-        per_page: this.per_page
-      };
 
       this.$api
         .getArticles({
@@ -49,12 +46,19 @@ export default {
         })
         .then(res => {
           const { articles, per_page, total } = res;
-          if (this.page >= total) this.loading = false;
+          if (this.page >= total) {
+            this.loading = false;
+            this.tip = articles.length < 4 ? "" : "你踩到我的底线了!";
+          }
+
           if (reachBottom) this.articles = [...this.articles, ...articles];
-          else this.articles = articles;
+          else {
+            this.articles = articles;
+          }
           this.total = total || 1;
           this.per_page = per_page;
           this.page += 1;
+          this.loading = false;
           wx.stopPullDownRefresh();
         })
         .catch(() => {
@@ -64,19 +68,26 @@ export default {
     handleEnterClick(id) {
       wx.navigateTo({ url: `/pages/RichContent/index?id=${id}&type=article` });
     }
+  },
+  onShareAppMessage() {
+    return {
+      title: "古典名著苑-免费看海量中国古典小说",
+      path: `/pages/Home/index`,
+      imageUrl:
+        "https://classics.oss-cn-beijing.aliyuncs.com/app/%E6%89%B9%E6%B3%A8%202019-08-29%2021584.jpg"
+    };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  // width: 100vw;
-  .wrapper__image {
-    display: block;
-    width: 650rpx;
-    height: 650 / 2.34987 + rpx;
-    margin: 60rpx auto;
-    border-radius: 10rpx;
-  }
+@import "@/assets/styles/common.scss";
+.wrapper__image {
+  display: block;
+  width: 650rpx;
+  height: 650 / 2.34987 + rpx;
+  margin: 60rpx auto;
+  border-radius: 10rpx;
+  @include boxShaow;
 }
 </style>

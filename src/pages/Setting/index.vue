@@ -194,7 +194,9 @@ export default {
   .setting-list {
     margin-top: 50rpx;
     .list-item {
-      @include flex(space-between, center);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       height: 110rpx;
       padding: 0 35rpx;
       background-color: #fff;

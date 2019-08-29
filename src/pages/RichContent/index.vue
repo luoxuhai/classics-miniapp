@@ -1,5 +1,5 @@
 <template>
-  <parser class="about__desc" :html="content" selectable showWithAnimation />
+  <parser class="about__desc" :html="content" @ready="onReady" selectable showWithAnimation />
 </template>
 <script>
 export default {
@@ -8,13 +8,17 @@ export default {
       content: ""
     };
   },
+  methods: {
+    onReady() {
+      wx.hideNavigationBarLoading();
+    }
+  },
+
   onLoad(options) {
-    wx.showNavigationBarLoading();
     if (options.type === "affiche") {
       wx.setNavigationBarTitle({ title: "公告" });
       this.$api.getAffiche(options.id).then(res => {
         this.content = res.affiche.content;
-        wx.hideNavigationBarLoading();
       });
     } else {
       this.$api
@@ -28,10 +32,12 @@ export default {
         .then(content => {
           this.$api.getOSSContent(content).then(res => {
             this.content = res;
-            wx.hideNavigationBarLoading();
           });
         });
     }
+  },
+  onReady() {
+    wx.showNavigationBarLoading();
   }
 };
 </script>

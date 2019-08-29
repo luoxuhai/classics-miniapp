@@ -170,7 +170,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   min-height: 100vh;
-  padding: 20px 12px 0 12px;
+  padding: 20px 20px 0 20px;
   opacity: 0;
   transition: opacity 0.16s;
   .title {
@@ -181,15 +181,11 @@ export default {
     min-height: 70vh;
     line-height: 1.8em;
     text-align: justify;
-    &::first-letter {
-      font: {
-        size: 26px;
-        weight: 600;
-      }
-    }
   }
   .toggle-button {
-    @include flex(space-around, center);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
     height: 140rpx;
     .last,

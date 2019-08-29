@@ -1,39 +1,43 @@
 <template>
   <view class="list-wrapper">
-    <view
-      class="list-item"
+    <form
       v-for="(item, index) of booksList"
       :key="index"
-      @click="handleEnterClick(item._id, item.bookName, item.author.name, item.bookCover, item.total)"
       hover-class="hover-button"
+      :report-submit="true"
+      @submit="handleEnterClick($event, item._id, item.bookName, item.author.name, item.bookCover, item.total)"
     >
-      <img mode="aspectFill" lazy-load :src="item.bookCover + '?x-oss-process=style/m'" />
-      <view class="books-syn">
-        <text class="syn-title">{{item.bookName}}</text>
-        <text class="syn-author">{{ '[' + item.author.dynasty + '] ' + item.author.name}}</text>
-        <text v-if="pageHome" class="syn-detail">{{item.bookDesc}}</text>
+      <view class="list-item">
+        <img mode="aspectFill" lazy-load :src="item.bookCover + '?x-oss-process=style/m'" />
+        <view class="books-syn">
+          <text class="syn-title">{{item.bookName}}</text>
+          <text class="syn-author">{{ '[' + item.author.dynasty + '] ' + item.author.name}}</text>
+          <text v-if="pageHome" class="syn-detail">{{item.bookDesc}}</text>
+        </view>
+        <view v-if="!pageComment || !pageRanking" class="books-sundry">
+          <view class="sundry-grade">
+            <StarComment :score="item.bookScore || 1.5" />
+          </view>
+          <view v-if="!pageRanking" class="sundry-count">
+            <label class="iconfont">&#xe603;</label>
+            {{item.browseSum}}
+          </view>
+          <view v-if="pageRanking" class="sundry-count">
+            <label class="iconfont">&#xe72e;</label>
+            {{item.readSum}}
+          </view>
+          <text v-if="pageHome" class="sundry-tag">{{item.bookType || '未知'}}</text>
+        </view>
+        <text v-if="pageComment" class="comment-count">{{ item.total }}</text>
+        <text
+          v-if="pageRanking"
+          class="ranking-count"
+          :style="{color: index < 3 ? '#f67280' : ''}"
+        >{{ index + 1 }}</text>
+        <button form-type="submit" />
       </view>
-      <view v-if="!pageComment || !pageRanking" class="books-sundry">
-        <view class="sundry-grade">
-          <StarComment :score="item.bookScore || 1.5" />
-        </view>
-        <view v-if="!pageRanking" class="sundry-count">
-          <label class="iconfont">&#xe603;</label>
-          {{item.browseSum}}
-        </view>
-        <view v-if="pageRanking" class="sundry-count">
-          <label class="iconfont">&#xe72e;</label>
-          {{item.readSum}}
-        </view>
-        <text v-if="pageHome" class="sundry-tag">{{item.bookType || '未知'}}</text>
-      </view>
-      <text v-if="pageComment" class="comment-count">{{ item.total }}</text>
-      <text
-        v-if="pageRanking"
-        class="ranking-count"
-        :style="{color: index < 3 ? '#f67280' : ''}"
-      >{{ index + 1 }}</text>
-    </view>
+    </form>
+
     <LoadingMore :loading="loading" :tip="tip" />
   </view>
 </template>
@@ -69,8 +73,10 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setBookInfo"]),
-    handleEnterClick(bookID, bookName, bookAuthor, bookCover, commentCount) {
+    ...mapMutations(["setBookInfo", "setProduction"]),
+    handleEnterClick(e, bookID, bookName, bookAuthor, bookCover, commentCount) {
+      if (e.detail.formId === "the formId is a mock one")
+        this.setProduction(false);
       if (this.pageComment) {
         this.enterUserCommentDetail(
           bookID,
@@ -102,7 +108,19 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
+form {
+  position: relative;
+  button {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+  }
+}
 .list-item {
+  position: relative;
   display: flex;
   justify-content: space-between;
   height: 260rpx;

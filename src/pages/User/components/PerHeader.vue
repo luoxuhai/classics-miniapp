@@ -1,7 +1,7 @@
 <template>
   <header class="header-container">
     <img class="img-avatar" :src="avatar" @click="handelEnterSetting" mode="aspectFill" />
-    <div class="info">
+    <div v-if="token" class="info">
       <h1 class="info-nickname">{{ nickName }}</h1>
       <div class="info-detail">
         <p class="detail-sex">
@@ -12,6 +12,7 @@
         <p class="detail-location">{{ province }} {{city }}</p>
       </div>
     </div>
+    <view v-else class="login">登录</view>
     <div class="bg-img" :style="{backgroundImage: 'url(' + avatar + ')'}"></div>
   </header>
 </template>
@@ -34,7 +35,8 @@ export default {
       "birthday",
       "gender",
       "city",
-      "province"
+      "province",
+      "token"
     ]),
 
     avatar() {
@@ -47,7 +49,8 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
 .header-container {
-  @include flex(start, center);
+  display: flex;
+  align-items: center;
   position: relative;
   padding: 40rpx 35rpx 0;
   height: 400rpx;
@@ -56,6 +59,12 @@ export default {
     rgba(53, 92, 125, 0.6)
   );
   color: #f5f5f5;
+  .login {
+    margin-left: 20rpx;
+    font-size: 50rpx;
+    letter-spacing: 0.5em;
+    font-weight: 600;
+  }
   .bg-img {
     position: absolute;
     left: 0;
@@ -86,7 +95,8 @@ export default {
       @include ellipsis;
     }
     .info-detail {
-      @include flex(start, center);
+      display: flex;
+      align-items: center;
       font-size: 28rpx;
       .detail-sex {
         height: 40rpx;

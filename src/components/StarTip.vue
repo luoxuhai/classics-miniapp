@@ -30,7 +30,7 @@ export default {
       });
       setTimeout(() => {
         this.showTips = false;
-      }, 5000);
+      }, 60000);
     }
   },
 

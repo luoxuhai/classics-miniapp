@@ -52,7 +52,9 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
 .nav {
-  @include flex(flex-end, center);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   position: fixed;
   z-index: 99;
   width: 100%;

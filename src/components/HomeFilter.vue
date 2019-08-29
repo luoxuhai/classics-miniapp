@@ -10,7 +10,7 @@
           @click="handleSelectType(index)"
         >{{ item.name }}</text>
       </scroll-view>
-      <div v-if="!pageNewBook" class="filter-item-sort" @click="handleOptionItem(1)">
+      <div class="filter-item-sort" @click="handleOptionItem(1)">
         <span class="iconfont">&#xe648;</span>
       </div>
     </div>
@@ -29,12 +29,6 @@
 <script>
 export default {
   name: "HomeFilter",
-  props: {
-    pageNewBook: {
-      type: Boolean,
-      default: false
-    }
-  },
 
   data() {
     return {
@@ -84,7 +78,7 @@ export default {
       this.optionIndex = null;
       let currentType = "";
       for (const [i, value] of this.types.entries()) {
-        if (i === index) this.types[i].active = !value.active;
+        if (i === index) this.types[i].active = true;
         else this.types[i].active = false;
         if (this.types[i].active) currentType = i !== 0 ? value.name : "";
       }
@@ -107,29 +101,36 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
+
 .filter-container {
-  @include flex(start, center);
-  position: relative;
+  display: flex;
+  align-items: center;
   height: 100rpx;
   width: 100vw;
   background-color: #fff;
+  transition: box-shadow 0.3s;
   .nav-filter {
     position: relative;
     z-index: 99;
     width: 100%;
     height: 100%;
     padding: 0 30rpx;
-    @include flex(space-between, center);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #fff;
     color: #434a52;
     .filter-item-sort {
-      @include flex(space-around, center);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
       width: 10%;
       font-size: 40rpx;
       padding: 10rpx;
     }
     .filter-item-scroll {
-      @include flex(start, center);
+      display: flex;
+      align-items: center;
       width: 100%;
       height: 100%;
       position: relative;
@@ -194,7 +195,8 @@ export default {
     background-color: #fff;
     transition: all 0.2s ease-out;
     .scroll-view {
-      @include flex(start, start, row, wrap);
+      display: flex;
+      flex-wrap: wrap;
       height: 260rpx;
     }
     .type-item {
@@ -215,7 +217,9 @@ export default {
   }
   .option-sort {
     @extend .option-dynasty;
+    transform: translateY(-16rpx);
     height: 320rpx;
+    @include boxShaow;
     .sort-item {
       @extend .dynasty-item;
     }

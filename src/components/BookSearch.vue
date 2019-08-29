@@ -36,7 +36,7 @@ export default {
     homeSearch: {
       type: Boolean,
       default: true
-    },
+    }
   },
   data() {
     return {
@@ -96,7 +96,7 @@ export default {
   },
   onReady() {
     this.$api.getHotSearch().then(res => {
-      this.hotSearch = res.hotSearch
+      this.hotSearch = res.hotSearch;
     });
   }
 };
@@ -109,7 +109,9 @@ export default {
   margin: 25rpx 0 50rpx 0;
   padding: 0 30rpx;
   .search-frame {
-    @include flex(space-between, center);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 100%;
     padding: 0 30rpx;
     border-radius: 60rpx;

@@ -101,7 +101,9 @@ export default {
 @import "@/assets/styles/common.scss";
 .select-list {
   .list-item {
-    @include flex(space-between, center);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
     height: 100rpx;
     padding: 0 35rpx;

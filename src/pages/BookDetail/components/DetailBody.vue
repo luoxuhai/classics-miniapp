@@ -16,7 +16,11 @@
         <swiper-item>
           <scroll-view :scroll-y="scrollY" style="height: 100vh; -webkit-overflow-scrolling: touch">
             <div class="content-detail">
-              <div class="detail-syn" :class="[descUnfold ? 'syn-shrink' : 'syn-unfold']" @click.stop="handleUnfold">
+              <div
+                class="detail-syn"
+                :class="[descUnfold ? 'syn-shrink' : 'syn-unfold']"
+                @click.stop="handleUnfold"
+              >
                 {{ detailBody.bookDesc || '' }}
                 <p class="unfold" @click.stop="handleUnfold">
                   <span class="iconfont" :class="[descUnfold ? 'shrink' : 'unfold']">&#xe63f;</span>
@@ -210,7 +214,8 @@ export default {
     color: $Theme;
   }
   .body-tab {
-    @include flex(space-around);
+    display: flex;
+    justify-content: space-around;
     position: relative;
     width: 100%;
     height: 90rpx;
@@ -285,7 +290,8 @@ export default {
         position: relative;
         margin-top: 70rpx;
         .grade-header {
-          @include flex(space-between);
+          display: flex;
+          justify-content: space-between;
           .grade-title {
             position: relative;
             font: {
@@ -354,11 +360,14 @@ export default {
       }
     }
     .catalog {
-      @include flex(space-around, space-between, column);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: space-between;
       padding: 40rpx 20rpx 150rpx;
       .catalog-title {
-        @include flex(space-between);
-
+        display: flex;
+        justify-content: space-between;
         height: 100rpx;
         padding-top: 40rpx;
         font-size: 34rpx;

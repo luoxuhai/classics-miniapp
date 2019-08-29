@@ -41,7 +41,8 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
 .header {
-  @include flex(space-between);
+  display: flex;
+  justify-content: space-between;
   width: 670rpx;
   height: 450rpx;
   margin: 50rpx auto 0;
@@ -53,7 +54,8 @@ export default {
   }
 
   .book-syn {
-    @include flex(space-between, start, column);
+    display: flex;
+    flex-direction: column;
     width: 380rpx;
     .syn-name {
       font: {
@@ -66,7 +68,7 @@ export default {
     .syn-count,
     .syn-word,
     .sundry-tag {
-      margin-top: 15rpx;
+      margin-top: 30rpx;
       font-size: 32rpx;
       .iconfont {
         margin-left: 5rpx;
@@ -81,7 +83,9 @@ export default {
       color: $Grey;
     }
     .sundry-tag {
-      @include flex(start, center, row, wrap);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
       width: 100%;
       color: $Grey;
       .title {
