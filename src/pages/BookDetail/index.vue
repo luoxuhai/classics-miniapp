@@ -164,6 +164,17 @@ export default {
 
     this.bookInfo = options;
     this.getBookDetail(this.bookInfo.bookID, this.bookInfo.bookName);
+    if (wx.createInterstitialAd && this.share) {
+      const interstitialAd = wx.createInterstitialAd({
+        adUnitId: "adunit-83c7d09dcd1bd671"
+      });
+      interstitialAd.onLoad(() => {});
+      interstitialAd.onError(err => {});
+      interstitialAd.onClose(() => {});
+      interstitialAd.show().catch(err => {
+        console.error(err);
+      });
+    }
   },
 
   onShow() {

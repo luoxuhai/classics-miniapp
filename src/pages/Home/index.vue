@@ -18,6 +18,7 @@ import BookList from "@/components/BookList";
 import StarTip from "@/components/StarTip";
 import { showShareMenu } from "@/libs/mixin";
 import { mapState, mapMutations } from "vuex";
+import { setTimeout } from "timers";
 export default {
   mixins: [showShareMenu],
   components: {
@@ -123,6 +124,18 @@ export default {
       this.$api.getUserInfo(this.$store.state.userID).then(res => {
         this.setUserInfo(res.userInfo);
       });
+    // 在页面onLoad回调事件中创建插屏广告实例
+    if (wx.createInterstitialAd) {
+      const interstitialAd = wx.createInterstitialAd({
+        adUnitId: "adunit-83c7d09dcd1bd671"
+      });
+      interstitialAd.onLoad(() => {});
+      interstitialAd.onError(err => {});
+      interstitialAd.onClose(() => {});
+      interstitialAd.show().catch(err => {
+        console.error(err);
+      });
+    }
   }
 };
 </script>

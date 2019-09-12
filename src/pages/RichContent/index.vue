@@ -1,15 +1,20 @@
 <template>
-  <parser class="about__desc" :html="content" @ready="onReady" selectable showWithAnimation />
+  <view>
+    <parser class="about__desc" :html="content" @ready="onReady" selectable showWithAnimation />
+    <ad v-if="ready" unit-id="adunit-72c18b317917e60b" ad-type="video" ad-theme="white" />
+  </view>
 </template>
 <script>
 export default {
   data() {
     return {
-      content: ""
+      content: "",
+      ready: false
     };
   },
   methods: {
     onReady() {
+      this.ready = true;
       wx.hideNavigationBarLoading();
     }
   },

@@ -15,6 +15,7 @@
         :loading="loading"
         @handleDelComment="handleDelComment"
       />
+      <ad v-if="page > total" unit-id="adunit-0a1335b664532ee6" ad-type="video" ad-theme="white" />
     </main>
     <footer class="publish-grade" @click="handleShow" hover-class="hover-more">
       <img :src="avatarUrl" mode="aspectFill" />

@@ -1,4 +1,3 @@
-import './static/sdk/ald-stat'
 import Vue from 'vue'
 import App from './App'
 import store from './store'
@@ -13,9 +12,3 @@ App.mpType = 'app'
 const app = new Vue({
   ...App
 }).$mount()
-
-export default {
-  config: {
-    pages: ['^pages/Home/index']
-  }
-}

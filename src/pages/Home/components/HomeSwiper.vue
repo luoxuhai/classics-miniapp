@@ -3,12 +3,16 @@
     indicator-dots
     indicator-active-color="#fff"
     skip-hidden-item-layout
-    :duration="400"
+    :duration="450"
     autoplay
+    :interval="10000"
     previous-margin="30rpx"
     next-margin="30rpx"
     circular
   >
+    <swiper-item>
+      <ad unit-id="adunit-e1a27ccddca8d7e7" ad-type="video" ad-theme="white" :ad-intervals="30" />
+    </swiper-item>
     <block v-for="item of banners" :key="item._id">
       <swiper-item>
         <img mode="aspectFill" :src="item.bannerImg" @click="handleEnter(item.type, item._id)" />

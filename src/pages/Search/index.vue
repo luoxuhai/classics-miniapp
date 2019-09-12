@@ -1,5 +1,5 @@
 <template>
-  <div class="search-container">
+  <view class="search-container">
     <BookSearch
       @handleClickSearch="handleClickSearch"
       @changeInputValue="changeInputValue"
@@ -7,21 +7,23 @@
       :homeSearch="false"
       :searched="searched"
     />
-    <section class="search-history">
-      <header class="header">
+    <view class="search-history">
+      <view class="header">
         <text class="title">{{ !searched ? '搜索历史' : '搜索结果' }}</text>
         <text v-if="!searched" class="button-clear" @click="handleClearAll">清空</text>
-      </header>
+      </view>
       <BookList v-if="searched" :booksList="books" :loading="false" :tip="tip" pageHome />
       <scroll-view v-if="!searched" class="main" scroll-y>
-        <main class="history-item" v-for="(item, index) of searchHistoryArr" :key="index">
-          <span class="iconfont">&#xe631;</span>
+        <view class="history-item" v-for="(item, index) of searchHistoryArr" :key="index">
+          <label class="iconfont">&#xe631;</label>
           <p class="content" @click="handleHistoryItem(index)">{{ item }}</p>
-          <span class="iconfont" @click="handleClearItem(index)">&#xe625;</span>
-        </main>
+          <label class="iconfont" @click="handleClearItem(index)">&#xe625;</label>
+        </view>
+        <ad unit-id="adunit-72c18b317917e60b" ad-type="video" ad-theme="white" />
+        <ad unit-id="adunit-e1a27ccddca8d7e7" ad-type="video" ad-theme="white" />
       </scroll-view>
-    </section>
-  </div>
+    </view>
+  </view>
 </template>
 
 <script>
@@ -107,6 +109,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
+ad {
+  margin-top: 20px;
+}
 .search-container {
   .search-history {
     padding: 0 40rpx;

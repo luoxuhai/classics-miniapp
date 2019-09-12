@@ -10,6 +10,7 @@
       lazy-load
     />
     <LoadingMore :loading="loading" :tip="tip" />
+    <ad unit-id="adunit-72c18b317917e60b" ad-type="video" ad-theme="white" />
   </view>
 </template>
 

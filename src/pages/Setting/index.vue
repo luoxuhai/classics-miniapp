@@ -184,6 +184,17 @@ export default {
     this.date = this.birthday;
     this.region = [this.province + "省", this.city + "市"];
     this.getStorageSize();
+    if (wx.createInterstitialAd) {
+      const interstitialAd = wx.createInterstitialAd({
+        adUnitId: "adunit-83c7d09dcd1bd671"
+      });
+      interstitialAd.onLoad(() => {});
+      interstitialAd.onError(err => {});
+      interstitialAd.onClose(() => {});
+      interstitialAd.show().catch(err => {
+        console.error(err);
+      });
+    }
   }
 };
 </script>

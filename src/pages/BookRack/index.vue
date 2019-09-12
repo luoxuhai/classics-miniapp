@@ -1,8 +1,18 @@
 <template>
   <view class="rack-container">
     <BookrackDate :date="date" :aphorism="aphorism" />
-    <BookrackList :books="books" />
-    <LoadingMore :loading="loading" />
+    <BookrackList :books="books" @handleLoadMore="handleLoadMore" />
+    <view style="height: 50px">
+      <LoadingMore :loading="loading" />
+    </view>
+    <ad
+      v-if="!books[0]"
+      class="ad-continer"
+      unit-id="adunit-e1a27ccddca8d7e7"
+      ad-type="video"
+      ad-theme="white"
+      :ad-intervals="30"
+    />
   </view>
 </template>
 
@@ -57,6 +67,10 @@ export default {
             wx.stopPullDownRefresh();
           });
     },
+    handleLoadMore() {
+      this.page = 1;
+      this.loadMore();
+    },
     getAphorism() {
       this.$api.getAphorism().then(res => {
         this.aphorism = res.aphorism;
@@ -108,6 +122,12 @@ export default {
     width: 100%;
     margin-bottom: 50rpx;
     color: $Grey;
+  }
+  .ad-continer {
+    width: 100vw;
+    padding: 0 5vw;
+    position: fixed;
+    bottom: 0;
   }
 }
 </style>

@@ -9,7 +9,7 @@
       :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
       selectable
     >{{ catalogueList[fileIndex] }}</text>
-     <!-- #ifdef MP-WEIXIN -->
+     <!-- #ifdef MP-WEIXIN || H5 -->
     <view
       class="content"
       :style="{ fontSize: readTheme.fontSize + 'px'}"
@@ -32,7 +32,7 @@
         :className="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
       />
       <!-- #endif -->
-      <!-- #ifdef MP-WEIXIN -->
+      <!-- #ifdef MP-WEIXIN || H5 -->
       <parser :html="bookContent" selectable @ready="onReady" />
       <!-- #endif -->
     </view>
@@ -47,7 +47,7 @@
         :hover-class="disableCutIndex === index ? '' : 'hover-button'"
       >{{ item }}</view>
     </view>
-  </view>
+   </view>
 </template>
 
 <script>

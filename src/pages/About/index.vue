@@ -5,6 +5,7 @@
     <p class="about__version">v{{ about.version }}</p>
     <parser v-if="production" class="about__log" :html="about.log" selectable />
     <parser class="about__desc" :html="about.intro" selectable />
+    <ad class="ad" unit-id="adunit-72c18b317917e60b" ad-type="video" ad-theme="white" />
   </view>
 </template>
 
@@ -35,7 +36,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  .ad {
+    margin-top: 20px;
+  }
   img {
     width: 160px;
     height: 160px;

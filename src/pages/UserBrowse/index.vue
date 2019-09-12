@@ -1,5 +1,8 @@
 <template>
-  <BookList :booksList="books" :loading="loading" />
+  <view>
+    <BookList :booksList="books" :loading="loading" />
+    <ad v-if="page > total" unit-id="adunit-0a1335b664532ee6" ad-type="video" ad-theme="white" />
+  </view>
 </template>
 
 <script>

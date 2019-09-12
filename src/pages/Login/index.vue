@@ -35,6 +35,7 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
+let interstitialAd = null;
 export default {
   name: "Login",
   data() {
@@ -141,11 +142,21 @@ export default {
                       this.$api.updateUserInfo(userID, data);
                     }
                     wx.hideLoading();
-                    if (this.share)
-                      wx.navigateBack({
-                        delta: 1
-                      });
-                    else wx.switchTab({ url: "/pages/Home/index" });
+                    interstitialAd.show().catch(err => {
+                      if (this.share)
+                        wx.navigateBack({
+                          delta: 1
+                        });
+                      else wx.switchTab({ url: "/pages/Home/index" });
+                    });
+
+                    interstitialAd.onClose(() => {
+                      if (this.share)
+                        wx.navigateBack({
+                          delta: 1
+                        });
+                      else wx.switchTab({ url: "/pages/Home/index" });
+                    });
                   })
                   .catch(err => {
                     if ((this.reqCount = 3)) return;
@@ -273,6 +284,12 @@ export default {
   },
   onLoad(options) {
     this.share = options.share;
+    if (wx.createInterstitialAd) {
+      interstitialAd = wx.createInterstitialAd({
+        adUnitId: "adunit-088b6992cc976c00"
+      });
+      interstitialAd.onLoad(() => {});
+    }
   }
 };
 </script>

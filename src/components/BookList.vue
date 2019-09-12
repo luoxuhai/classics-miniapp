@@ -37,7 +37,6 @@
         <button form-type="submit" />
       </view>
     </form>
-
     <LoadingMore :loading="loading" :tip="tip" />
   </view>
 </template>

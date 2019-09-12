@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="{paddingTop: title === 'classify' ? '100rpx' : 0}">
+  <view class="container" :style="{paddingTop: title === 'classify' ? '100rpx' : 0}">
     <view
       class="filter"
       :style="{boxShadow: scrolltoupper ? '' : '0 4rpx 12rpx 0 rgba(0, 0, 0, 0.05)'}"
@@ -18,7 +18,8 @@
       :pageRanking="title === 'ranking' ? true : false"
       ref="list"
     />
-  </div>
+    <ad v-if="page > total" unit-id="adunit-0a1335b664532ee6" ad-type="video" ad-theme="white" />
+  </view>
 </template>
 
 <script>

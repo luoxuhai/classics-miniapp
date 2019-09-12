@@ -477,7 +477,6 @@ export default {
 
 .text-font {
   @extend .theme;
-  height: 220rpx;
   .font__size {
     display: flex;
     justify-content: space-around;

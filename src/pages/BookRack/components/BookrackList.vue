@@ -19,6 +19,7 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
+import { setTimeout } from "timers";
 export default {
   props: {
     books: Object
@@ -45,7 +46,7 @@ export default {
                   if (res.confirm) {
                     this.$api.deleteBookRack(bookID).then(res => {
                       this.page = 1;
-                      this.loadMore();
+                      this.$emit("handleLoadMore", null);
                     });
                   }
                 }
