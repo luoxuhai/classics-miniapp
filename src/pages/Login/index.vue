@@ -48,14 +48,13 @@ export default {
   methods: {
     ...mapMutations(["setUserInfo", "setProduction"]),
     formSubmit(e) {
+      wx.showLoading({
+        title: "登录中...",
+        mask: true
+      });
       this.formId = e.detail.formId;
     },
     handleLogin() {
-      // #ifndef MP-TOUTIAO
-      wx.showLoading({
-        title: "加载中"
-      });
-      // #endif
       const date = new Date();
       const [year, month, day] = [
         date.getFullYear(),
@@ -290,6 +289,9 @@ export default {
       });
       interstitialAd.onLoad(() => {});
     }
+  },
+  onUnload() {
+    interstitialAd = null;
   }
 };
 </script>

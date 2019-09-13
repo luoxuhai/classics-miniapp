@@ -2,7 +2,7 @@
   <view class="container">
     <PerHeader />
     <PerList />
-    <view v-if="!token" class="mask" @click="handleLoginClick"></view>
+    <view v-if="!token" class="mask" @touchstart="handleLoginClick"></view>
   </view>
 </template>
 

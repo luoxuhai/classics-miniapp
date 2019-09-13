@@ -14,7 +14,7 @@
       @handleDelComment="handleDelComment"
     />
     <div v-if="share" class="float--button iconfont" @click="handleHomeClick">&#xe867;</div>
-    <div v-if="!token" class="mask" catchtouchmove="move" @click="handleLoginClick"></div>
+    <div v-if="!token" class="mask" catchtouchmove="move" @touchstart="handleLoginClick"></div>
   </div>
 </template>
 
