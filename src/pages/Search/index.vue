@@ -19,7 +19,6 @@
           <p class="content" @click="handleHistoryItem(index)">{{ item }}</p>
           <label class="iconfont" @click="handleClearItem(index)">&#xe625;</label>
         </view>
-        <ad unit-id="adunit-72c18b317917e60b" ad-type="video" ad-theme="white" />
         <ad unit-id="adunit-e1a27ccddca8d7e7" ad-type="video" ad-theme="white" />
       </scroll-view>
     </view>

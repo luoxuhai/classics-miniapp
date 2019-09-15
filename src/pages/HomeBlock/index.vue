@@ -134,8 +134,12 @@ export default {
     this["loadMore_" + this.title](true);
   },
   onPageScroll(e) {
-    if (e.scrollTop < 10) this.scrolltoupper = true;
-    else this.scrolltoupper = false;
+    if (e.scrollTop < 10) {
+      this.scrolltoupper = true;
+      if (this.books.length > this.per_page) {
+        this.books = this.books.splice(0, 10);
+      }
+    } else this.scrolltoupper = false;
   },
   onLoad(options) {
     let title = "分类";

@@ -11,7 +11,7 @@
     circular
   >
     <swiper-item>
-      <ad unit-id="adunit-e1a27ccddca8d7e7" ad-type="video" ad-theme="white" :ad-intervals="30" />
+      <ad unit-id="adunit-83a2d356a525d43e" :ad-intervals="30" />
     </swiper-item>
     <block v-for="item of banners" :key="item._id">
       <swiper-item>

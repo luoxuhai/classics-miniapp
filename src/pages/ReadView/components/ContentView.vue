@@ -107,7 +107,7 @@ export default {
       });
 
       this.$api.getOSSContent(`${bookFile}/${fileIndex}.html`).then(res => {
-        this.bookContent = res;
+        this.bookContent = res.replace(/　　{2,}/g, '　　');
         // #ifdef MP-QQ
         setTimeout(() => {
           wx.pageScrollTo({

@@ -6,7 +6,7 @@
       <LoadingMore :loading="loading" />
     </view>
     <ad
-      v-if="!books[0]"
+      v-if="!token"
       class="ad-continer"
       unit-id="adunit-e1a27ccddca8d7e7"
       ad-type="video"
@@ -42,30 +42,29 @@ export default {
   },
   methods: {
     loadMore(reachBottom = false) {
-      if (this.page > this.total) {
+      if (this.page > this.total || !this.token) {
         this.loading = false;
         return;
       } else this.loading = true;
-      if (this.token)
-        this.$api
-          .getBookRack({
-            page: this.page,
-            per_page: this.per_page
-          })
-          .then(res => {
-            const { books, per_page, total } = res;
-            if (this.page >= total) this.loading = false;
-            if (reachBottom) this.books = [...this.books, ...books];
-            else this.books = books;
-            this.total = total || 1;
-            this.per_page = per_page;
-            this.page += 1;
-            this.loading = false;
-            wx.stopPullDownRefresh();
-          })
-          .catch(() => {
-            wx.stopPullDownRefresh();
-          });
+      this.$api
+        .getBookRack({
+          page: this.page,
+          per_page: this.per_page
+        })
+        .then(res => {
+          const { books, per_page, total } = res;
+          if (this.page >= total) this.loading = false;
+          if (reachBottom) this.books = [...this.books, ...books];
+          else this.books = books;
+          this.total = total || 1;
+          this.per_page = per_page;
+          this.page += 1;
+          this.loading = false;
+          wx.stopPullDownRefresh();
+        })
+        .catch(() => {
+          wx.stopPullDownRefresh();
+        });
     },
     handleLoadMore() {
       this.page = 1;
@@ -90,7 +89,7 @@ export default {
   },
   onPullDownRefresh() {
     this.getAphorism();
-    this.loadMore();
+     this.loadMore();
   },
   onLoad() {
     this.getDate();
@@ -124,8 +123,6 @@ export default {
     color: $Grey;
   }
   .ad-continer {
-    width: 100vw;
-    padding: 0 5vw;
     position: fixed;
     bottom: 0;
   }

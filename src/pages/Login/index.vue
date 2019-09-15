@@ -287,7 +287,6 @@ export default {
       interstitialAd = wx.createInterstitialAd({
         adUnitId: "adunit-088b6992cc976c00"
       });
-      interstitialAd.onLoad(() => {});
     }
   },
   onUnload() {
