@@ -5,7 +5,7 @@
       :class="{show: showHeader}"
       :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
     >
-      <!-- #ifdef MP-WEIXIN || MP-QQ -->
+      <!-- #ifdef MP-WEIXIN || MP-QQ || APP-PLUS -->
       <view
         class="iconfont nav-item"
         v-for="(item, index) of menuIcon"
@@ -310,11 +310,12 @@ export default {
   width: 100%;
   height: 120rpx;
   padding: 0;
-  opacity: 0;
+  opacity: 0.5;
   background-color: #fff;
   box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.12);
-  transition: all 0.3s ease-out;
+  transition: all 0.2s ease-out;
   transform: translateY(120rpx);
+  will-change: transform;
   .nav-item {
     padding: 40rpx;
     font-size: 24px;

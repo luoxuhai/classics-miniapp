@@ -3,13 +3,12 @@
   opacity: 0.7;
   text-decoration: underline;
 }
-
 /* 以下内容不建议修改 */
 :host {
   display: inherit;
   float: inherit;
 }
-.sub, .sup, .text, .bdo, .bdi, .ruby, .rt, .span {
+.sub, .sup, .bdo, .bdi, .ruby, .rt {
   display: inline-block !important;
 }
 .div, .blockquote, .p{

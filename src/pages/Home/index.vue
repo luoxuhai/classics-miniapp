@@ -1,6 +1,8 @@
 <template>
   <view class="container">
+    <!-- #ifdef MP-WEIXIN -->
     <StarTip />
+    <!-- #endif -->
     <BookSearch :homeSearch="homeSearch" />
     <HomeSwiper :banners="banners" />
     <HomeBlock />

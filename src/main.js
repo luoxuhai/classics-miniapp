@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store'
-import api from '@/services'
-import './App.css'
+import api from './api'
 
 Vue.config.productionTip = false
 Vue.prototype.$store = store

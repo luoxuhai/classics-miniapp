@@ -19,10 +19,9 @@
 
 <script>
 import { mapMutations, mapState } from "vuex";
-import { setTimeout } from "timers";
 export default {
   props: {
-    books: Object
+    books: Array
   },
   methods: {
     ...mapMutations(["setBookInfo"]),

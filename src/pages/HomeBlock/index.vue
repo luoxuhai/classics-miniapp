@@ -95,6 +95,7 @@ export default {
         this.loading = false;
         return;
       } else this.loading = true;
+
       this.$api
         .getRanking({
           page: this.page,
@@ -111,14 +112,14 @@ export default {
         this.loading = false;
         return;
       } else this.loading = true;
-      let data = {
-        page: this.page,
-        per_page: this.per_page,
-        type: this.currentType,
-        sortMethod: this.sortMethod
-      };
+
       this.$api
-        .getBook(data)
+        .getBook({
+          page: this.page,
+          per_page: this.per_page,
+          type: this.currentType,
+          sortMethod: this.sortMethod
+        })
         .then(this.successHandle.bind(this, reachBottom))
         .catch(err => {
           this.loading = false;

@@ -1,15 +1,15 @@
 <template>
-  <div class="login-container">
-    <section>
+  <view class="login-container">
+    <view class="section">
       <img
         src="https://classics.oss-cn-beijing.aliyuncs.com/app/logo.png?x-oss-process=style/o"
         mode="aspectFill"
       />
       <text class="name webfont">古典名著书单小程序</text>
-    </section>
-    <section>
-      <p class="hint">请授权小程序以继续使用古典名著苑小程序服务</p>
-      <div hover-class="hover-button" class="button-login">
+    </view>
+    <view class="section">
+      <view class="hint">请授权小程序以继续使用古典名著苑小程序服务</view>
+      <view hover-class="hover-button" class="button-login">
         <form :report-submit="true" @submit="formSubmit">
           <!-- #ifdef MP-ALIPAY -->
           <button
@@ -27,15 +27,18 @@
           <!-- #ifdef MP-TOUTIAO -->
           <button @click="handleLogin" />
           <!-- #endif -->
+
+          <!-- #ifdef APP-PLUS || H5 -->
+          <button @click="handleLoginApp" />
+          <!-- #endif -->
         </form>微信授权登录
-      </div>
-    </section>
-  </div>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script>
 import { mapMutations, mapState } from "vuex";
-let interstitialAd = null;
 export default {
   name: "Login",
   data() {
@@ -141,21 +144,11 @@ export default {
                       this.$api.updateUserInfo(userID, data);
                     }
                     wx.hideLoading();
-                    interstitialAd.show().catch(err => {
-                      if (this.share)
-                        wx.navigateBack({
-                          delta: 1
-                        });
-                      else wx.switchTab({ url: "/pages/Home/index" });
-                    });
-
-                    interstitialAd.onClose(() => {
-                      if (this.share)
-                        wx.navigateBack({
-                          delta: 1
-                        });
-                      else wx.switchTab({ url: "/pages/Home/index" });
-                    });
+                    if (this.share)
+                      wx.navigateBack({
+                        delta: 1
+                      });
+                    else wx.switchTab({ url: "/pages/Home/index" });
                   })
                   .catch(err => {
                     if ((this.reqCount = 3)) return;
@@ -165,6 +158,75 @@ export default {
                     }, 2000);
                   });
               }
+            }
+          });
+        }
+      });
+    },
+    // #endif
+
+    // #ifdef APP-PLUS || H5
+    handleLoginApp() {
+      wx.showLoading({
+        title: "登录中...",
+        mask: true
+      });
+      uni.login({
+        provider: "qq",
+        success: loginRes => {
+          uni.getUserInfo({
+            provider: "qq",
+            withCredentials: true,
+            lang: "zh_CN",
+            success: infoRes => {
+              const {
+                openId,
+                nickName,
+                gender,
+                province,
+                city,
+                figureurl_2: avatarUrl
+              } = infoRes.userInfo;
+
+              this.$api
+                .login({
+                  openId,
+                  client: "qq",
+                  formId: "null"
+                })
+                .then(res => {
+                  const { userID, token } = res;
+                  this.setUserInfo({ userID, token });
+                  if (res.status === "register") {
+                    const date = new Date();
+                    const [year, month, day] = [
+                      date.getFullYear(),
+                      date.getMonth() + 1,
+                      date.getDate()
+                    ];
+                    this.$api.updateUserInfo(userID, {
+                      nickName,
+                      avatarUrl,
+                      gender,
+                      province,
+                      city,
+                      birthday: `${year}-${month}-${day}`
+                    });
+                  }
+                  wx.hideLoading();
+                  if (this.share)
+                    wx.navigateBack({
+                      delta: 1
+                    });
+                  else wx.switchTab({ url: "/pages/Home/index" });
+                })
+                .catch(err => {
+                  if ((this.reqCount = 3)) return;
+                  setTimeout(() => {
+                    this.reqCount++;
+                    this.handleLoginApp();
+                  }, 2000);
+                });
             }
           });
         }
@@ -283,14 +345,6 @@ export default {
   },
   onLoad(options) {
     this.share = options.share;
-    if (wx.createInterstitialAd) {
-      interstitialAd = wx.createInterstitialAd({
-        adUnitId: "adunit-088b6992cc976c00"
-      });
-    }
-  },
-  onUnload() {
-    interstitialAd = null;
   }
 };
 </script>
@@ -303,7 +357,7 @@ export default {
   align-items: center;
   justify-content: space-around;
   height: 100vh;
-  section {
+  .section {
     display: flex;
     flex-direction: column;
     align-items: center;

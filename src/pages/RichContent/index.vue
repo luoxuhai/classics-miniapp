@@ -1,6 +1,6 @@
 <template>
   <view>
-    <parser class="about__desc" :html="content" @ready="onReady" selectable showWithAnimation />
+    <parser class="about__desc" :html="content" @ready="handleReady" selectable showWithAnimation />
     <ad v-if="ready" unit-id="adunit-72c18b317917e60b" ad-type="video" ad-theme="white" />
   </view>
 </template>
@@ -13,7 +13,7 @@ export default {
     };
   },
   methods: {
-    onReady() {
+    handleReady() {
       this.ready = true;
       wx.hideNavigationBarLoading();
     }

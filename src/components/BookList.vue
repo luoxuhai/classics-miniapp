@@ -8,7 +8,7 @@
       @submit="handleEnterClick($event, item._id, item.bookName, item.author.name, item.bookCover, item.total)"
     >
       <view class="list-item">
-        <img mode="aspectFill" lazy-load :src="item.bookCover + '?x-oss-process=style/m'" />
+        <img mode="aspectFill" lazy-load :src="item.bookCover + '?x-oss-process=style/s'" />
         <view class="books-syn">
           <text class="syn-title">{{item.bookName}}</text>
           <text class="syn-author">{{ '[' + item.author.dynasty + '] ' + item.author.name}}</text>
@@ -74,8 +74,14 @@ export default {
   methods: {
     ...mapMutations(["setBookInfo", "setProduction"]),
     handleEnterClick(e, bookID, bookName, bookAuthor, bookCover, commentCount) {
+      // #ifndef APP-PLUS
       if (e.detail.formId === "the formId is a mock one")
         this.setProduction(false);
+      else
+        this.$api.updateUserInfo(this.$store.state.userID, {
+          formId: e.detail.formId
+        });
+      // #endif
       if (this.pageComment) {
         this.enterUserCommentDetail(
           bookID,

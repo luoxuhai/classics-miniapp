@@ -1,28 +1,27 @@
 <template>
-  <div>
-    <header class="header">
+  <view>
+    <view class="header">
       <img class="book-cover" :src="bookCover + '?x-oss-process=style/m'" mode="aspectFill" />
-      <div class="syn">
-        <h1 class="title">{{bookName}}</h1>
-        <h2 class="author">{{bookAuthor}}</h2>
-        <p class="author">{{count}}条书评</p>
-      </div>
-    </header>
-    <main class="body">
+      <view class="syn">
+        <view class="title">{{bookName}}</view>
+        <view class="author">{{bookAuthor}}</view>
+        <view class="author">{{count}}条书评</view>
+      </view>
+    </view>
+    <view class="body">
       <CommentList
         :commentList="comments"
         :userID="userID"
         :loading="loading"
         @handleDelComment="handleDelComment"
       />
-      <ad v-if="page > total" unit-id="adunit-0a1335b664532ee6" ad-type="video" ad-theme="white" />
-    </main>
-    <footer class="publish-grade" @click="handleShow" hover-class="hover-more">
+    </view>
+    <view class="publish-grade" @click="handleShow" hover-class="hover-more">
       <img :src="avatarUrl" mode="aspectFill" />
-      <p>{{loading ? '' : '我来评论'}}</p>
-    </footer>
+      <view>{{loading ? '' : '我来评论'}}</view>
+    </view>
     <PublishGrade ref="publishGrade" @handlePublishClick="handlePublishClick" />
-  </div>
+  </view>
 </template>
 
 <script>
@@ -222,7 +221,7 @@ export default {
     border-radius: 50%;
     background-color: #eee;
   }
-  p {
+  view {
     margin-left: 40rpx;
     font-size: 40rpx;
     font-weight: 600;

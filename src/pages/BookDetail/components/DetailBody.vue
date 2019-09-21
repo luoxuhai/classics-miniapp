@@ -35,7 +35,7 @@
                   >{{comments[0] ? '查看更多' : '我要点评'}}</div>
                 </div>
                 <CommentList
-                  :commentList="comments"
+                  :comments="comments"
                   :detailPage="detailPage"
                   @handleDelComment="handleDelComment"
                   :tip="comments[0] ? '共有' + detailBody.commentSum + '条点评' : tip"
@@ -388,6 +388,7 @@ export default {
         }
 
         .catalog-order {
+          padding: 5rpx 10rpx;
           color: #ea5a49;
           .iconfont {
             margin-right: 5rpx;

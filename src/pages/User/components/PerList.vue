@@ -9,9 +9,11 @@
     >
       <img :src="item.icon" />
       <button v-if="index === 4" open-type="feedback"></button>
+      <!-- #ifdef MP-WEIXIN || MP-QQ -->
       <button v-if="index === 5" open-type="contact"></button>
-      <p>{{item.text}}</p>
-      <span v-if="index != 3" class="iconfont">&#xe667;</span>
+      <!-- #endif -->
+      <p class="title">{{item.text}}</p>
+      <label v-if="index != 3" class="iconfont">&#xe667;</label>
     </view>
   </view>
 </template>
@@ -100,6 +102,8 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
 .select-list {
+  width: 100vw;
+  overflow: hidden;
   .list-item {
     display: flex;
     justify-content: space-between;

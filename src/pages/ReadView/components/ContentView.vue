@@ -9,7 +9,7 @@
       :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
       selectable
     >{{ catalogueList[fileIndex] }}</text>
-     <!-- #ifdef MP-WEIXIN || H5 -->
+     <!-- #ifdef MP-WEIXIN || H5 || APP-PLUS -->
     <view
       class="content"
       :style="{ fontSize: readTheme.fontSize + 'px'}"
@@ -18,6 +18,7 @@
       @touchmove="handleControlNavHide"
     >
      <!-- #endif -->
+
     <!-- #ifdef MP-QQ -->
     <view
       class="content"
@@ -26,15 +27,18 @@
       @touchmove="handleControlNavHide"
     >
     <!-- #endif -->
+
       <!-- #ifdef MP-QQ -->
       <HtmlParse
         :content="bookContent"
         :className="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
       />
       <!-- #endif -->
-      <!-- #ifdef MP-WEIXIN || H5 -->
-      <parser :html="bookContent" selectable @ready="onReady" />
+
+      <!-- #ifdef MP-WEIXIN || H5 || APP-PLUS -->
+      <parser :html="bookContent" selectable showWithAnimation @ready="handleReady" />
       <!-- #endif -->
+
     </view>
 
     <view v-if="opacity" class="toggle-button">
@@ -55,7 +59,6 @@ import { mapState, mapMutations } from "vuex";
 // #ifdef MP-QQ
 import HtmlParse from "@/components/HtmlParse/parse.vue";
 // #endif
-import { setTimeout } from "timers";
 export default {
   // #ifdef MP-QQ
   components: {
@@ -114,7 +117,7 @@ export default {
             scrollTop:
               this.progress[1] *
               (this.progress[2] / this.systemInfo.windowWidth),
-            // #ifdef MP-WEIXIN || MP-QQ
+            // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
             duration: 0
             // #endif
           });
@@ -131,12 +134,13 @@ export default {
         return 1;
       } else return null;
     },
-    onReady() {
+    handleReady() {
+      console.log('ready');
       wx.hideLoading();
       wx.pageScrollTo({
         scrollTop:
           this.progress[1] * (this.progress[2] / this.systemInfo.windowWidth),
-        // #ifdef MP-WEIXIN || MP-QQ
+        // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
         duration: 0
         // #endif
       });

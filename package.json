@@ -38,8 +38,8 @@
   "devDependencies": {
     "@dcloudio/uni-cli-shared": "*",
     "@dcloudio/uni-template-compiler": "*",
-    "@dcloudio/vue-cli-plugin-hbuilderx": "latest",
-    "@dcloudio/vue-cli-plugin-uni": "latest",
+    "@dcloudio/vue-cli-plugin-hbuilderx": "^2.0.0-23120190920002",
+    "@dcloudio/vue-cli-plugin-uni": "^2.0.0-23120190920002",
     "@dcloudio/webpack-uni-mp-loader": "*",
     "@dcloudio/webpack-uni-pages-loader": "*",
     "@types/html5plus": "*",
@@ -47,10 +47,10 @@
     "@vue/cli-plugin-babel": "3.5.1",
     "@vue/cli-service": "^3.9.0",
     "babel-plugin-import": "^1.11.0",
-    "postcss-comment": "^2.0.0",
-    "vue-template-compiler": "^2.6.10",
     "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0"
+    "postcss-comment": "^2.0.0",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.6.10"
   },
   "browserslist": [
     "last 3 versions",

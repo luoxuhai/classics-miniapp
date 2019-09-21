@@ -1,5 +1,5 @@
 <template>
-  <div class="read-container">
+  <view class="read-container">
     <TitleBar
       ref="titleBar"
       @handleToCommentClick="handleToCommentClick"
@@ -14,15 +14,15 @@
       @handleToCataClick="handleToCataClick"
       @showBookMark="showBookMarkFunc"
     />
-    <div
+    <view
       v-if="showBookMark"
       class="bookmark"
       :style="{color: join ? '#f67280' : '#f8f8fa'}"
       @click="handleJoinBookMarkClick"
     >
       <span class="iconfont">&#xe780;</span>
-    </div>
-  </div>
+    </view>
+  </view>
 </template>
 
 <script>

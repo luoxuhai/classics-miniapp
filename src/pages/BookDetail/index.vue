@@ -51,6 +51,7 @@ export default {
     changeImgLoad() {
       // #ifndef MP-TOUTIAO
       wx.hideNavigationBarLoading();
+      this.opacity = 1;
       // #endif
     },
     handleGradeClick() {
@@ -77,7 +78,6 @@ export default {
       this.$api
         .getBookDetail(bookID)
         .then(res => {
-          this.opacity = 1;
           let {
             catalogueSum,
             catalogueList,

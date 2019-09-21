@@ -86,27 +86,7 @@ export default {
   getBookContentInfo: data => {
     return request.get('/v1/book/content', data)
   },
-  getEnv: data => {
-    return request.get('/v1/app/env', data)
-  },
-  getTypes: data => {
-    return request.get('/v1/app/types', data)
-  },
-  getAffiche: id => {
-    return request.get(`/v1/push/affiche/${id}`)
-  },
-  getArticle: id => {
-    return request.get(`/v1/articles/${id}`)
-  },
-  getArticles: data => {
-    return request.get('/v1/articles', data)
-  },
-  getHotSearch: () => {
-    return request.get('/v1/push/hot')
-  },
-  about: data => {
-    return request.get('/v1/push/about', data)
-  },
+
   getOSSContent: url => {
     return request.get(url)
   }

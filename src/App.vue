@@ -69,6 +69,10 @@ export default {
     });
     // #endif
 
+    // #ifdef APP-PLUS
+    this.setProduction(true);
+    // #endif
+
     // #ifdef MP-WEIXIN
     this.autoUpdate();
     wx.getStorage({
@@ -112,4 +116,5 @@ export default {
 </script>
 <style>
 @import url("/components/HtmlParse/parse.css");
+@import url("./App.css");
 </style>

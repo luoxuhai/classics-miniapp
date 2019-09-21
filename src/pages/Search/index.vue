@@ -16,7 +16,7 @@
       <scroll-view v-if="!searched" class="main" scroll-y>
         <view class="history-item" v-for="(item, index) of searchHistoryArr" :key="index">
           <label class="iconfont">&#xe631;</label>
-          <p class="content" @click="handleHistoryItem(index)">{{ item }}</p>
+          <view class="content" @click="handleHistoryItem(index)">{{ item }}</view>
           <label class="iconfont" @click="handleClearItem(index)">&#xe625;</label>
         </view>
         <ad unit-id="adunit-e1a27ccddca8d7e7" ad-type="video" ad-theme="white" />

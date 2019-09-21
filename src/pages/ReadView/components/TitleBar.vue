@@ -1,21 +1,21 @@
 <template>
-  <div
+  <view
     class="nav"
     :class="{show: showHeader}"
     :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
   >
-    <header class="header">{{ catalogueList[fileIndex] }}</header>
-    <span
+    <view class="header">{{ catalogueList[fileIndex] }}</view>
+    <label
       class="iconfont nav-item"
       :style="{color: isStar ? '#b2b2b2' : ''}"
       @click="handleAddToRackClick"
-    >&#xe630;</span>
-    <span class="iconfont nav-item" @click="handleToCommentClick">&#xe62d;</span>
-    <div class="iconfont nav-item share" @click="handleShareClick">
+    >&#xe630;</label>
+    <label class="iconfont nav-item" @click="handleToCommentClick">&#xe62d;</label>
+    <view class="iconfont nav-item share" @click="handleShareClick">
       &#xe624;
       <button open-type="share" />
-    </div>
-  </div>
+    </view>
+  </view>
 </template>
 
 <script>
@@ -62,9 +62,10 @@ export default {
   padding: 0 25rpx;
   background-color: #fff;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
-  opacity: 0;
-  transition: all 0.3s ease-out;
+  opacity: 0.5;
+  transition: all 0.2s ease-out;
   transform: translateY(-120rpx);
+  will-change: transform;
   .header {
     width: 100%;
     font-size: 14px;

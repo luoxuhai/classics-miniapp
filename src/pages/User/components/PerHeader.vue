@@ -1,20 +1,20 @@
 <template>
-  <header class="header-container">
+  <view class="header-container">
     <img class="img-avatar" :src="avatar" @click="handelEnterSetting" mode="aspectFill" />
-    <div v-if="token" class="info">
-      <h1 class="info-nickname">{{ nickName }}</h1>
-      <div class="info-detail">
-        <p class="detail-sex">
-          <span v-if="gender === '男'" class="iconfont">&#xe632;</span>
-          <span v-if="gender === '女'" class="iconfont">&#xe642;</span>
+    <view v-if="token" class="info">
+      <view class="info-nickname">{{ nickName }}</view>
+      <view class="info-detail">
+        <view class="detail-sex">
+          <label v-if="gender === '男'" class="iconfont">&#xe632;</label>
+          <label v-if="gender === '女'" class="iconfont">&#xe642;</label>
           {{ gender }}
-        </p>
-        <p class="detail-location">{{ province }} {{city }}</p>
-      </div>
-    </div>
+        </view>
+        <view class="detail-location">{{ province }} {{city }}</view>
+      </view>
+    </view>
     <view v-else class="login">登录</view>
-    <div class="bg-img" :style="{backgroundImage: 'url(' + avatar + ')'}"></div>
-  </header>
+    <view class="bg-img" :style="{backgroundImage: 'url(' + avatar + ')'}"></view>
+  </view>
 </template>
 
 <script>

@@ -58,11 +58,11 @@ export default {
       type: Boolean,
       default: false
     },
-    commentList: Array
+    comments: Array
   },
   data() {
     return {
-      commentList: this.commentList
+      commentList: this.comments
     };
   },
   methods: {

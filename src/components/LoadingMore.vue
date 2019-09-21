@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <div v-if="loading" class="box" :style="{color}">
-      <span class="loader-13"></span>
-    </div>
-    <p v-if="!loading" :style="{color: fontColor}" class="tip">{{ tip }}</p>
-  </div>
+  <view>
+    <view v-if="loading" class="box" :style="{color}">
+      <label class="loader-13"></label>
+    </view>
+    <view v-if="!loading" :style="{color: fontColor}" class="tip">{{ tip }}</view>
+  </view>
 </template>
 
 <script>
@@ -36,14 +36,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   height: 100rpx;
 }
 .tip {
   @extend .box;
   font-size: 32rpx;
 }
-[class*="loader-"] {
+.loader-13 {
   display: inline-block;
   width: 1em;
   height: 1em;

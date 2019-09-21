@@ -22,11 +22,13 @@ const trustAttrs = {
   name: true,
   poster: true,
   rowspan: true,
+  size: true,
   span: true,
   src: true,
   start: true,
   style: true,
   type: true,
+  "unit-id":true,
   width: true,
 };
 const voidTag = {
