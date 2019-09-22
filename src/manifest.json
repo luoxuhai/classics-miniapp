@@ -13,6 +13,9 @@
             "autoclose" : true,
             "delay" : 0
         },
+        "compatible": {  
+            "ignoreVersion": true  
+        },  
         "modules" : {
             "OAuth" : {}
         },

@@ -127,7 +127,7 @@ export default {
         this.setUserInfo(res.userInfo);
       });
     // 在页面onLoad回调事件中创建插屏广告实例
-    // #ifdef MP-WEiXIN
+    // #ifdef MP-WEIXIN
     if (wx.createInterstitialAd) {
       const interstitialAd = wx.createInterstitialAd({
         adUnitId: "adunit-83c7d09dcd1bd671"

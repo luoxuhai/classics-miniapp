@@ -202,7 +202,11 @@ export default {
           });
           // #ifdef MP-ALIPAY
           my.setNavigationBar({
-            backgroundColor: this.readTheme.viewColor.backgroundColor
+            backgroundColor: this.readTheme.viewColor.backgroundColor,
+            animation: {
+              duration: 200,
+              timingFunc: "easeOut"
+            }
           });
           // #endif
 
@@ -212,7 +216,11 @@ export default {
               this.readTheme.viewColor.fontColor === "#f9f9f9"
                 ? "#ffffff"
                 : this.readTheme.viewColor.fontColor,
-            backgroundColor: this.readTheme.viewColor.backgroundColor
+            backgroundColor: this.readTheme.viewColor.backgroundColor,
+            animation: {
+              duration: 200,
+              timingFunc: "easeOut"
+            }
           });
           // #endif
           break;
@@ -314,8 +322,7 @@ export default {
   box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.12);
   opacity: 0;
   transform: translateY(120rpx);
-  transition: opacity 0.4s ease-out;
-  transition: transform 0.2s ease-out;
+  transition: all 0.2s ease-out;
   .nav-item {
     padding: 40rpx;
     font-size: 24px;

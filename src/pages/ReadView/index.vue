@@ -157,7 +157,6 @@ export default {
 
   onPageScroll(e) {
     oldScrollTop = e.scrollTop;
-    
   },
 
   onShareAppMessage(res) {
@@ -210,8 +209,8 @@ export default {
       });
     // #endif
     wx.setKeepScreenOn({
-  keepScreenOn: true
-})
+      keepScreenOn: true
+    });
   },
   // #ifdef MP-ALIPAY
   onReady() {
@@ -251,9 +250,9 @@ export default {
     oldScrollTop = 0;
     // 清除计时器
     this.$refs.menuBar.handleUnload();
-        wx.setKeepScreenOn({
-  keepScreenOn: false
-})
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    });
   }
 };
 </script>
