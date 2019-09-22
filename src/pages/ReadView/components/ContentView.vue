@@ -1,7 +1,7 @@
 <template>
   <view
     class="content-container"
-    :style="{ opacity, backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+    :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
   >
     <text
       v-if="opacity"
@@ -9,7 +9,7 @@
       :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
       selectable
     >{{ catalogueList[fileIndex] }}</text>
-     <!-- #ifdef MP-WEIXIN || H5 || APP-PLUS -->
+     <!-- #ifdef H5 -->
     <view
       class="content"
       :style="{ fontSize: readTheme.fontSize + 'px'}"
@@ -19,10 +19,10 @@
     >
      <!-- #endif -->
 
-    <!-- #ifdef MP-QQ -->
+    <!-- #ifdef MP-QQ || MP-WEIXIN || APP-PLUS -->
     <view
       class="content"
-      :style="{ fontSize: readTheme.fontSize + 'px'}"
+      :style="{opacity, fontSize: readTheme.fontSize + 'px'}"
       @click="handleControlNav"
       @touchmove="handleControlNavHide"
     >
@@ -31,14 +31,14 @@
       <!-- #ifdef MP-QQ -->
       <HtmlParse
         :content="bookContent"
-        :className="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
+
       />
       <!-- #endif -->
 
       <!-- #ifdef MP-WEIXIN || H5 || APP-PLUS -->
-      <parser :html="bookContent" selectable showWithAnimation @ready="handleReady" />
+      <!-- <parser html="<div>Hello World!</div" selectable @ready="handleReady" @error="binderror" /> -->
+      <HtmlParse :content="bookContent" />
       <!-- #endif -->
-
     </view>
 
     <view v-if="opacity" class="toggle-button">
@@ -56,11 +56,11 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-// #ifdef MP-QQ
+// #ifdef MP-QQ || MP-WEIXIN || APP-PLUS
 import HtmlParse from "@/components/HtmlParse/parse.vue";
 // #endif
 export default {
-  // #ifdef MP-QQ
+  // #ifdef MP-QQ || MP-WEIXIN || APP-PLUS
   components: {
     HtmlParse
   },
@@ -111,9 +111,9 @@ export default {
 
       this.$api.getOSSContent(`${bookFile}/${fileIndex}.html`).then(res => {
         this.bookContent = res.replace(/　　{2,}/g, '　　');
-        // #ifdef MP-QQ
-        setTimeout(() => {
-          wx.pageScrollTo({
+        // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
+        this.$nextTick(() => {
+         wx.pageScrollTo({
             scrollTop:
               this.progress[1] *
               (this.progress[2] / this.systemInfo.windowWidth),
@@ -123,7 +123,8 @@ export default {
           });
           this.setBookInfo({ progress: [0, 0, 0] });
           this.opacity = 1;
-        }, 50);
+          wx.hideLoading();
+        })
         // #endif
       });
     },
@@ -175,7 +176,7 @@ export default {
   align-items: center;
   min-height: 100vh;
   padding: 20px 20px 0 20px;
-  opacity: 0;
+
   transition: opacity 0.16s;
   .title {
     margin: 25px auto;
@@ -185,6 +186,7 @@ export default {
     min-height: 70vh;
     line-height: 1.8em;
     text-align: justify;
+    opacity: 0;
   }
   .toggle-button {
     display: flex;

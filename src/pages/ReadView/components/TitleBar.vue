@@ -62,10 +62,10 @@ export default {
   padding: 0 25rpx;
   background-color: #fff;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
-  opacity: 0.5;
-  transition: all 0.2s ease-out;
+  opacity: 0;
   transform: translateY(-120rpx);
-  will-change: transform;
+  transition: opacity 0.4s ease-out;
+  transition: transform 0.2s ease-out;
   .header {
     width: 100%;
     font-size: 14px;

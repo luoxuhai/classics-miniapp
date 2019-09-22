@@ -19,7 +19,9 @@
           <view class="content" @click="handleHistoryItem(index)">{{ item }}</view>
           <label class="iconfont" @click="handleClearItem(index)">&#xe625;</label>
         </view>
+        <!-- #ifdef MP-WEIXIN -->
         <ad unit-id="adunit-e1a27ccddca8d7e7" ad-type="video" ad-theme="white" />
+        <!-- #endif -->
       </scroll-view>
     </view>
   </view>

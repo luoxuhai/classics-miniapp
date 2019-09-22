@@ -175,13 +175,13 @@ export default {
     });
     // #endif
 
-    // #ifdef MP-WEIXIN || MP-QQ || MP-TOUTIAO
+    // #ifdef MP-WEIXIN || MP-QQ || MP-TOUTIAO || APP-PLUS
     wx.setNavigationBarTitle({
       title: this.bookName
     });
     // #endif
 
-    // #ifdef MP-WEIXIN || MP-QQ
+    // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
     this.$api
       .getBookContentInfo({
         bookID: this.bookID

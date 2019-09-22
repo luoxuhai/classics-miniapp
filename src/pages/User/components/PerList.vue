@@ -45,10 +45,12 @@ export default {
           icon: "/static/icons/feedback.png",
           text: "我要反馈"
         },
+         // #ifdef MP-WEIXIN
         {
           icon: "/static/icons/feedback.png",
           text: "客服"
         },
+        // #endif
         {
           icon: "/static/icons/about.png",
           text: "关于"
@@ -78,14 +80,23 @@ export default {
           });
           break;
         case 4:
+           // #ifdef MP-WEIXIN
           wx.showLoading({
             title: "打开中"
           });
+          // #endif
           break;
         case 5:
+           // #ifdef MP-WEIXIN
           wx.showLoading({
             title: "打开中"
           });
+          // #endif
+          // #ifdef APP-PLUS
+            wx.navigateTo({
+            url: `/pages/About/index`
+          });
+          // #endif
           break;
         case 6:
           wx.navigateTo({

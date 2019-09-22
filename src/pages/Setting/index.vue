@@ -115,9 +115,11 @@ export default {
       }
     },
     selectImage() {
+       // #ifdef MP-WEIXIN
       wx.showLoading({
         title: "加载中"
       });
+      // #endif
       wx.chooseImage({
         count: 1,
         sizeType: ["original"],
@@ -184,17 +186,16 @@ export default {
     this.date = this.birthday;
     this.region = [this.province + "省", this.city + "市"];
     this.getStorageSize();
+    // #ifdef MP-WEIXIN
     if (wx.createInterstitialAd) {
       const interstitialAd = wx.createInterstitialAd({
         adUnitId: "adunit-83c7d09dcd1bd671"
       });
-      interstitialAd.onLoad(() => {});
-      interstitialAd.onError(err => {});
-      interstitialAd.onClose(() => {});
       interstitialAd.show().catch(err => {
         console.error(err);
       });
     }
+    // #endif
   }
 };
 </script>
@@ -227,12 +228,12 @@ export default {
           align-items: inherit;
           justify-content: inherit;
           margin-right: 10rpx;
-          font-size: 14px;
+          font-size: 28rpx;
           color: $Grey;
         }
         img {
-          width: 50px;
-          height: 50px;
+          width: 100rpx;
+          height: 100rpx;
           margin-right: 10rpx;
           border-radius: 50%;
           background-color: $Place;
@@ -243,7 +244,7 @@ export default {
           margin-right: 10rpx;
           text-align: right;
           line-height: 110rpx;
-          font-size: 14px;
+          font-size: 28rpx;
           color: $Grey;
         }
         .iconfont {

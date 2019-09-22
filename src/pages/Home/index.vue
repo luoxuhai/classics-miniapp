@@ -127,6 +127,7 @@ export default {
         this.setUserInfo(res.userInfo);
       });
     // 在页面onLoad回调事件中创建插屏广告实例
+    // #ifdef MP-WEiXIN
     if (wx.createInterstitialAd) {
       const interstitialAd = wx.createInterstitialAd({
         adUnitId: "adunit-83c7d09dcd1bd671"
@@ -138,6 +139,7 @@ export default {
         console.error(err);
       });
     }
+    // #endif
   }
 };
 </script>

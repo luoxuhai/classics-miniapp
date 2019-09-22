@@ -5,6 +5,7 @@
     <view style="height: 50px">
       <LoadingMore :loading="loading" />
     </view>
+    <!-- #ifdef MP-WEIXIN -->
     <ad
       v-if="!token"
       class="ad-continer"
@@ -13,6 +14,7 @@
       ad-theme="white"
       :ad-intervals="30"
     />
+    <!-- #endif -->
   </view>
 </template>
 
@@ -89,7 +91,7 @@ export default {
   },
   onPullDownRefresh() {
     this.getAphorism();
-     this.loadMore();
+    this.loadMore();
   },
   onLoad() {
     this.getDate();

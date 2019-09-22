@@ -90,7 +90,6 @@
       <div
         :class="[production ? 'navbar-join' : 'navbar-read']"
         :style="{color: detailBody.isStar ? '#888': ''}"
-        open-type="share"
         :hover-class="detailBody.isStar ? '' : 'hover-button'"
         @click="handleAddBookRack"
       >{{ detailBody.isStar ? '已在书单' : '加入书单' }}</div>
@@ -133,6 +132,25 @@ export default {
     };
   },
   methods: {
+    handleShareClick() {
+      // #ifdef APP-PLUS
+      uni.share({
+        provider: "weixin",
+        type: 5,
+        imageUrl:
+          "https://classics.oss-cn-beijing.aliyuncs.com/app/%E6%89%B9%E6%B3%A8%202019-08-29%2021584.jpg",
+        title: "古典名著苑-免费看海量中国古典小说",
+        miniProgram: {
+          id: "wx53d943b45c17326f",
+          path: "pages/Home/index",
+          type: 0
+        },
+        success: ret => {
+          console.log(JSON.stringify(ret));
+        }
+      });
+      // #endif
+    },
     ...mapMutations(["setBookInfo"]),
     handleOrderClick() {
       this.inverted = !this.inverted;
