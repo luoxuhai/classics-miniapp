@@ -10,7 +10,7 @@
     </view>
     <view class="body">
       <CommentList
-        :commentList="comments"
+        :comments="comments"
         :userID="userID"
         :loading="loading"
         @handleDelComment="handleDelComment"

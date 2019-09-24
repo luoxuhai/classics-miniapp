@@ -3,7 +3,7 @@
     <ul
       class="grade-list"
       :class="{'p-40 ': pageComment}"
-      v-for="(item, index) of commentList"
+      v-for="(item, index) of comments"
       :key="item._id"
     >
       <img
@@ -47,7 +47,7 @@ import LoadingMore from "@/components/LoadingMore";
 
 moment.locale("zh-cn");
 export default {
-  name: "CommentList",
+  name: "comments",
   components: {
     StarComment,
     LoadingMore
@@ -62,7 +62,7 @@ export default {
   },
   data() {
     return {
-      commentList: this.comments
+      comments: this.comments
     };
   },
   methods: {
@@ -70,20 +70,20 @@ export default {
       this.$emit("handleDelComment", { commentID, bookID });
     },
     handleLikeClick(index, commentID, isLike) {
-      this.commentList[index].isLike = !this.commentList[index].isLike;
+      this.comments[index].isLike = !this.comments[index].isLike;
       if (isLike) {
-        this.commentList[index].likeSum -= 1;
+        this.comments[index].likeSum -= 1;
         this.$api.deleteLike(commentID).catch(() => {
-          this.commentList[index].likeSum += 1;
+          this.comments[index].likeSum += 1;
         });
       } else {
-        this.commentList[index].likeSum += 1;
+        this.comments[index].likeSum += 1;
         this.$api
           .addLike({
             commentID
           })
           .catch(() => {
-            this.commentList[index].likeSum -= 1;
+            this.comments[index].likeSum -= 1;
           });
       }
     },

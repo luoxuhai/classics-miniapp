@@ -1,15 +1,15 @@
 <template>
-  <main class="container">
-    <header>
-      <div class="header-content">
-        <h1 class="book-name">{{ bookInfo.bookName }}</h1>
-        <h2 class="book-author">{{ bookInfo.bookAuthor }}</h2>
-        <p class="book-comment-count">{{ bookInfo.commentCount }}条点评</p>
-      </div>
+  <view class="container">
+    <view class="header-container">
+      <view class="header-content">
+        <text class="book-name">{{ bookInfo.bookName }}</text>
+        <text class="book-author">{{ bookInfo.bookAuthor }}</text>
+        <text class="book-comment-count">{{ bookInfo.commentCount }}条点评</text>
+      </view>
       <img mode="aspectFill" :src="bookInfo.bookCover + '?x-oss-process=style/m'" />
-    </header>
-    <CommentList :commentList="comments" :pageComment="true" @handleDelComment="handleDelComment" />
-  </main>
+    </view>
+    <CommentList :comments="comments" :pageComment="true" @handleDelComment="handleDelComment" />
+  </view>
 </template>
 
 <script>
@@ -77,39 +77,35 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/styles/common.scss";
 .container {
-  header {
+  .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
-    padding: 20px 50rpx;
+    padding: 40rpx 50rpx;
     border-bottom: 5px solid $Divider;
     .header-content {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      height: 100%;
+      height: calc(140rpx / 0.65);
       .book-name {
         @include ellipsis;
-        /* #ifdef MP-TOUTIAO */
-        overflow: visible;
-        /* #endif */
         font: {
-          size: 20px;
+          size: 40rpx;
           weight: 700;
         }
         color: $Title;
       }
       .book-author {
         font: {
-          size: 16px;
+          size: 32rpx;
         }
         color: $Content;
       }
       .book-comment-count {
         font: {
-          size: 14px;
+          size: 28rpx;
         }
         color: $Light;
       }
