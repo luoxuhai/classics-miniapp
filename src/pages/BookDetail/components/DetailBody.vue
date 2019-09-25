@@ -26,7 +26,7 @@
                   <span class="iconfont" :class="[descUnfold ? 'shrink' : 'unfold']">&#xe63f;</span>
                 </p>
               </div>
-              <div class="detail-grade">
+              <div v-if="production" class="detail-grade">
                 <div class="grade-header">
                   <p class="grade-title">评论</p>
                   <div

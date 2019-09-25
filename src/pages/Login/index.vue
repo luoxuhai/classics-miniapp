@@ -151,6 +151,15 @@ export default {
                     else wx.switchTab({ url: "/pages/Home/index" });
                   })
                   .catch(err => {
+                    if (err.response.data.errMsg) {
+                      wx.showModal({
+                        title: "提示",
+                        content: err.response.data.errMsg,
+                        showCancel: false,
+                        confirmText: "确认"
+                      });
+                      return;
+                    }
                     if ((this.reqCount = 3)) return;
                     setTimeout(() => {
                       this.reqCount++;

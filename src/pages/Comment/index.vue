@@ -90,6 +90,16 @@ export default {
               });
               return;
             }
+
+            if (err.response.data.errMsg) {
+              wx.showModal({
+                title: "提示",
+                content: err.response.data.errMsg,
+                showCancel: false,
+                confirmText: "确认",
+              });
+              return;
+            }
             showToast({
               title: "评论失败",
               type: "error"
