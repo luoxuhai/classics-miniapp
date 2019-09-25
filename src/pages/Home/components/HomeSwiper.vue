@@ -10,9 +10,11 @@
     next-margin="30rpx"
     circular
   >
+    <!-- #ifdef MP-WEIXIN -->
     <swiper-item>
       <ad unit-id="adunit-83a2d356a525d43e" :ad-intervals="30" />
     </swiper-item>
+    <!-- #endif -->
     <block v-for="item of banners" :key="item._id">
       <swiper-item>
         <img mode="aspectFill" :src="item.bannerImg" @click="handleEnter(item.type, item._id)" />

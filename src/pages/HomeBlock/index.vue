@@ -18,7 +18,9 @@
       :pageRanking="title === 'ranking' ? true : false"
       ref="list"
     />
+    <!-- #ifdef MP-WEIXIN -->
     <ad v-if="page > total" unit-id="adunit-0a1335b664532ee6" ad-type="video" ad-theme="white" />
+    <!-- #endif -->
   </view>
 </template>
 

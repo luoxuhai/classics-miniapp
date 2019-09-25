@@ -10,7 +10,9 @@
       lazy-load
     />
     <LoadingMore :loading="loading" :tip="tip" />
+    <!-- #ifdef MP-WEIXIN -->
     <ad unit-id="adunit-72c18b317917e60b" ad-type="video" ad-theme="white" />
+    <!-- #endif -->
   </view>
 </template>
 

@@ -202,17 +202,25 @@ export default {
           });
           // #ifdef MP-ALIPAY
           my.setNavigationBar({
-            backgroundColor: this.readTheme.viewColor.backgroundColor
+            backgroundColor: this.readTheme.viewColor.backgroundColor,
+            animation: {
+              duration: 200,
+              timingFunc: "easeOut"
+            }
           });
           // #endif
 
-          // #ifdef MP-WEIXIN || MP-QQ
+          // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
           wx.setNavigationBarColor({
             frontColor:
               this.readTheme.viewColor.fontColor === "#f9f9f9"
                 ? "#ffffff"
                 : this.readTheme.viewColor.fontColor,
-            backgroundColor: this.readTheme.viewColor.backgroundColor
+            backgroundColor: this.readTheme.viewColor.backgroundColor,
+            animation: {
+              duration: 200,
+              timingFunc: "easeOut"
+            }
           });
           // #endif
           break;
@@ -310,12 +318,11 @@ export default {
   width: 100%;
   height: 120rpx;
   padding: 0;
-  opacity: 0.5;
   background-color: #fff;
   box-shadow: 0 -2px 6px 0 rgba(0, 0, 0, 0.12);
-  transition: all 0.2s ease-out;
+  opacity: 0;
   transform: translateY(120rpx);
-  will-change: transform;
+  transition: all 0.2s ease-out;
   .nav-item {
     padding: 40rpx;
     font-size: 24px;
