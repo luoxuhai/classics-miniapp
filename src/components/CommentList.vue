@@ -1,42 +1,42 @@
 <template>
-  <action class="container">
-    <ul
+  <view class="container">
+    <view
       class="grade-list"
       :class="{'p-40 ': pageComment}"
       v-for="(item, index) of comments"
       :key="item._id"
     >
-      <img
+      <image
         v-if="!pageComment"
         :src="item.user.avatarUrl + '?x-oss-process=style/s'"
         class="grade-face"
         mode="aspectFill"
       />
-      <li class="grade-body">
-        <h1 v-if="!pageComment" class="grade-top">{{item.user.nickName}}</h1>
-        <div class="grade-stars">
-          <div class="grade-star">
+      <view class="grade-body">
+        <text v-if="!pageComment" class="grade-top">{{item.user.nickName}}</text>
+        <view class="grade-stars">
+          <view class="grade-star">
             <StarComment :score="item.score" />
-          </div>
-          <p @click="handleLikeClick(index, item._id, item.isLike)">
-            <span v-if="!item.isLike" class="iconfont">&#xe704;</span>
-            <span v-if="item.isLike" class="iconfont active">&#xe703;</span>
+          </view>
+          <view @click="handleLikeClick(index, item._id, item.isLike)">
+            <label v-if="!item.isLike" class="iconfont">&#xe704;</label>
+            <label v-if="item.isLike" class="iconfont active">&#xe703;</label>
             {{item.likeSum}}
-          </p>
-        </div>
-        <p class="grade-content">{{item.content}}</p>
-        <footer class="footer">
-          <p class="grade-date">{{relativeTime(item.createdAt)}}</p>
-          <div
+          </view>
+        </view>
+        <text class="grade-content">{{item.content}}</text>
+        <view class="footer">
+          <text class="grade-date">{{relativeTime(item.createdAt)}}</text>
+          <view
             v-if="item.user._id === userID"
             class="button-delete"
             @click="handleDelComment(item._id, item.bookID)"
-          >删除</div>
-        </footer>
-      </li>
-    </ul>
+          >删除</view>
+        </view>
+      </view>
+    </view>
     <LoadingMore :loading="loading" />
-  </action>
+  </view>
 </template>
 
 <script>
@@ -104,7 +104,7 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 25rpx;
-    & + ul {
+    & + view {
       border-top: 10rpx solid $Divider;
     }
     .grade-face {
@@ -120,9 +120,7 @@ export default {
       align-items: center;
       width: 100%;
       font-size: 32rpx;
-      p {
-        color: $Theme;
-      }
+      color: $Theme;
       .button-more {
         color: #ea5a49;
       }

@@ -1,34 +1,34 @@
 <template>
-  <div class="setting-container">
-    <div class="setting-list">
+  <view class="setting-container">
+    <view class="setting-list">
       <!-- #ifndef MP-TOUTIAO -->
-      <div class="list-item" hover-class="hover-button" @click="handleEnterClick(0)">
-        <h1>头像</h1>
-        <div class="footer">
+      <view class="list-item" hover-class="hover-button" @click="handleEnterClick(0)">
+        <text>头像</text>
+        <view class="footer">
           <img mode="aspectFill" :src="avatarUrl" />
-          <span class="iconfont">&#xe667;</span>
-        </div>
-      </div>
+          <label class="iconfont">&#xe667;</label>
+        </view>
+      </view>
       <!-- #endif -->
-      <div class="list-item" hover-class="hover-button" @click="handleEnterClick(1)">
-        <h1>昵称</h1>
-        <div class="footer">
-          <p>{{ nickName }}</p>
-          <span class="iconfont">&#xe667;</span>
-        </div>
-      </div>
-      <div class="list-item">
-        <h1>性别</h1>
-        <div class="footer">
+      <view class="list-item" hover-class="hover-button" @click="handleEnterClick(1)">
+        <text>昵称</text>
+        <view class="footer">
+          <text class="title">{{ nickName }}</text>
+          <label class="iconfont">&#xe667;</label>
+        </view>
+      </view>
+      <view class="list-item">
+        <text>性别</text>
+        <view class="footer">
           <picker @change="bindPickerGenderChange" :value="sexIndex" :range="sexArr">
-            <p>{{sexArr[sexIndex]}}</p>
+            <text class="title">{{sexArr[sexIndex]}}</text>
           </picker>
-          <span class="iconfont">&#xe667;</span>
-        </div>
-      </div>
-      <div class="list-item">
-        <h1>生日</h1>
-        <div class="footer">
+          <label class="iconfont">&#xe667;</label>
+        </view>
+      </view>
+      <view class="list-item">
+        <text>生日</text>
+        <view class="footer">
           <picker
             mode="date"
             :value="date"
@@ -36,27 +36,27 @@
             end="2500-09-01"
             @change="bindBirthdayChange"
           >
-            <p>{{ date }}</p>
+            <text class="title">{{ date }}</text>
           </picker>
-          <span class="iconfont">&#xe667;</span>
-        </div>
-      </div>
-      <div class="list-item">
-        <h1>地区</h1>
-        <div class="footer">
+          <label class="iconfont">&#xe667;</label>
+        </view>
+      </view>
+      <view class="list-item">
+        <text>地区</text>
+        <view class="footer">
           <picker mode="region" @change="bindRegionChange" :value="region">
-            <p>{{region[0]}}，{{region[1]}}</p>
+            <text class="title">{{region[0]}}，{{region[1]}}</text>
           </picker>
-          <span class="iconfont">&#xe667;</span>
-        </div>
-      </div>
-      <div class="list-item" @click="handleClear">
+          <label class="iconfont">&#xe667;</label>
+        </view>
+      </view>
+      <view class="list-item" @click="handleClear">
         清除缓存
-        <p class="storage">{{currentSize + 'KB'}}</p>
-      </div>
-    </div>
-    <div hover-class="hover-button" class="button-logout" @click="handleLogoutClick">退出登录</div>
-  </div>
+        <text class="storage">{{currentSize + 'KB'}}</text>
+      </view>
+    </view>
+    <view hover-class="hover-button" class="button-logout" @click="handleLogoutClick">退出登录</view>
+  </view>
 </template>
 
 <script>
@@ -110,7 +110,7 @@ export default {
           break;
         case 1:
           wx.navigateTo({
-            url: `/pages/SettingName/index`
+            url: `/pages/Setting/SettingName/index`
           });
       }
     },
@@ -125,7 +125,7 @@ export default {
         sizeType: ["original"],
         success: res => {
           wx.navigateTo({
-            url: `/pages/ImageCropper/index?imagePath=${res.tempFilePaths[0]}`
+            url: `/pages/Setting/ImageCropper/index?imagePath=${res.tempFilePaths[0]}`
           });
         },
         complete: () => {
@@ -186,16 +186,6 @@ export default {
     this.date = this.birthday;
     this.region = [this.province + "省", this.city + "市"];
     this.getStorageSize();
-    // #ifdef MP-WEIXIN
-    if (wx.createInterstitialAd) {
-      const interstitialAd = wx.createInterstitialAd({
-        adUnitId: "adunit-83c7d09dcd1bd671"
-      });
-      interstitialAd.show().catch(err => {
-        console.error(err);
-      });
-    }
-    // #endif
   }
 };
 </script>
@@ -238,7 +228,7 @@ export default {
           border-radius: 50%;
           background-color: $Place;
         }
-        p {
+        .title {
           width: 70vw;
           height: 110rpx;
           margin-right: 10rpx;

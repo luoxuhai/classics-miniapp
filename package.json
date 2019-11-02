@@ -49,7 +49,7 @@
     "babel-plugin-import": "^1.11.0",
     "node-sass": "^4.11.0",
     "postcss-comment": "^2.0.0",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "browserslist": [

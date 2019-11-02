@@ -5,9 +5,6 @@
     <view class="about__version">v{{ about.version }}</view>
     <parser v-if="production" class="about__log" :html="about.log" selectable />
     <parser class="about__desc" :html="about.intro" selectable />
-    <!-- #ifdef MP-WEIXIN -->
-    <ad class="ad" unit-id="adunit-72c18b317917e60b" ad-type="video" ad-theme="white" />
-    <!-- #endif -->
   </view>
 </template>
 

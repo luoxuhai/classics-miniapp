@@ -27,10 +27,6 @@
           <!-- #ifdef MP-TOUTIAO -->
           <button @click="handleLogin" />
           <!-- #endif -->
-
-          <!-- #ifdef APP-PLUS || H5 -->
-          <button @click="handleLoginApp" />
-          <!-- #endif -->
         </form>微信授权登录
       </view>
     </view>
@@ -167,75 +163,6 @@ export default {
                     }, 2000);
                   });
               }
-            }
-          });
-        }
-      });
-    },
-    // #endif
-
-    // #ifdef APP-PLUS || H5
-    handleLoginApp() {
-      wx.showLoading({
-        title: "登录中...",
-        mask: true
-      });
-      uni.login({
-        provider: "qq",
-        success: loginRes => {
-          uni.getUserInfo({
-            provider: "qq",
-            withCredentials: true,
-            lang: "zh_CN",
-            success: infoRes => {
-              const {
-                openId,
-                nickName,
-                gender,
-                province,
-                city,
-                figureurl_2: avatarUrl
-              } = infoRes.userInfo;
-
-              this.$api
-                .login({
-                  openId,
-                  client: "qq",
-                  formId: "null"
-                })
-                .then(res => {
-                  const { userID, token } = res;
-                  this.setUserInfo({ userID, token });
-                  if (res.status === "register") {
-                    const date = new Date();
-                    const [year, month, day] = [
-                      date.getFullYear(),
-                      date.getMonth() + 1,
-                      date.getDate()
-                    ];
-                    this.$api.updateUserInfo(userID, {
-                      nickName,
-                      avatarUrl,
-                      gender,
-                      province,
-                      city,
-                      birthday: `${year}-${month}-${day}`
-                    });
-                  }
-                  wx.hideLoading();
-                  if (this.share)
-                    wx.navigateBack({
-                      delta: 1
-                    });
-                  else wx.switchTab({ url: "/pages/Home/index" });
-                })
-                .catch(err => {
-                  if ((this.reqCount = 3)) return;
-                  setTimeout(() => {
-                    this.reqCount++;
-                    this.handleLoginApp();
-                  }, 2000);
-                });
             }
           });
         }

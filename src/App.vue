@@ -69,10 +69,6 @@ export default {
     });
     // #endif
 
-    // #ifdef APP-PLUS
-    this.setProduction(true);
-    // #endif
-
     // #ifdef MP-WEIXIN
     this.autoUpdate();
     wx.getStorage({

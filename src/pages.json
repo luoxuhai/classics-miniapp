@@ -57,7 +57,11 @@
       }
     },
     {
-      "path": "pages/ImageCropper/index",
+      "path": "pages/Setting/SettingName/index",
+      "style": { "navigationBarTitleText": "修改姓名" }
+    },
+    {
+      "path": "pages/Setting/ImageCropper/index",
       "style": {
         "navigationBarTitleText": "头像剪切",
         "navigationBarBackgroundColor": "#000",
@@ -65,25 +69,21 @@
       }
     },
     {
-      "path": "pages/SettingName/index",
-      "style": { "navigationBarTitleText": "修改姓名" }
-    },
-    {
-      "path": "pages/UserBrowse/index",
+      "path": "pages/User/Browse/index",
       "style": {
         "enablePullDownRefresh": true,
         "navigationBarTitleText": "我的浏览"
       }
     },
     {
-      "path": "pages/UserComment/index",
+      "path": "pages/User/Comment/index",
       "style": {
         "enablePullDownRefresh": true,
         "navigationBarTitleText": "我的评论"
       }
     },
     {
-      "path": "pages/UserCommentDetail/index",
+      "path": "pages/User/CommentDetail/index",
       "style": { "enablePullDownRefresh": true, "navigationBarTitleText": "" }
     },
     {

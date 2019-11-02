@@ -13,6 +13,7 @@ export default {
   catalogueSum: null,
   bookFileSavePath: [],
   bookRackList: [],
+  isBold: wx.getStorageSync("isBold") || false,
   readTheme: {
     fontSize: 18,
     viewColor: {

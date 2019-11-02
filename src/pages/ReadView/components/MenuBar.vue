@@ -5,7 +5,7 @@
       :class="{show: showHeader}"
       :style="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
     >
-      <!-- #ifdef MP-WEIXIN || MP-QQ || APP-PLUS -->
+      <!-- #ifdef MP-WEIXIN || MP-QQ -->
       <view
         class="iconfont nav-item"
         v-for="(item, index) of menuIcon"
@@ -101,6 +101,10 @@
         />
         <text>A</text>
       </view>
+      <view class="font__weight">
+        <text>粗体</text>
+        <switch color="#444c57" :checked="isBold" @change="handleFontWeightClick" />
+      </view>
     </view>
     <view
       class="more"
@@ -176,6 +180,10 @@ export default {
   },
   methods: {
     ...mapMutations(["setBookInfo", "setReadView"]),
+    handleFontWeightClick({ detail: { value } }) {
+      this.setBookInfo({ isBold: value });
+      wx.setStorageSync("isBold", value);
+    },
     move() {},
     handleToggleNavClick(index) {
       this.selectIndex = index;
@@ -210,7 +218,7 @@ export default {
           });
           // #endif
 
-          // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
+          // #ifdef MP-WEIXIN || MP-QQ
           wx.setNavigationBarColor({
             frontColor:
               this.readTheme.viewColor.fontColor === "#f9f9f9"
@@ -279,7 +287,8 @@ export default {
       "catalogueSum",
       "fileIndex",
       "readTheme",
-      "bookMarkIndex"
+      "bookMarkIndex",
+      "isBold"
     ]),
     percent() {
       return (
@@ -498,10 +507,14 @@ export default {
       font-size: 40rpx;
     }
   }
-  .font__family {
+  .font__weight {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    width: 100%;
+    text {
+      font-size: 40rpx;
+    }
   }
 }
 

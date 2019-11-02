@@ -174,13 +174,13 @@ export default {
     });
     // #endif
 
-    // #ifdef MP-WEIXIN || MP-QQ || MP-TOUTIAO || APP-PLUS
+    // #ifdef MP-WEIXIN || MP-QQ || MP-TOUTIAO
     wx.setNavigationBarTitle({
       title: this.bookName
     });
     // #endif
 
-    // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
+    // #ifdef MP-WEIXIN || MP-QQ
     this.$api
       .getBookContentInfo({
         bookID: this.bookID
@@ -211,6 +211,17 @@ export default {
     wx.setKeepScreenOn({
       keepScreenOn: true
     });
+
+    // #ifdef MP-WEIXIN
+    if (wx.createInterstitialAd) {
+      const interstitialAd = wx.createInterstitialAd({
+        adUnitId: "adunit-088b6992cc976c00"
+      });
+      interstitialAd.show().catch(err => {
+        console.error(err);
+      });
+    }
+    // #endif
   },
   // #ifdef MP-ALIPAY
   onReady() {

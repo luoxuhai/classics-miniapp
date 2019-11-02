@@ -19,6 +19,7 @@
 <script>
 import LoadingMore from "@/components/LoadingMore";
 import { showShareMenu, pagingLoadMixin } from "@/libs/mixin";
+import { mapState } from "vuex";
 
 export default {
   mixins: [showShareMenu, pagingLoadMixin],
@@ -69,8 +70,30 @@ export default {
         });
     },
     handleEnterClick(id) {
-      wx.navigateTo({ url: `/pages/RichContent/index?id=${id}&type=article` });
+      if (!this.token) {
+        wx.showModal({
+          title: "提示",
+          content: "登录后查看更多内容",
+          showCancel: true,
+          confirmText: "登录",
+          cancelText: "暂不登录",
+          confirmColor: "#f67280",
+          success: res => {
+            if (res.confirm) wx.navigateTo({ url: "/pages/Login/index" });
+          }
+        });
+        return;
+      }
+
+      if (this.production)
+        wx.navigateTo({
+          url: `/pages/RichContent/index?id=${id}&type=article`
+        });
+      else wx.navigateTo({ url: `/pages/HomeBlock/index?page=classify` });
     }
+  },
+  computed: {
+    ...mapState(["token", "production"])
   },
   onShareAppMessage() {
     return {

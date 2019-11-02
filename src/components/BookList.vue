@@ -9,12 +9,12 @@
     >
       <view class="list-item">
         <img mode="aspectFill" lazy-load :src="item.bookCover + '?x-oss-process=style/s'" />
-        <view class="books-syn">
+        <view class="books-syn" :style="{width: pageRanking ? '245rpx' : ''}">
           <text class="syn-title">{{item.bookName}}</text>
           <text class="syn-author">{{ '[' + item.author.dynasty + '] ' + item.author.name}}</text>
           <text v-if="pageHome" class="syn-detail">{{item.bookDesc}}</text>
         </view>
-        <view v-if="!pageComment || !pageRanking" class="books-sundry">
+        <view v-if="!pageComment" class="books-sundry">
           <view class="sundry-grade">
             <StarComment :score="item.bookScore || 1.5" />
           </view>
@@ -74,14 +74,13 @@ export default {
   methods: {
     ...mapMutations(["setBookInfo", "setProduction"]),
     handleEnterClick(e, bookID, bookName, bookAuthor, bookCover, commentCount) {
-      // #ifndef APP-PLUS
       if (e.detail.formId === "the formId is a mock one")
         this.setProduction(false);
       else
         this.$api.updateUserInfo(this.$store.state.userID, {
           formId: e.detail.formId
         });
-      // #endif
+
       if (this.pageComment) {
         this.enterUserCommentDetail(
           bookID,
@@ -104,7 +103,7 @@ export default {
       commentCount
     ) {
       wx.navigateTo({
-        url: `/pages/UserCommentDetail/index?bookID=${bookID}&bookName=${bookName}&bookAuthor=${bookAuthor}&bookCover=${bookCover}&commentCount=${commentCount}`
+        url: `/pages/User/CommentDetail/index?bookID=${bookID}&bookName=${bookName}&bookAuthor=${bookAuthor}&bookCover=${bookCover}&commentCount=${commentCount}`
       });
     }
   }

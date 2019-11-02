@@ -9,35 +9,22 @@
       :style="{fontSize: readTheme.fontSize - 2 + 'px'}"
       selectable
     >{{ catalogueList[fileIndex] }}</text>
-     <!-- #ifdef H5 -->
-    <view
-      class="content"
-      :style="{ fontSize: readTheme.fontSize + 'px'}"
-      :class="{backgroundColor: readTheme.viewColor.backgroundColor, color: readTheme.viewColor.fontColor}"
-      @click="handleControlNav"
-      @touchmove="handleControlNavHide"
-    >
-     <!-- #endif -->
-
-    <!-- #ifdef MP-QQ || MP-WEIXIN || APP-PLUS -->
+    <!-- #ifdef MP-QQ || MP-WEIXIN -->
     <view
       class="content"
       :style="{opacity, fontSize: readTheme.fontSize + 'px'}"
       @click="handleControlNav"
       @touchmove="handleControlNavHide"
     >
-    <!-- #endif -->
-
-      <!-- #ifdef MP-QQ -->
-      <HtmlParse
-        :content="bookContent"
-
-      />
       <!-- #endif -->
 
-      <!-- #ifdef MP-WEIXIN || H5 || APP-PLUS -->
-      <!-- <parser html="<div>Hello World!</div" selectable @ready="handleReady" @error="binderror" /> -->
+      <!-- #ifdef MP-QQ -->
       <HtmlParse :content="bookContent" />
+      <!-- #endif -->
+
+      <!-- #ifdef MP-WEIXIN -->
+      <!-- <parser html="<div>Hello World!</div" selectable @ready="handleReady" @error="binderror" /> -->
+      <HtmlParse :style="{fontWeight: isBold ? 'bold' : ''}" :content="bookContent" />
       <!-- #endif -->
     </view>
 
@@ -51,16 +38,16 @@
         :hover-class="disableCutIndex === index ? '' : 'hover-button'"
       >{{ item }}</view>
     </view>
-   </view>
+  </view>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
-// #ifdef MP-QQ || MP-WEIXIN || APP-PLUS
+// #ifdef MP-QQ || MP-WEIXIN
 import HtmlParse from "@/components/HtmlParse/parse.vue";
 // #endif
 export default {
-  // #ifdef MP-QQ || MP-WEIXIN || APP-PLUS
+  // #ifdef MP-QQ || MP-WEIXIN
   components: {
     HtmlParse
   },
@@ -110,21 +97,21 @@ export default {
       });
 
       this.$api.getOSSContent(`${bookFile}/${fileIndex}.html`).then(res => {
-        this.bookContent = res.replace(/　　{2,}/g, '　　');
-        // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
+        this.bookContent = res.replace(/　　{2,}/g, "　　");
+        // #ifdef MP-WEIXIN || MP-QQ
         this.$nextTick(() => {
-         wx.pageScrollTo({
+          wx.pageScrollTo({
             scrollTop:
               this.progress[1] *
               (this.progress[2] / this.systemInfo.windowWidth),
-            // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
+            // #ifdef MP-WEIXIN || MP-QQ
             duration: 0
             // #endif
           });
           this.setBookInfo({ progress: [0, 0, 0] });
           this.opacity = 1;
           wx.hideLoading();
-        })
+        });
         // #endif
       });
     },
@@ -136,12 +123,12 @@ export default {
       } else return null;
     },
     handleReady() {
-      console.log('ready');
+      console.log("ready");
       wx.hideLoading();
       wx.pageScrollTo({
         scrollTop:
           this.progress[1] * (this.progress[2] / this.systemInfo.windowWidth),
-        // #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
+        // #ifdef MP-WEIXIN || MP-QQ
         duration: 0
         // #endif
       });
@@ -158,7 +145,8 @@ export default {
       "readTheme",
       "progress",
       "systemInfo",
-      "fileIndex"
+      "fileIndex",
+      "isBold"
     ]),
     disableCutIndex(val) {
       return this.disableCut();

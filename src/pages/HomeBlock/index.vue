@@ -18,9 +18,6 @@
       :pageRanking="title === 'ranking' ? true : false"
       ref="list"
     />
-    <!-- #ifdef MP-WEIXIN -->
-    <ad v-if="page > total" unit-id="adunit-0a1335b664532ee6" ad-type="video" ad-theme="white" />
-    <!-- #endif -->
   </view>
 </template>
 
@@ -139,9 +136,6 @@ export default {
   onPageScroll(e) {
     if (e.scrollTop < 10) {
       this.scrolltoupper = true;
-      if (this.books.length > this.per_page) {
-        this.books = this.books.splice(0, 10);
-      }
     } else this.scrolltoupper = false;
   },
   onLoad(options) {
