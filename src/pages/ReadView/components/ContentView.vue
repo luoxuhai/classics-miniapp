@@ -170,6 +170,7 @@ export default {
     font-size: 16px;
   }
   .content {
+    width: 335px;
     min-height: 70vh;
     line-height: 1.8em;
     text-align: justify;
