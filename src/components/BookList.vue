@@ -8,7 +8,11 @@
       @submit="handleEnterClick($event, item._id, item.bookName, item.author.name, item.bookCover, item.total)"
     >
       <view class="list-item">
-        <img mode="aspectFill" lazy-load :src="item.bookCover + '?x-oss-process=style/s'" />
+        <img
+          mode="aspectFill"
+          lazy-load
+          :src="item.bookCover && item.bookCover + '?x-oss-process=style/s'"
+        />
         <view class="books-syn" :style="{width: pageRanking ? '245rpx' : ''}">
           <text class="syn-title">{{item.bookName}}</text>
           <text class="syn-author">{{ '[' + item.author.dynasty + '] ' + item.author.name}}</text>

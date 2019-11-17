@@ -133,17 +133,14 @@ export default {
         }
       });
     },
-    ...mapMutations(["setUserInfo"]),
+    ...mapMutations(["setUserInfo", "logout"]),
     handleLogoutClick() {
       wx.showModal({
         title: "提示",
         content: "确认退出登录",
         confirmColor: "#ed3f14",
         success: res => {
-          if (res.confirm) {
-            wx.clearStorageSync();
-            wx.reLaunch({ url: `/pages/Login/index` });
-          }
+          if (res.confirm) this.logout();
         }
       });
     },

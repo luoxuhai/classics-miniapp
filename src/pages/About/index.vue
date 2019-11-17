@@ -1,7 +1,7 @@
 <template>
   <view class="about">
     <img :src="about.QRcode" mode="aspectFill" />
-    <view class="about__title">古典文学名著阅读</view>
+    <view class="about__title webfont">古典文学名著阅读</view>
     <view class="about__version">v{{ about.version }}</view>
     <parser v-if="production" class="about__log" :html="about.log" selectable />
     <parser class="about__desc" :html="about.intro" selectable />
@@ -50,9 +50,9 @@ export default {
     color: $Grey;
   }
   .about__title {
-    margin: 10px 0;
+    margin: 20px 0;
     font: {
-      size: 18px;
+      size: 46rpx;
       weight: 500;
     }
   }

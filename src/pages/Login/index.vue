@@ -5,7 +5,7 @@
         src="https://classics.oss-cn-beijing.aliyuncs.com/app/logo.png?x-oss-process=style/o"
         mode="aspectFill"
       />
-      <text class="name webfont">古典文学名著阅读小程序</text>
+      <text class="name webfont">古典文学名著阅读</text>
     </view>
     <view class="section">
       <view class="hint">请授权小程序以继续使用古典文学名著阅读小程序服务</view>

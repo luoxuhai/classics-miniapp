@@ -145,7 +145,7 @@ export default {
   //博客内容
   onShareAppMessage() {
     return {
-      title: `${this.bookInfo.bookName}-古典名著苑`,
+      title: `${this.bookInfo.bookName}-古典文学名著阅读`,
       path: `/pages/BookDetail/index?share=1&bookID=${this.bookInfo.bookID}&bookName=${this.bookInfo.bookName}`
     };
   },

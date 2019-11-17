@@ -3,7 +3,7 @@
     <img
       mode="aspectFill"
       class="book-cover"
-      :src="detailHeader.bookCover + '?x-oss-process=style/m'"
+      :src="detailHeader.bookCover && detailHeader.bookCover + '?x-oss-process=style/m'"
       @load="changeImgLoad"
     />
     <view class="book-syn">

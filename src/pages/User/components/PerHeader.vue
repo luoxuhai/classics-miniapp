@@ -40,7 +40,7 @@ export default {
     ]),
 
     avatar() {
-      return this.avatarUrl + "?x-oss-process=style/l";
+      return this.avatarUrl && this.avatarUrl + "?x-oss-process=style/l";
     }
   }
 };

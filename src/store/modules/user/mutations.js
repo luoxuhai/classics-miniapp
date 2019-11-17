@@ -8,4 +8,10 @@ export default {
       });
     });
   },
-}
+
+  logout(state) {
+    for (const key in state) state[key] = "";
+    wx.clearStorageSync();
+    wx.reLaunch({ url: `/pages/Login/index` });
+  }
+};
