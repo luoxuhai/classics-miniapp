@@ -4,7 +4,7 @@
       "path": "pages/Home/index",
       "style": {
         "enablePullDownRefresh": true,
-        "navigationBarTitleText": "古典名著苑"
+        "navigationBarTitleText": "古典文学名著阅读"
       }
     },
     {

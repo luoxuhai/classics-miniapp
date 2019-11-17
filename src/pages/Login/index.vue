@@ -5,10 +5,10 @@
         src="https://classics.oss-cn-beijing.aliyuncs.com/app/logo.png?x-oss-process=style/o"
         mode="aspectFill"
       />
-      <text class="name webfont">古典名著书单小程序</text>
+      <text class="name webfont">古典文学名著阅读小程序</text>
     </view>
     <view class="section">
-      <view class="hint">请授权小程序以继续使用古典名著苑小程序服务</view>
+      <view class="hint">请授权小程序以继续使用古典文学名著阅读小程序服务</view>
       <view hover-class="hover-button" class="button-login">
         <form :report-submit="true" @submit="formSubmit">
           <!-- #ifdef MP-ALIPAY -->
