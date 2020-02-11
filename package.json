@@ -1,7 +1,7 @@
 {
   "name": "classics-novel",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "scripts": {
     "serve": "npm run dev:mp-weixin",
     "build": "npm run build:mp-weixin",
@@ -22,26 +22,26 @@
     "info": "node node_modules/@dcloudio/vue-cli-plugin-uni/commands/info.js"
   },
   "dependencies": {
-    "@dcloudio/uni-app-plus": "*",
-    "@dcloudio/uni-h5": "*",
-    "@dcloudio/uni-mp-alipay": "*",
-    "@dcloudio/uni-mp-baidu": "*",
-    "@dcloudio/uni-mp-qq": "*",
-    "@dcloudio/uni-mp-toutiao": "*",
-    "@dcloudio/uni-mp-weixin": "*",
+    "@dcloudio/uni-app-plus": "2.0.0-25120200103006",
+    "@dcloudio/uni-h5": "2.0.0-25120200103006",
+    "@dcloudio/uni-mp-alipay": "2.0.0-25120200103006",
+    "@dcloudio/uni-mp-baidu": "2.0.0-25120200103006",
+    "@dcloudio/uni-mp-qq": "2.0.0-25120200103006",
+    "@dcloudio/uni-mp-toutiao": "2.0.0-25120200103006",
+    "@dcloudio/uni-mp-weixin": "2.0.0-25120200103006",
     "flyio": "^0.6.14",
     "moment": "^2.24.0",
-    "regenerator-runtime": "^0.12.1",
-    "vue": "^2.6.10",
-    "vuex": "^3.0.1"
+    "regenerator-runtime": "^0.13.3",
+    "vue": "^2.6.11",
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "@dcloudio/uni-cli-shared": "*",
-    "@dcloudio/uni-template-compiler": "*",
-    "@dcloudio/vue-cli-plugin-hbuilderx": "^2.0.0-23120190920002",
-    "@dcloudio/vue-cli-plugin-uni": "^2.0.0-23120190920002",
-    "@dcloudio/webpack-uni-mp-loader": "*",
-    "@dcloudio/webpack-uni-pages-loader": "*",
+    "@dcloudio/uni-cli-shared": "2.0.0-25120200103006",
+    "@dcloudio/uni-template-compiler": "2.0.0-25120200103006",
+    "@dcloudio/vue-cli-plugin-hbuilderx": "2.0.0-25120200103006",
+    "@dcloudio/vue-cli-plugin-uni": "2.0.0-25120200103006",
+    "@dcloudio/webpack-uni-mp-loader": "2.0.0-25120200103006",
+    "@dcloudio/webpack-uni-pages-loader": "2.0.0-25120200103006",
     "@types/html5plus": "*",
     "@types/uni-app": "*",
     "@vue/cli-plugin-babel": "3.5.1",
@@ -49,7 +49,7 @@
     "babel-plugin-import": "^1.11.0",
     "node-sass": "^4.11.0",
     "postcss-comment": "^2.0.0",
-    "sass-loader": "^8.0.0",
+    "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.6.10"
   },
   "browserslist": [

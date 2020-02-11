@@ -8,7 +8,7 @@
 <script>
 import BookList from "@/components/BookList";
 import { mapState, mapMutations } from "vuex";
-import { pagingLoadMixin } from "@/libs/mixin";
+import { pagingLoadMixin } from "@/lib/mixin";
 export default {
   mixins: [pagingLoadMixin],
   components: {

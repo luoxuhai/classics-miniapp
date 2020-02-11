@@ -316,7 +316,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .nav {
   display: flex;
   justify-content: space-around;

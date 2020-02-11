@@ -106,7 +106,7 @@
 <script>
 import CommentList from "@/components/CommentList";
 import { mapState, mapMutations } from "vuex";
-import { developModal } from "@/libs/utils";
+import { developModal } from "@/lib/utils";
 export default {
   components: {
     CommentList
@@ -184,7 +184,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .unfold {
   position: absolute;
   bottom: 0;

@@ -14,7 +14,7 @@
 
 <script>
 import CommentList from "@/components/CommentList";
-import { deleteComment } from "@/libs/mixin";
+import { deleteComment } from "@/lib/mixin";
 export default {
   mixins: [deleteComment],
   components: {
@@ -75,7 +75,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .container {
   .header-container {
     display: flex;

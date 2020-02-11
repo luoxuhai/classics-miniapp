@@ -156,7 +156,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .content-container {
   display: flex;
   flex-direction: column;

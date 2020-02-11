@@ -24,7 +24,7 @@
 <script>
 import HomeFilter from "@/components/HomeFilter";
 import BookList from "@/components/BookList";
-import { showShareMenu } from "@/libs/mixin";
+import { showShareMenu } from "@/lib/mixin";
 import { mapState, mapMutations } from "vuex";
 export default {
   mixins: [showShareMenu],

@@ -23,7 +23,7 @@ import BookrackDate from "./components/BookrackDate";
 import BookrackList from "./components/BookrackList";
 import LoadingMore from "@/components/LoadingMore";
 import { mapState } from "vuex";
-import { showShareMenu, pagingLoadMixin } from "@/libs/mixin";
+import { showShareMenu, pagingLoadMixin } from "@/lib/mixin";
 export default {
   mixins: [showShareMenu, pagingLoadMixin],
   components: {
@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .rack-container {
   width: 100%;
   height: 100%;

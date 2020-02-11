@@ -109,7 +109,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 ad {
   margin-top: 20px;
 }

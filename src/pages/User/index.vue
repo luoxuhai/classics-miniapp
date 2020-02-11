@@ -10,7 +10,7 @@
 import PerHeader from "./components/PerHeader";
 import PerList from "./components/PerList";
 import { mapState } from "vuex";
-import { showShareMenu } from "@/libs/mixin";
+import { showShareMenu } from "@/lib/mixin";
 export default {
   mixins: [showShareMenu],
   components: {

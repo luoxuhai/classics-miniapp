@@ -18,7 +18,7 @@ import HomeFilter from "@/components/HomeFilter";
 import HomeBlock from "./components/HomeBlock";
 import BookList from "@/components/BookList";
 import StarTip from "@/components/StarTip";
-import { showShareMenu } from "@/libs/mixin";
+import { showShareMenu } from "@/lib/mixin";
 import { mapState, mapMutations } from "vuex";
 import { setTimeout } from "timers";
 export default {
@@ -141,7 +141,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 
 .container {
   overflow: hidden;

@@ -1,4 +1,4 @@
-import { request } from '@/libs/request'
+import { request } from '@/lib/request'
 
 export default {
   getArticle: id => {

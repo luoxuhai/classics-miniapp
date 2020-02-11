@@ -17,7 +17,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .loading {
   @include center;
   position: fixed;

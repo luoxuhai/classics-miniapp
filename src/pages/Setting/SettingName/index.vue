@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .container {
   height: 100vh;
   padding-top: 10px;

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { developModal } from "@/libs/utils";
+import { developModal } from "@/lib/utils";
 export default {
   name: "PerList",
   data() {
@@ -111,7 +111,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .select-list {
   width: 100vw;
   overflow: hidden;

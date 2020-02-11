@@ -1,4 +1,4 @@
-import { request, upload } from '@/libs/request'
+import { request, upload } from '@/lib/request'
 
 export default {
   login: data => {

@@ -18,7 +18,7 @@
 
 <script>
 import LoadingMore from "@/components/LoadingMore";
-import { showShareMenu, pagingLoadMixin } from "@/libs/mixin";
+import { showShareMenu, pagingLoadMixin } from "@/lib/mixin";
 import { mapState } from "vuex";
 
 export default {
@@ -107,7 +107,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .wrapper__image {
   display: block;
   width: 650rpx;

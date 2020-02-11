@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .header-container {
   display: flex;
   align-items: center;

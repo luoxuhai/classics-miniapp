@@ -21,7 +21,7 @@
 <script>
 import DetailHeader from "./components/DetailHeader";
 import DetailBody from "./components/DetailBody";
-import { deleteComment } from "@/libs/mixin";
+import { deleteComment } from "@/lib/mixin";
 import { mapState } from "vuex";
 import { setTimeout } from "timers";
 export default {
@@ -192,7 +192,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .float--button {
   position: fixed;
   z-index: 999;

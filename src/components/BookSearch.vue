@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { showToast } from "@/libs/utils";
+import { showToast } from "@/lib/utils";
 export default {
   name: "HomeSearch",
   props: {
@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .search-container {
   height: 80rpx;
   margin: 25rpx 0 50rpx 0;

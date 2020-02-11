@@ -26,8 +26,8 @@
 
 <script>
 import { mapState } from "vuex";
-import { showToast } from "@/libs/utils";
-import { deleteComment, pagingLoadMixin } from "@/libs/mixin";
+import { showToast } from "@/lib/utils";
+import { deleteComment, pagingLoadMixin } from "@/lib/mixin";
 import StarComment from "@/components/StarComment";
 import PublishGrade from "@/components/PublishGrade";
 import CommentList from "@/components/CommentList";
@@ -172,7 +172,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .loading {
   @include center;
   position: fixed;

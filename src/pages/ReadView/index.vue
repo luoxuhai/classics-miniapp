@@ -269,7 +269,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/common.scss";
+@import "@/lib/scss/common.scss";
 .read-container {
   background-color: #f8f8fa;
   .bookmark {
