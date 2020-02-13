@@ -1,0 +1,10 @@
+{
+  "rules": [
+    {
+      "action": "allow",
+      "page": "pages/BookDetail/index",
+      "params": ["bookName"],
+      "matching": "exact"
+    }
+  ]
+}

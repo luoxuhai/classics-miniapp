@@ -3,4 +3,5 @@ export default {
   searchResult: Object,
   searchHistoryArr: [],
   systemInfo: {},
+  homeData: { books: [], banners: [] }
 };

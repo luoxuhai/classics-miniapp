@@ -7,7 +7,8 @@ export default {
       "setUserInfo",
       "setSystemInfo",
       "setSearchHistory",
-      "setReadView"
+      "setReadView",
+      "setHomeData"
     ]),
     warn(updateManager) {
       wx.showModal({
@@ -62,6 +63,16 @@ export default {
     }
   },
   onLaunch() {
+    wx.setBackgroundFetchToken({
+      token: 'previous'
+    });
+
+    wx.getBackgroundFetchData({
+      fetchType: "pre",
+      success: res => {
+        this.setHomeData(JSON.parse(res.fetchedData));
+      }
+    });
     // #ifdef MP-QQ || MP-TOUTIAO || MP-ALIPAY
     this.$api.getEnv().then(res => {
       this.setProduction(res.production);

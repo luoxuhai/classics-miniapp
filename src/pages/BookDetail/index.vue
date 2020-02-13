@@ -76,7 +76,7 @@ export default {
 
     getBookDetail(bookID, bookName) {
       this.$api
-        .getBookDetail(bookID)
+        .getBookDetail(bookID, bookName)
         .then(res => {
           let {
             catalogueSum,
@@ -176,7 +176,8 @@ export default {
 
   onShow() {
     if (!this.token) return;
-    this.getComment(this.bookInfo.bookID);
+    if (this.bookInfo.bookID)
+      this.getComment(this.bookInfo.bookID);
   },
 
   onPageScroll(e) {

@@ -26,5 +26,10 @@ export default {
 
   setSystemInfo(state, systemInfo) {
     state.systemInfo = { ...state.systemInfo, ...systemInfo };
+  },
+
+  setHomeData(state, { books, banners }) {
+    if (books) state.homeData = { ...state.homeData, books };
+    if (banners) state.homeData = { ...state.homeData, banners };
   }
 };

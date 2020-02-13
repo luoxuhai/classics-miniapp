@@ -16,8 +16,8 @@ export default {
   getBanner: data => {
     return request.get('/v1/push/banner', data)
   },
-  getBookDetail: id => {
-    return request.get(`/v1/books/${id}`)
+  getBookDetail: (id = undefined, bookName = '') => {
+    return request.get(`/v1/books/${id}`, { bookName })
   },
   addBookRack: data => {
     return request.post('/v1/bookrack', data)

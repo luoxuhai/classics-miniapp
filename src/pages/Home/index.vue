@@ -4,10 +4,10 @@
     <StarTip />
     <!-- #endif -->
     <BookSearch :homeSearch="homeSearch" />
-    <HomeSwiper :banners="banners" />
+    <HomeSwiper :banners="homeData.banners" />
     <HomeBlock />
     <view class="recommend">热门推荐</view>
-    <BookList :booksList="books" :loading="loading" :pageHome="true" ref="list" />
+    <BookList :booksList="homeData.books" :loading="loading" :pageHome="true" ref="list" />
   </view>
 </template>
 
@@ -33,19 +33,21 @@ export default {
   },
   data() {
     return {
-      loading: true,
       homeSearch: true,
       page: 1,
       total: 1,
-      per_page: 10,
-      books: [],
-      banners: [],
+      per_page: 20,
       currentTypeArr: [],
       sortMethod: 0
     };
   },
   methods: {
-    ...mapMutations(["setBookInfo", "setProduction", "setUserInfo"]),
+    ...mapMutations([
+      "setBookInfo",
+      "setProduction",
+      "setUserInfo",
+      "setHomeData"
+    ]),
     formSubmit(e) {
       this.formId = e.detail.formId;
       console.log(e.detail.formId);
@@ -66,33 +68,23 @@ export default {
     getBanner() {
       this.$api.getBanner({}).then(res => {
         const { types, banners } = res;
-        this.banners = banners;
+        this.setHomeData({ banners });
       });
     },
     loadMore(reachBottom = false) {
-      if (this.page > this.total) {
-        this.loading = false;
-        return;
-      } else this.loading = true;
-      let data = {
-        page: this.page,
-        per_page: this.per_page
-      };
+      if (this.page > this.total) return;
+
       this.$api
-        .getRecommend(data)
+        .getRecommend({ page: this.page, per_page: this.per_page })
         .then(res => {
           const { books, total, per_page } = res;
-          if (this.page >= total) this.loading = false;
-          if (reachBottom) {
-            this.books = [...this.books, ...books];
-          } else this.books = books;
+          this.setHomeData({ books });
           this.page += 1;
           this.per_page = per_page;
           this.total = total || 1;
           wx.stopPullDownRefresh();
         })
         .catch(err => {
-          this.loading = false;
           wx.stopPullDownRefresh();
         });
     }
@@ -102,11 +94,12 @@ export default {
     this.loadMore();
     this.getBanner();
   },
-  onReachBottom() {
-    this.loadMore(true);
-  },
   computed: {
-    ...mapState(["production"])
+    ...mapState(["production", "homeData"]),
+
+    loading() {
+      return this.homeData.books.length === 0 ? true : false;
+    }
   },
   onShareAppMessage() {
     return {
@@ -120,8 +113,6 @@ export default {
     const token = wx.getStorageSync("token");
     if (wx.getStorageSync("isFirst") !== false)
       wx.setStorageSync("isFirst", true);
-    this.getBanner();
-    this.loadMore();
     if (token)
       this.$api.getUserInfo(this.$store.state.userID).then(res => {
         this.setUserInfo(res.userInfo);
