@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./dist",
+  "projectname": "classics",
+  "description": "",
+  "appid": "wx53d943b45c17326f",
+  "setting": {
+    "urlCheck": false,
+    "es6": false,
+    "postcss": false,
+    "minified": true
+  },
+  "compileType": "miniprogram"
+}

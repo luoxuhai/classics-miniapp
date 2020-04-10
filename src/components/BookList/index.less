@@ -1,0 +1,48 @@
+@import '../../utils/utils.less';
+
+.book-list {
+  padding-bottom: 50rpx;
+  .book-list__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: calc(160rpx / 0.73);
+    padding: 10rpx 25rpx;
+    margin-top: 20px;
+    .item__cover {
+      flex-shrink: 0;
+      width: 160rpx;
+      height: 100%;
+      border-radius: 2px;
+    }
+    .item__desc {
+      flex: 1;
+      margin: 0 30rpx;
+    }
+    .item__name {
+      .ellipsis(2);
+      font-size: 17px;
+      line-height: 26px;
+      width: 360rpx;
+      max-height: 3em;
+    }
+    .item__author {
+      display: block;
+      margin: 6px 0;
+      font-size: 14px;
+    }
+    .item__rate {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+    .item__footer {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width: 120rpx;
+      height: calc(160rpx / 0.73);
+      flex-shrink: 0;
+    }
+  }
+}

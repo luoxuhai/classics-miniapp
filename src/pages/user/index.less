@@ -1,0 +1,82 @@
+@import '../../utils/utils.less';
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-bottom: 10px;
+  background-color: #f6f7f9;
+  box-sizing: border-box;
+  .user__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 50px;
+    background: 50% 0 / cover no-repeat url('../../assets/images/user-bg.svg');
+    overflow: hidden;
+    .cut {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      width: 705rpx;
+      height: 250px;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+    .header__pane {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      flex-shrink: 0;
+      top: 140px;
+      width: 1200rpx;
+      height: 1000rpx;
+      border-radius: 50% 50% 0 0;
+      background-color: white;
+      .pane__user {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 120px;
+        transform: translateY(-155rpx / 2);
+        .pane__avatar {
+          .boxShadow;
+          width: 155rpx;
+          height: 155rpx;
+          margin-bottom: 20px;
+          border-radius: 50%;
+        }
+        .pane__nickname {
+          .ellipsis;
+        }
+      }
+    }
+  }
+
+  .panel {
+    width: 705rpx;
+    padding: 10rpx 40rpx;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin-top: 15px;
+    .panel__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      height: 100rpx;
+      box-sizing: border-box;
+      border-bottom: 2rpx solid #e8e8e8;
+      font-size: 16px;
+
+      &:nth-last-child(1) {
+        border-bottom: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@import '../../../../utils/utils.less';
+
+.nav-bar {
+  position: fixed;
+  bottom: -230px;
+  left: 0;
+  right: 0;
+  z-index: 9;
+}
+.nav-bar__default {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 170px;
+  padding: 40rpx 0 0 0;
+  box-shadow: 0 -6px 16px -2px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease-out;
+  box-sizing: border-box;
+  opacity: 0.5;
+  .chapter {
+    .ellipsis;
+  }
+  .slider-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .slider {
+      flex: 1;
+      margin: 0;
+    }
+    .icon {
+      padding: 10px;
+      font-size: 26px;
+      color: #f67280;
+    }
+    .progress {
+      margin-left: 1em;
+      font-size: 14px;
+    }
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    .bottom__item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 40rpx;
+      font-size: 14px;
+      .icon {
+        margin-bottom: 10rpx;
+        font-size: 24px;
+        color: black;
+      }
+    }
+  }
+}

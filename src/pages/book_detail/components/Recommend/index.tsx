@@ -1,0 +1,33 @@
+import Taro from '@tarojs/taro';
+import { View, Text, Image, Navigator } from '@tarojs/components';
+
+import { Recommend } from '../../data';
+import './index.less';
+
+type Props = {
+  books: Recommend[];
+};
+
+function Recommend({ books = [] }: Props) {
+  return (
+    <View className="recommend">
+      {books.map(item => (
+        <Navigator
+          className="recommend__item"
+          url={`/pages/book_detail/index?bookName=${item.bookName}&id=${item._id}&cover=${item.bookCover}`}
+          key={item._id}
+          hoverClass="none"
+        >
+          <Image
+            className="book__cover"
+            src={`https://classics.oss-cn-beijing.aliyuncs.com/${item.bookCover}`}
+            mode="aspectFill"
+          />
+          <Text className="book__name">{item.bookName}</Text>
+        </Navigator>
+      ))}
+    </View>
+  );
+}
+
+export default Recommend;

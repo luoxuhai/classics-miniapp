@@ -1,0 +1,17 @@
+@import '../../../../utils//utils.less';
+
+.banner__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  .item__content {
+    width: 640rpx;
+    height: 265rpx;
+    border-radius: 6px;
+    transition: transform 0.3s;
+  }
+  .banner__item-active {
+    transform: scale(1.1);
+  }
+}

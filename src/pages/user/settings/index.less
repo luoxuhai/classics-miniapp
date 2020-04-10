@@ -1,0 +1,51 @@
+@import '../../../utils/utils.less';
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 40rpx;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  .settings__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 140rpx;
+    box-sizing: border-box;
+    border-bottom: 2rpx solid #e8e8e8;
+    font-size: 16px;
+
+    &:nth-last-child(1) {
+      border-bottom: none;
+    }
+    .avatar {
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 50%;
+    }
+    .gender-selector {
+      flex: 1;
+      .gender-selector__text {
+        display: block;
+        width: 100%;
+        height: 120rpx;
+        line-height: 120rpx;
+        text-align: right;
+      }
+    }
+    .clear-cache-icon {
+      margin-right: 15rpx;
+      font-family: icon;
+      font-size: 20px;
+    }
+  }
+
+  .settings__logout {
+    margin-top: 150px;
+    color: white;
+  }
+}

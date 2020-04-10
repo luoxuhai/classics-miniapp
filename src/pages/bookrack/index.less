@@ -1,0 +1,59 @@
+@import '../../utils/utils.less';
+
+.bookrack {
+  .bookrack__header {
+    display: flex;
+    align-items: center;
+    padding: 75px 30rpx 15px 30rpx;
+    color: white;
+    background: 100% 50% / contain  no-repeat url('../../assets/images/bookrack-bg-1.svg');
+    background-color: rgba(246, 114, 127, 0.692);
+
+    .header__cover {
+      .boxShadow;
+      width: 200rpx;
+      height: calc(200rpx / 0.73);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .header__detail {
+      display: flex;
+      flex-direction: column;
+      margin-left: 55rpx;
+      width: 440rpx;
+
+      text {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        height: 40rpx;
+        margin-bottom: 10px;
+      }
+
+      .detail__bookName {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .manage {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 40rpx 0 60rpx 0;
+    padding: 0 30rpx;
+
+    .manage__text {
+      letter-spacing: 0.05em;
+    }
+
+    .manage__button {
+      width: 120rpx;
+      margin: 0;
+      letter-spacing: 0.1em;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "rules": [
+    {
+      "action": "allow",
+      "page": "pages/book_detail/index",
+      "params": ["bookName"],
+      "matching": "exact"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/bookrack/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/catalogue/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/book_preview/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/user/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/user/nickname/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/user/settings/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/rich_content/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/login/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/bookstore/search/index"
+    },
+    {
+      "action": "disallow",
+      "page": "pages/read_history/index"
+    }
+  ]
+}

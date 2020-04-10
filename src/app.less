@@ -1,0 +1,39 @@
+@import './utils/utils.less';
+@import './assets/style/weui.css';
+
+page {
+  background-color: white;
+}
+
+@font-face {
+  font-family: 'icon';
+  src: url('./assets/fonts/iconfont.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'webfont';
+  font-display: swap;
+  src: url('./assets/fonts/webfont.ttf') format('truetype');
+}
+
+.webfont {
+  font-family: 'webfont';
+}
+
+.icon {
+  font-family: icon;
+  color: #a8a8a8;
+}
+
+.hide-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: 9;
+  width: auto;
+  margin-left: 0;
+  margin-right: 0;
+}

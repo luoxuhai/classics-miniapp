@@ -1,0 +1,42 @@
+@import '../../../utils/utils.less';
+
+.login {
+  height: 100vh;
+  overflow: hidden;
+  .login__slogan {
+    .ellipsis;
+    display: inline-block;
+    position: relative;
+    z-index: 9;
+    color: white;
+    font-size: 22px;
+  }
+  .login__bg {
+    position: absolute;
+    top: -200px;
+    left: -520px / 2;
+    width: 1500px / 2;
+    height: 1250px / 2;
+    border-radius: 0 0 50% 50%;
+    background-image: linear-gradient(-45deg, #fe6b8b 20%, #ff8e53);
+  }
+  .login__logo {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    width: 180rpx;
+    height: 180rpx;
+    border-radius: 50%;
+  }
+  .login__group {
+    position: absolute;
+    bottom: 15vh;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .login__affirm {
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+    box-shadow: 0 3px 5px 2px rgba(255, 105, 135, 0.3);
+  }
+}

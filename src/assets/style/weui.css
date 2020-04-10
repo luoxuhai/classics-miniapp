@@ -1,0 +1,40 @@
+.black {
+  color: #000;
+}
+.semi {
+  color: #353535;
+}
+.grey {
+  color: #888;
+}
+.light {
+  color: #b2b2b2;
+}
+
+.blue {
+  color: rgba(87, 107, 149, 1);
+}
+.blue-press {
+  color: rgba(87, 107, 149, 0.2);
+}
+.green {
+  color: rgba(9, 187, 7, 1);
+}
+.green-press {
+  color: rgba(9, 187, 7, 0.2);
+}
+.green-disable {
+  color: rgba(52, 179, 50, 0.1);
+}
+.red {
+  color: rgba(230, 67, 64, 1);
+}
+.red-bg {
+  background-color: rgba(230, 67, 64, 1);
+}
+.red-press {
+  color: rgba(230, 67, 64, 0.2);
+}
+.red-disable {
+  color: rgba(230, 67, 64, 0.1);
+}

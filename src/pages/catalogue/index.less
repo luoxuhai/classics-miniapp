@@ -1,0 +1,41 @@
+.catalogue {
+  padding-top: 100rpx;
+  height: 100vh;
+  overflow: hidden;
+  .tab-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    padding: 0 140rpx;
+    height: 100rpx;
+    background-color: #fff;
+    .tab-bar__item {
+      padding: 0 20rpx;
+      font-size: 18px;
+      transition: all 0.2s;
+    }
+    .tab-bar__item-active {
+      font-size: 20px;
+      font-weight: bold;
+      padding-bottom: 10rpx;
+      border-bottom: 4rpx solid #f00;
+    }
+  }
+  .swiper {
+    min-height: 100vh;
+  }
+}
+
+.catalogue__header {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 30rpx;
+  border-bottom: 20rpx solid #f6f7f9;
+  background-color: #fff;
+}

@@ -1,0 +1,61 @@
+@import '../../../utils/utils.less';
+
+.book-view {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 40rpx;
+  .book-view__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
+    width: 190rpx;
+    margin-bottom: 50rpx;
+    border-radius: 2px;
+    .book-view__cover {
+      .boxShadow;
+      position: relative;
+      width: 190rpx;
+      height: calc(190rpx / 0.73);
+      border-radius: 2px;
+      flex-shrink: 0
+    }
+
+    .book-view__name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      margin-top: 20rpx;
+      font-size: 28rpx;
+      font-weight: 500;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .book-view__mask {
+      display: none;
+    }
+
+    .book-view__mask-active {
+      .center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      .book-view__icon {
+        font-family: icon;
+        font-size: 22px;
+        color: white;
+      }
+    }
+  }
+
+  &::after {
+    content: '';
+    width: 190rpx;
+  }
+}

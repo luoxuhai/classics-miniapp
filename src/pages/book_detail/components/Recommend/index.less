@@ -1,0 +1,33 @@
+@import '../../../../utils/utils.less';
+
+.recommend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20rpx 40rpx;
+  .recommend__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
+    width: 190rpx;
+    height: 320rpx;
+    margin-bottom: 50rpx;
+    border-radius: 2px;
+    .book__cover {
+      width: 190rpx;
+      height: calc(190rpx / 0.73);
+      border-radius: 2px;
+      box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    .book__name {
+      .ellipsis(1);
+      margin-top: 20rpx;
+      font-size: 28rpx;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+  }
+}
