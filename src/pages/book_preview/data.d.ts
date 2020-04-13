@@ -3,6 +3,7 @@ interface BookPreviewStore {
     book: {
       _id: string;
       bookName: string;
+      bookFile: string;
       isStar: boolean;
     };
     animation: any;
@@ -28,6 +29,9 @@ interface BookPreviewStore {
     setCurrentChapter: Function;
     setChapters: Function;
     setTheme: Function;
+  };
+  globalStore: {
+    freeAD: boolean;
   };
 }
 

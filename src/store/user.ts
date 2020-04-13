@@ -1,7 +1,8 @@
 import Taro from '@tarojs/taro';
 import { observable } from 'mobx';
 import { fetchUser, login, updateUser } from '../services/user';
-import bookrack from './bookrack';
+import bookrackStore from './bookrack';
+import globalStore from './global';
 
 const userStore = observable({
   user: {},
@@ -36,6 +37,7 @@ const userStore = observable({
   login({ code, client, data }) {
     login({ code, client })
       .then(res => {
+        Taro.hideLoading();
         const { userID, token } = res;
         this.setToken(token);
         if (res.status === 'register') {
@@ -51,6 +53,7 @@ const userStore = observable({
         else Taro.switchTab({ url: '/pages/bookstore/index' });
       })
       .catch(() => {
+        Taro.hideLoading();
         Taro.showModal({
           title: '提示',
           content: '登录失败!请重试',
@@ -58,9 +61,6 @@ const userStore = observable({
           confirmText: '确认'
         });
       })
-      .finally(() => {
-        Taro.hideLoading();
-      });
   },
 
   logout() {
@@ -68,7 +68,8 @@ const userStore = observable({
     this.user = {};
     this.token = '';
     global.$token = '';
-    bookrack.bookrack = [];
+    bookrackStore.setBookrack([]);
+    globalStore.setFreeAD(0);
     Taro.reLaunch({
       url: '/pages/bookstore/index'
     });

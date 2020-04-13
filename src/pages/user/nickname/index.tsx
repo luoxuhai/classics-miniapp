@@ -72,11 +72,11 @@ class User extends Component<Props> {
         <Textarea
           className="nickname__input"
           value={user.nickName}
-          placeholder="请输入昵称"
+          placeholder="请输入昵称(最多16字)"
           autoFocus
           showConfirmBar={false}
           onInput={this.handleInput}
-          maxlength={12}
+          maxlength={16}
         />
         <Button
           className="nickname__save"

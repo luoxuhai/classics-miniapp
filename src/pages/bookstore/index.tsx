@@ -29,19 +29,21 @@ class BookstorePage extends Component<Props, State> {
   shareConfig: ShareConfig = {};
 
   componentDidMount() {
-    // const {
-    //   data: { books }
-    // } = this.props.bookstoreStore;
-
+    let freeAD = 0;
+    try {
+      freeAD = Taro.getStorageSync('freeAD');
+    } catch (error) {}
     // if (!books.length) this.fetchData();
-    const interstitialAd = Taro.createInterstitialAd({
-      adUnitId: 'adunit-83c7d09dcd1bd671'
-    });
-    interstitialAd.onError(() => null);
-    interstitialAd.load().catch(() => null);
-    setTimeout(() => {
-      interstitialAd.show().catch(() => null);
-    }, 500);
+    if (freeAD !== 1) {
+      const interstitialAd = Taro.createInterstitialAd({
+        adUnitId: 'adunit-83c7d09dcd1bd671'
+      });
+      interstitialAd.onError(() => null);
+      interstitialAd.load().catch(() => null);
+      setTimeout(() => {
+        interstitialAd.show().catch(() => null);
+      }, 500);
+    }
   }
 
   fetchData = () => {

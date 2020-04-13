@@ -11,6 +11,8 @@ class RichContent extends PureComponent {
     }
   };
 
+  parser: any;
+
   componentDidMount() {
     const { url, title } = this.$router.params;
     Taro.showNavigationBarLoading();
@@ -18,7 +20,7 @@ class RichContent extends PureComponent {
     queryRichContent({
       url
     }).then(res => {
-      if (!this.refs.parser.html) this.refs.parser.setContent(res);
+      if (!this.parser.html) this.parser.setContent(res);
       Taro.setStorage({
         key: title,
         data: res
@@ -26,7 +28,7 @@ class RichContent extends PureComponent {
     });
     Taro.getStorage({ key: title })
       .then(res => {
-        this.refs.parser.setContent(res.data);
+        this.parser.setContent(res.data);
       })
       .catch(() => null);
   }
@@ -34,7 +36,7 @@ class RichContent extends PureComponent {
   render() {
     return (
       <View className="rich-content">
-        <parser ref="parser" selectable onLoad={() => Taro.hideNavigationBarLoading()} />
+        <parser ref={e => (this.parser = e)} selectable onLoad={() => Taro.hideNavigationBarLoading()} />
       </View>
     );
   }

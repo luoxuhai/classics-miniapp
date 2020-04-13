@@ -10,15 +10,21 @@ import NavBar from './components/NavBar';
 import './index.less';
 import { Props } from './data';
 
+const tagStyle = {
+  h2: 'font-size: 1.2em;line-height: 1.2em;font-weight: 700;margin-bottom: 1.5em;color: rgb(107, 47, 17)',
+  p: 'margin: 1em 0;'
+};
+
 @shareMixin
 @inject('bookPreviewStore')
+@inject('globalStore')
 @observer
 class BookPreview extends Component<Props> {
   config = {
-    navigationBarTitleText: '',
-    usingComponents: {
-      parser: '../../components/parser/parser'
-    }
+    navigationBarTitleText: ''
+    // usingComponents: {
+    //   parser: '../../components/parser/parser'
+    // }
   };
 
   state = {};
@@ -60,11 +66,10 @@ class BookPreview extends Component<Props> {
       } else {
         _index = 0;
       }
-      console.log('componentWillMount', _index);
       bookPreviewStore.setProgress(res.progress);
       bookPreviewStore.setBookmarkIndex(res.bookMarkIndex);
       bookPreviewStore.setChapters(res.catalogueList);
-      bookPreviewStore.setBook({ _id: id, bookName, isStar: res.isStar });
+      bookPreviewStore.setBook({ _id: id, bookName, isStar: res.isStar, bookFile: res.bookFile });
       bookPreviewStore.setCurrentChapter(_index);
     });
   }
@@ -76,7 +81,7 @@ class BookPreview extends Component<Props> {
     bookPreviewStore.setCurrentChapter(null);
     if (Taro.getCurrentPages()[Taro.getCurrentPages().length - 2].route !== 'pages/catalogue/index') {
       bookPreviewStore.setChapters([]);
-      bookPreviewStore.setBook({ _id: '', bookName: '', isStar: false });
+      bookPreviewStore.setBook({ _id: '', bookName: '', isStar: false, bookFile: '' });
     }
     bookPreviewStore.setProgress([]);
     bookPreviewStore.setBookmarkIndex([]);
@@ -89,13 +94,11 @@ class BookPreview extends Component<Props> {
     const {
       bookPreviewStore: { currentChapter, chapters, book }
     } = this.props;
-    console.log('componentWillReact-1', currentChapter);
     if (this.currentChapter !== currentChapter && currentChapter !== null) {
-      console.log('componentWillReact-2', currentChapter);
       this.currentChapter = currentChapter;
       Taro.setNavigationBarTitle({ title: chapters[Number(currentChapter)] });
       queryRichContent({
-        url: `https://classics.oss-cn-beijing.aliyuncs.com/books/contents/${book._id}/${currentChapter}.html`
+        url: `${book.bookFile}/${currentChapter}.html`
       })
         .then(content => {
           this.parser.setContent(content);
@@ -124,7 +127,10 @@ class BookPreview extends Component<Props> {
   };
 
   loadAd = () => {
-    if (process.env.NODE_ENV === 'development') return;
+    const {
+      globalStore: { freeAD }
+    } = this.props;
+    if (process.env.NODE_ENV === 'development' || freeAD) return;
     this.videoAd = Taro.createRewardedVideoAd({
       adUnitId: 'adunit-7f9e5a42537d055c'
     });
@@ -216,7 +222,7 @@ class BookPreview extends Component<Props> {
       <View className="book-preview" style={{ backgroundColor: theme.backgroundColor, color: theme.color }}>
         <View className="parser">
           <View className="content" onClick={this.handleContentClick} style={{ fontSize: font.fontSize + 'px' }}>
-            <parser ref={e => (this.parser = e)} selectable onLoad={this.onParserLoad} />
+            <parser ref={e => (this.parser = e)} tag-style={tagStyle} selectable onLoad={this.onParserLoad} />
           </View>
           <View className="footer" onClick={this.handleFooterClick}>
             <Button className="footer__previous" disabled={currentChapter === 0} data-type="previous">

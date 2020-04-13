@@ -1,9 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import { View, Text, Input, Ad } from '@tarojs/components';
+import { observer, inject } from '@tarojs/mobx';
 
-import BookList from '../../../components/BookList';
-import Tag from '../../../components/Tag';
-import { Props } from '../data';
+import BookList from '@/components/BookList';
+import Tag from '@/components/Tag';
 import { search } from '../services';
 import './index.less';
 
@@ -12,7 +12,14 @@ interface State {
   searchHistory: string[];
   inputValue: string;
 }
+interface Props {
+  globalStore: {
+    freeAD: boolean;
+  };
+}
 
+@inject('globalStore')
+@observer
 class SearchPage extends Component<Props, State> {
   config: Config = {
     navigationBarTitleText: '搜索'
@@ -115,6 +122,9 @@ class SearchPage extends Component<Props, State> {
 
   render() {
     const { books, inputValue, searchHistory } = this.state;
+    const {
+      globalStore: { freeAD }
+    } = this.props;
 
     return (
       <View className="search-page">
@@ -159,13 +169,18 @@ class SearchPage extends Component<Props, State> {
                   bgColor="#f6f7fb"
                   color="#000"
                   size="default"
-                  space={{ h: '20rpx', v: '10rpx' }}
+                  space={{ h: '10rpx', v: '10rpx' }}
                   key={item}
                   data-id={item}
                 />
               ))}
             </View>
-            <Ad unitId="adunit-4e312c3ed67b9128" adType="grid" gridOpacity="0.8" gridCount="5" adTheme="white" />
+            {!freeAD && (
+              <View>
+                <Ad unitId="adunit-4e312c3ed67b9128" adType="grid" gridOpacity="0.8" gridCount="5" adTheme="white" />
+                <Ad unitId="adunit-83a2d356a525d43e" />
+              </View>
+            )}
           </View>
         )}
       </View>

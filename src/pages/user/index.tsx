@@ -5,6 +5,7 @@ import { observer, inject } from '@tarojs/mobx';
 import IconFont from '@/components/IconFont';
 import LoginMask from '@/components/LoginMask';
 import avatar from '@/assets/images/avatar.svg';
+import { BASE_URL } from '@/utils/config';
 import { Props } from './data';
 import './index.less';
 
@@ -25,6 +26,10 @@ const options = [
   ],
   [
     {
+      title: '交流讨论',
+      icon: '&#xe62c;'
+    },
+    {
       title: '问题反馈',
       icon: '&#xe65e;'
     },
@@ -40,6 +45,7 @@ const options = [
 ];
 
 @inject('userStore')
+@inject('globalStore')
 @observer
 class UserPage extends Component<Props> {
   config: Config = {
@@ -67,21 +73,38 @@ class UserPage extends Component<Props> {
         });
         break;
       case 'panel-00':
-      case 'panel-12':
+      case 'panel-13':
         const title = target === 'panel-00' ? '去除广告' : '关于';
         const {
           userStore: { check }
         } = this.props;
-        const pathname = target === 'panel-00' ? (check ? '/remove-ad-check.html' : '/remove-ad.html') : '/about.html';
+        const url =
+          target === 'panel-00'
+            ? check
+              ? 'https://classics.oss-cn-beijing.aliyuncs.com/app/pages/remove-ad-check.html'
+              : `${BASE_URL}/v1/pages/remove-ad`
+            : 'https://classics.oss-cn-beijing.aliyuncs.com/app/pages/about.html';
         Taro.navigateTo({
-          url: `/pages/rich_content/index?title=${title}&url=https://classics.oss-cn-beijing.aliyuncs.com/app/pages${pathname}`
+          url: `/pages/rich_content/index?title=${title}&url=${url}`
+        });
+        break;
+      case 'panel-10':
+        Taro.navigateToMiniProgram({
+          appId: 'wx8abaf00ee8c3202e',
+          extraData: {
+            id: '72770',
+            customData: {
+              clientInfo: global.systemInfo.system
+            }
+          }
         });
     }
   };
 
   render() {
     const {
-      userStore: { user }
+      userStore: { user },
+      globalStore: { freeAD }
     } = this.props;
     return (
       <View className="user" onClick={this.handleClick}>
@@ -90,7 +113,11 @@ class UserPage extends Component<Props> {
             <View className="header__pane">
               <View className="pane__user" data-id="panel-02">
                 <Image className="pane__avatar" src={user.avatarUrl || avatar} mode="aspectFill" data-id="panel-02" />
-                <Text className="pane__nickname" data-id="panel-02">
+                <Text
+                  className="pane__nickname"
+                  style={{ color: freeAD === 1 ? '#f67280' : undefined }}
+                  data-id="panel-02"
+                >
                   {user.nickName}
                 </Text>
               </View>
@@ -102,8 +129,8 @@ class UserPage extends Component<Props> {
             {item.map((_item, _index) => (
               <View className="panel__item black" key={_item.title} data-id={`panel-${index}${_index}`}>
                 {_item.title} <IconFont size="22px" unicode={_item.icon} />
-                {index === 1 && _index === 0 && <Button className="hide-button" size="mini" openType="feedback" />}
-                {index === 1 && _index === 1 && <Button className="hide-button" size="mini" openType="contact" />}
+                {index === 1 && _index === 1 && <Button className="hide-button" size="mini" openType="feedback" />}
+                {index === 1 && _index === 2 && <Button className="hide-button" size="mini" openType="contact" />}
               </View>
             ))}
           </View>

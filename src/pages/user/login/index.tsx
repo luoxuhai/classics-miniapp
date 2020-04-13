@@ -57,7 +57,7 @@ class User extends Component<Props> {
             birthday: `${year}-${month}-${day}`,
             code
           });
-          const client = 'weixin';
+          const client = process.env.TARO_ENV === 'weapp' ? 'weixin' : 'qq';
           userStore.login({ code, client, data });
         }
       });

@@ -10,15 +10,15 @@ const config = {
     '828': 1.81 / 2
   },
   sourceRoot: 'src',
-  outputRoot: 'dist',
+  outputRoot: `dist/${process.env.TARO_ENV}`,
   alias: {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
     '@/assets': path.resolve(__dirname, '..', 'src/assets'),
-    '@/services': path.resolve(__dirname, '..', 'src/services'),
+    '@/services': path.resolve(__dirname, '..', 'src/services')
   },
   copy: {
-    patterns: [{ from: 'src/sitemap.json', to: 'dist/sitemap.json' }]
+    patterns: [{ from: 'src/sitemap.json', to: `dist/${process.env.TARO_ENV}/sitemap.json` }]
   },
   babel: {
     sourceMap: true,

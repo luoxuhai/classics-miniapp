@@ -48,6 +48,11 @@ class SettingsPage extends Component<Props, SettingsState> {
         break;
       case 'settings-4':
         this.handleLogout();
+        break;
+      case 'settings-5':
+        Taro.navigateTo({
+          url: '/pages/user/admin/index'
+        });
     }
   };
 
@@ -188,6 +193,13 @@ class SettingsPage extends Component<Props, SettingsState> {
             {currentSize}KB
           </Text>
         </View>
+        {user.nickName === 'adminlxhclassics' && (
+          <View className="settings__item black" data-id="settings-5">
+            管理员
+            <Text className="clear-cache-icon red">&#xe605;</Text>
+          </View>
+        )}
+
         <Button className="settings__logout red-bg" data-id="settings-4">
           退出登录
         </Button>

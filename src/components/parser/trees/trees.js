@@ -18,15 +18,15 @@ Component({
     play(e) {
       this.top.group && this.top.group.pause(this.top.i);
       if (this.top.videoContexts.length > 1 && this.top.data.autopause)
-        for (var i = this.top.videoContexts.length; i--;)
+        for (let i = this.top.videoContexts.length; i--;)
           if (this.top.videoContexts[i].id != e.currentTarget.id)
             this.top.videoContexts[i].pause();
     },
     // 图片点击事件
     imgtap(e) {
-      var attrs = e.target.dataset.attrs;
+      const attrs = e.target.dataset.attrs;
       if (!attrs.ignore) {
-        var preview = true;
+        let preview = true;
         this.top.triggerEvent('imgtap', {
           id: e.target.id,
           src: attrs.src,
@@ -34,7 +34,7 @@ Component({
         })
         if (preview) {
           if (this.top.group) return this.top.group.preview(this.top.i, attrs.i);
-          var urls = this.top.imgList,
+          let urls = this.top.imgList,
             current = urls[attrs.i] ? urls[attrs.i] : (urls = [attrs.src], attrs.src);
           wx.previewImage({
             current,
@@ -45,7 +45,7 @@ Component({
     },
     // 链接点击事件
     linkpress(e) {
-      var jump = true,
+      let jump = true,
         attrs = e.currentTarget.dataset.attrs;
       attrs.ignore = () => jump = false;
       this.top.triggerEvent('linkpress', attrs);
@@ -68,6 +68,14 @@ Component({
                   title: '链接已复制'
                 })
             })
+          else if (attrs.href.indexOf('id-') === 0)
+            wx.setClipboardData({
+              data: attrs.href.replace(/^id-/, ''),
+              success: () =>
+                wx.showToast({
+                  title: 'ID已复制'
+                })
+            })
           else
             wx.navigateTo({
               url: attrs.href,
@@ -77,13 +85,13 @@ Component({
     },
     // 错误事件
     error(e) {
-      var context, src = '',
+      let context, src = '',
         source = e.target.dataset.source,
         i = e.target.dataset.i,
         node = this.data.nodes[i];
       if (source == 'video' || source == 'audio') {
         // 加载其他 source
-        var index = (node.i || 0) + 1;
+        const index = (node.i || 0) + 1;
         if (index < node.attrs.source.length)
           return this.setData({
             [`nodes[${i}].i`]: index
@@ -100,7 +108,7 @@ Component({
         ...e.detail
       })
       if (source == 'img') {
-        var data = {
+        const data = {
           [`nodes[${i}].attrs.src`]: src
         }
         if (!src) data[`nodes[${i}].err`] = 1;
@@ -109,7 +117,7 @@ Component({
     },
     // 加载视频
     loadVideo(e) {
-      var i = e.target.dataset.i;
+      const i = e.target.dataset.i;
       this.setData({
         [`nodes[${i}].lazyLoad`]: false,
         [`nodes[${i}].attrs.autoplay`]: true
@@ -117,7 +125,7 @@ Component({
     },
     // 加载图片
     loadImg(e) {
-      var data = e.target.dataset;
+      const data = e.target.dataset;
       if (data.auto)
         this.setData({
           [`nodes[${data.i}].attrs.style`]: `${this.data.nodes[data.i].attrs.style};width:${e.detail.width}px`

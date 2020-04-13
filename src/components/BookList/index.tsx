@@ -2,6 +2,7 @@ import Taro, { PureComponent, Config } from '@tarojs/taro';
 import { View, Text, Image, Navigator } from '@tarojs/components';
 
 import { getDecimals } from '@/utils/utils';
+import BookCover from "@/components/BookCover";
 import Empty from '@/components/Empty';
 import './index.less';
 import Tag from '../Tag';
@@ -41,11 +42,16 @@ class BookList extends PureComponent<Props> {
             url={`/pages/book_detail/index?bookName=${item.bookName}&id=${item._id}&cover=${item.bookCover}`}
             key={item._id}
           >
-            <Image
+            <BookCover
+              class-name="item__cover"
+              text={item.bookName}
+            />
+            {/* <Image
               src={`https://classics.oss-cn-beijing.aliyuncs.com/${item.bookCover}`}
               className="item__cover"
+              lazyLoad
               mode="aspectFill"
-            ></Image>
+            /> */}
             <View className="item__desc">
               <Text className="item__name black">{item.bookName}</Text>
               <Text className="item__author grey">{item.author.name}</Text>

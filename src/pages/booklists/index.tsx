@@ -96,7 +96,7 @@ class BooklistsPage extends Component<Props, State> {
             }
             key={item._id}
           >
-            <Image className="booklists__cover" src={item.cover} mode="aspectFill" lazy-load />
+            <Image className="booklists__cover" src={item.cover} mode="aspectFill" lazyLoad />
           </Navigator>
         ))}
         <loading show={loading} type="circle" tips="加载中..." />

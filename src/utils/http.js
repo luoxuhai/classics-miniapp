@@ -7,7 +7,7 @@ interceptors.forEach(interceptorItem => Taro.addInterceptor(interceptorItem));
 class HttpRequest {
   baseOptions(url, { params = {}, header = {} }, method = 'GET') {
     const option = {
-      url: /^https:\/\//.test(url) ? url : BASE_URL + url,
+      url: /^http/.test(url) ? url : BASE_URL + url,
       data: params,
       method: method,
       header: {

@@ -2,6 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro';
 import { View, Button, Image, Text } from '@tarojs/components';
 import { observer, inject } from '@tarojs/mobx';
 
+import BookCover from '@/components/BookCover';
 import Empty from '@/components/Empty';
 import BookView from './components/BookView';
 import { delBookrack } from './services';
@@ -122,10 +123,10 @@ class Bookrack extends Component<Props, State> {
     return (
       <View className="bookrack">
         <View className="bookrack__header">
-          <Image
-            className="header__cover"
-            src={`https://classics.oss-cn-beijing.aliyuncs.com/${bookrack[0].book.bookCover}`}
-            mode="aspectFill"
+          <BookCover
+            class-name="header__cover"
+            width="200rpx"
+            text={bookrack[0] && bookrack[0].book.bookName}
             onClick={() => this.handleGotoRead(bookrack[0] && bookrack[0].book._id)}
           />
           {bookrack.length ? (

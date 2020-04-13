@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View, Text, Image, Label } from '@tarojs/components';
+import { View, Text, Label } from '@tarojs/components';
 
+import BookCover from '@/components/BookCover';
 import { BookViewProps } from '../data';
 import './BookView.less';
 
@@ -23,17 +24,14 @@ export default class BookView extends Component<BookViewProps> {
             hoverStopPropagation
             key={item.book._id}
           >
-            <Image
-              className="book-view__cover"
-              src={`https://classics.oss-cn-beijing.aliyuncs.com/${item.book.bookCover}`}
-              mode="aspectFill"
-            >
+            <View className="book-view__cover">
+              <BookCover width="190rpx" text={item.book.bookName} />
               <View className={isEdit ? 'book-view__mask-active' : 'book-view__mask'} data-id="delete">
                 <Label className="book-view__icon" data-id="delete">
                   &#xe64f;
                 </Label>
               </View>
-            </Image>
+            </View>
             <Text className="book-view__name">{item.book.bookName}</Text>
           </View>
         ))}

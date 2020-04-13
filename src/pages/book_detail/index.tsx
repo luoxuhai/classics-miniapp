@@ -40,13 +40,13 @@ class BookDetail extends Component<Props, State> {
   };
 
   componentWillMount() {
-    const { bookName = '红楼梦', id = '5d04d326574eaa305c56f8da', cover = '' } = this.$router.params;
-    Taro.setNavigationBarTitle({ title: bookName });
+    const { bookName, id, cover } = this.$router.params;
+    Taro.setNavigationBarTitle({ title: bookName || '' });
     this.setState({
       book: { _id: id, bookCover: cover, bookName, ...this.state.book }
     });
     Taro.showLoading({ title: '加载中', mask: true });
-    fetchBookDetail({ id })
+    fetchBookDetail({ id: id || bookName })
       .then(res => {
         if (res.book) {
           this.setState({

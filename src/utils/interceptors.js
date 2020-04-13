@@ -9,7 +9,10 @@ const customInterceptor = chain => {
 
   return chain.proceed(requestParams).then(res => {
     // 只要请求成功，不管返回什么状态码，都走这个回调
-    if (res.statusCode === HTTP_STATUS.INVALID_TOKEN && res.data.error === 'invalid token') {
+    if (
+      res.statusCode === HTTP_STATUS.INVALID_TOKEN &&
+      (res.data.error === 'invalid token' || res.data.error === 'invalid signature')
+    ) {
       if (++count > 1) return;
       Taro.showModal({
         title: '提示',
@@ -29,16 +32,18 @@ const customInterceptor = chain => {
       return Promise.reject('需要鉴权');
     } else if (res.statusCode >= 200 && res.statusCode <= 204) {
       return res.data;
-    } else {
+    } else if (res.statusCode >= 500) {
       Taro.showModal({
         title: '提示',
         content: '小程序出错了!',
         confirmText: '重新启动',
-        confirmColor: '#f67280',
-        showCancel: false
+        confirmColor: '#f67280'
       }).then(({ confirm }) => {
         if (confirm) userStore.logout();
+        else Taro.navigateBack({ delta: 1 });
       });
+      return Promise.reject(res.data);
+    } else {
       return Promise.reject(res.data);
     }
   });

@@ -16,6 +16,9 @@ export interface Props {
     logout: Function;
     setCheck: Function;
   };
+  globalStore: {
+    freeAD: number;
+  };
 }
 
 export interface SettingsState {

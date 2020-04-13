@@ -1,10 +1,12 @@
+import Taro from '@tarojs/taro';
 import { observable } from 'mobx';
 
 const globalStore = observable({
-  ad: 0,
+  freeAD: 0,
 
-  setAd(value) {
-    this.ad = value;
+  setFreeAD(value) {
+    this.freeAD = value;
+    Taro.setStorage({ key: 'freeAD', data: value });
   }
 });
 export default globalStore;

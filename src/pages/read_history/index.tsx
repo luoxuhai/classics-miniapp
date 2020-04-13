@@ -22,7 +22,7 @@ class ReadHistoryPage extends Component<Props, State> {
 
   pagination: Pagination = {
     current: 1,
-    pageSize: 6,
+    pageSize: 10,
     pageTotal: 1
   };
 

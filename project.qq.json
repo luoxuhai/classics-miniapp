@@ -1,8 +1,8 @@
 {
-  "miniprogramRoot": "./dist/weapp",
+  "miniprogramRoot": "./dist/qq",
   "projectname": "classics",
   "description": "",
-  "appid": "wx53d943b45c17326f",
+  "appid": "1109630779",
   "setting": {
     "urlCheck": false,
     "es6": false,

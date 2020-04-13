@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 
 import { getDecimals } from '@/utils/utils';
+import BookCover from '@/components/BookCover';
 import './index.less';
 
 type Props = {
@@ -11,10 +12,10 @@ type Props = {
   author: { name: string } | undefined;
 };
 
-function Header({ name = '', cover = '', score = 0, author = { name: '' } }: Props) {
+function Header({ name = '', score = 0, author = { name: '' } }: Props) {
   return (
     <View className="header">
-      <Image className="header__cover" src={cover} mode="aspectFill" />
+      <BookCover class-name="header__cover" width="226rpx" text={name} />
       <View>
         <Text className="header__name">{name}</Text>
         <Text className="header__author">{author.name}</Text>

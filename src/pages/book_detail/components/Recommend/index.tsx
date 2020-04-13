@@ -1,6 +1,7 @@
 import Taro from '@tarojs/taro';
 import { View, Text, Image, Navigator } from '@tarojs/components';
 
+import BookCover from "@/components/BookCover";
 import { Recommend } from '../../data';
 import './index.less';
 
@@ -18,10 +19,10 @@ function Recommend({ books = [] }: Props) {
           key={item._id}
           hoverClass="none"
         >
-          <Image
-            className="book__cover"
-            src={`https://classics.oss-cn-beijing.aliyuncs.com/${item.bookCover}`}
-            mode="aspectFill"
+          <BookCover
+            class-name="book__cover"
+            text={item.bookName}
+            width="190rpx"
           />
           <Text className="book__name">{item.bookName}</Text>
         </Navigator>

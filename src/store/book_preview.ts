@@ -4,7 +4,9 @@ import { observable } from 'mobx';
 const bookPreviewStore = observable({
   book: {
     _id: '',
-    bookName: ''
+    bookName: '',
+    bookFile: '',
+    isStar: false
   },
   chapters: [],
   currentChapter: -1,

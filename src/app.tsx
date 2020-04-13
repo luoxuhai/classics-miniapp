@@ -2,6 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro';
 import { Provider } from '@tarojs/mobx';
 
 import { refreshToken } from '@/services/user';
+import { queryFreeAD } from '@/services/servers';
 import Index from './pages/bookstore';
 import store from './store';
 import './app.less';
@@ -35,7 +36,8 @@ class App extends Component {
       'pages/booklists/index',
       'pages/user/nickname/index',
       'pages/user/settings/index',
-      'pages/rich_content/index'
+      'pages/rich_content/index',
+      'pages/user/admin/index'
     ],
     window: {
       backgroundTextStyle: 'dark',
@@ -75,8 +77,10 @@ class App extends Component {
         }
       ]
     },
-    navigateToMiniProgramAppIdList: ['wx8a5d6f9fad07544e']
+    navigateToMiniProgramAppIdList: ['wx8abaf00ee8c3202e']
   };
+
+  interval: any;
 
   componentWillMount() {
     this.updateApp();
@@ -101,11 +105,33 @@ class App extends Component {
 
   componentDidMount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+    this.queryFreeAD();
+  }
 
-  componentDidHide() {}
+  componentDidHide() {
+    clearInterval(this.interval);
+  }
 
   componentDidCatchError() {}
+
+  queryFreeAD() {
+    try {
+      const freeAD = Taro.getStorageSync('freeAD');
+      if (freeAD) store.globalStore.setFreeAD(freeAD);
+    } catch (error) {}
+
+    function _queryFreeAD() {
+      queryFreeAD().then(res => {
+        store.globalStore.setFreeAD(res.freeAD);
+      });
+    }
+
+    if (global.$token) _queryFreeAD();
+    this.interval = setInterval(() => {
+      if (global.$token) _queryFreeAD();
+    }, 1000 * 60 * 5);
+  }
 
   updateApp() {
     const updateManager = Taro.getUpdateManager();
