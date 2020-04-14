@@ -20,7 +20,7 @@ const bookrackStore = observable({
       .then(res => {
         const { books, current, pageTotal } = res;
 
-        this.bookrack = reachBottom ? [...this.state.booklists, ...books] : books;
+        this.bookrack = reachBottom ? [...this.bookrack, ...books] : books;
         pagination.current = current + 1;
         pagination.pageTotal = pageTotal || 1;
       })

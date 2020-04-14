@@ -21,10 +21,10 @@ const tagStyle = {
 @observer
 class BookPreview extends Component<Props> {
   config = {
-    navigationBarTitleText: ''
-    // usingComponents: {
-    //   parser: '../../components/parser/parser'
-    // }
+    navigationBarTitleText: '',
+    usingComponents: {
+      parser: '../../components/parser/parser'
+    }
   };
 
   state = {};
