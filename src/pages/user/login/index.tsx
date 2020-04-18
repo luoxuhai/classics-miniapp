@@ -15,7 +15,7 @@ class User extends Component<Props> {
     navigationBarTextStyle: 'white'
   };
 
-  menuButton = global.menuButton;
+  menuButton = Taro.getMenuButtonBoundingClientRect();
 
   handleButtonClick = e => {
     const id = e.target.dataset.id;

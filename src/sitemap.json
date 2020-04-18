@@ -7,6 +7,12 @@
       "matching": "exact"
     },
     {
+      "action": "allow",
+      "page": "pages/book_list_view/index",
+      "params": ["bookType"],
+      "matching": "exact"
+    },
+    {
       "action": "disallow",
       "page": "pages/bookrack/index"
     },
@@ -32,15 +38,15 @@
     },
     {
       "action": "disallow",
+      "page": "pages/user/admin/index"
+    },
+    {
+      "action": "disallow",
       "page": "pages/rich_content/index"
     },
     {
       "action": "disallow",
       "page": "pages/login/index"
-    },
-    {
-      "action": "disallow",
-      "page": "pages/bookstore/search/index"
     },
     {
       "action": "disallow",

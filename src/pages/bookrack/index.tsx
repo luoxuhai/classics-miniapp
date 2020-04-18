@@ -1,9 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import { View, Button, Image, Text } from '@tarojs/components';
+import { View, Button, Text } from '@tarojs/components';
 import { observer, inject } from '@tarojs/mobx';
 
 import BookCover from '@/components/BookCover';
-import Empty from '@/components/Empty';
+import LoadMore from '@/components/LoadMore';
 import BookView from './components/BookView';
 import { delBookrack } from './services';
 import { State, Props } from './data';
@@ -17,10 +17,7 @@ class Bookrack extends Component<Props, State> {
     navigationBarTitleText: '书架',
     navigationStyle: 'custom',
     enablePullDownRefresh: true,
-    navigationBarTextStyle: 'white',
-    usingComponents: {
-      loading: '../../components/weui/loading/loading'
-    }
+    navigationBarTextStyle: 'white'
   };
 
   state = {
@@ -35,8 +32,8 @@ class Bookrack extends Component<Props, State> {
 
   componentDidShow() {
     if (global.$token) {
-      const { bookrackStore } = this.props;
       this.pagination.current = 1;
+      const { bookrackStore } = this.props;
       bookrackStore.fetchBookRack(this.pagination, false);
     }
   }
@@ -44,6 +41,10 @@ class Bookrack extends Component<Props, State> {
   componentDidHide() {
     this.setState({
       isEdit: false
+    });
+    Taro.pageScrollTo({
+      scrollTop: 0,
+      duration: 0
     });
   }
 
@@ -123,19 +124,21 @@ class Bookrack extends Component<Props, State> {
     return (
       <View className="bookrack">
         <View className="bookrack__header">
-          <BookCover
-            class-name="header__cover"
-            width="200rpx"
-            text={bookrack[0] && bookrack[0].book.bookName}
-            onClick={() => this.handleGotoRead(bookrack[0] && bookrack[0].book._id)}
-          />
-          {bookrack.length ? (
+          {bookrack.length && (
+            <BookCover
+              class-name="header__cover"
+              width="200rpx"
+              text={bookrack[0] && bookrack[0].book.bookName}
+              onClick={() => this.handleGotoRead(bookrack[0] && bookrack[0].book._id)}
+            />
+          )}
+          {bookrack.length && (
             <View className="header__detail">
               <Text className="detail__bookName">{bookrack[0].book.bookName}</Text>
               <Text className="header__author">作者: {bookrack[0].book.author.name}</Text>
               <Text className="header__progress">读至: {bookrack[0].progress}</Text>
             </View>
-          ) : null}
+          )}
         </View>
         <View className="manage">
           <Text className="manage__text">共{bookrack.length}本</Text>
@@ -150,7 +153,7 @@ class Bookrack extends Component<Props, State> {
           </Button>
         </View>
         <BookView book={bookrack} isEdit={isEdit} onClick={this.handleClick} onLongPress={this.handleActionSheet} />
-        {!loading && !bookrack.length ? <Empty /> : <loading show={loading} type="circle" tips="加载中..." />}
+        <LoadMore loading={loading} empty={!loading && !bookrack.length} />
       </View>
     );
   }

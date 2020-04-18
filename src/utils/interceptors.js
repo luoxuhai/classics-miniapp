@@ -11,9 +11,9 @@ const customInterceptor = chain => {
     // 只要请求成功，不管返回什么状态码，都走这个回调
     if (
       res.statusCode === HTTP_STATUS.INVALID_TOKEN &&
-      (res.data.error === 'invalid token' || res.data.error === 'invalid signature')
+      /jwt expired|invalid token|invalid signature/.test(res.data.error)
     ) {
-      if (++count > 1) return;
+      if (++count > 1) return Promise.reject(res.data);
       Taro.showModal({
         title: '提示',
         content: '登录状态过期,请重新登录',
@@ -29,7 +29,7 @@ const customInterceptor = chain => {
         .finally(() => {
           count = 0;
         });
-      return Promise.reject('需要鉴权');
+      return Promise.reject(res.data);
     } else if (res.statusCode >= 200 && res.statusCode <= 204) {
       return res.data;
     } else if (res.statusCode >= 500) {

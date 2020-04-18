@@ -4,6 +4,7 @@ import { observer, inject } from '@tarojs/mobx';
 
 import BookList from '@/components/BookList';
 import LoginMask from '@/components/LoginMask';
+// import RateModal from '@/components/RateModal';
 import { shareMixin } from '@/utils/utils';
 import Search from './components/Search';
 import Banner from './components/Banner';
@@ -18,31 +19,29 @@ import './index.less';
 @observer
 class BookstorePage extends Component<Props, State> {
   config: Config = {
-    navigationBarTitleText: '书城',
-    navigationStyle: 'custom',
-    enablePullDownRefresh: true,
-    usingComponents: {
-      ['navigation-bar']: '../../components/weui/navigation-bar/navigation-bar'
-    }
+    navigationBarTitleText: '古典文学名著阅读',
+    enablePullDownRefresh: true
   };
 
   shareConfig: ShareConfig = {};
+
+  interstitialAd: any;
+
+  componentWillMount() {
+    this.fetchData();
+  }
 
   componentDidMount() {
     let freeAD = 0;
     try {
       freeAD = Taro.getStorageSync('freeAD');
     } catch (error) {}
-    // if (!books.length) this.fetchData();
     if (freeAD !== 1) {
-      const interstitialAd = Taro.createInterstitialAd({
+      this.interstitialAd = Taro.createInterstitialAd({
         adUnitId: 'adunit-83c7d09dcd1bd671'
       });
-      interstitialAd.onError(() => null);
-      interstitialAd.load().catch(() => null);
-      setTimeout(() => {
-        interstitialAd.show().catch(() => null);
-      }, 500);
+      this.interstitialAd.onError(() => null);
+      this.interstitialAd.show().catch(() => null);
     }
   }
 
@@ -53,9 +52,10 @@ class BookstorePage extends Component<Props, State> {
     })
       .then(res => {
         const { bookstoreStore } = this.props;
-        bookstoreStore.saveData({
-          books: res.books
-        });
+        if (!bookstoreStore.data.books.length)
+          bookstoreStore.saveData({
+            books: res.books
+          });
       })
       .finally(() => {
         Taro.stopPullDownRefresh();
@@ -63,9 +63,10 @@ class BookstorePage extends Component<Props, State> {
     fetchBanner()
       .then(res => {
         const { bookstoreStore } = this.props;
-        bookstoreStore.saveData({
-          banners: res.banners
-        });
+        if (!bookstoreStore.data.banners.length)
+          bookstoreStore.saveData({
+            banners: res.banners
+          });
       })
       .finally(() => {
         Taro.stopPullDownRefresh();
@@ -85,14 +86,14 @@ class BookstorePage extends Component<Props, State> {
 
     return (
       <View className="bookstore">
-        <navigation-bar id="nav" title="古典文学名著阅读" back={false} background="#fff" show />
         <Search />
         <Banner banners={banners} check={check} />
         <Text className="title">分类</Text>
         <Classify />
         <Text className="title">推荐</Text>
         <BookList books={books} loading={loading} />
-        <LoginMask />
+        <LoginMask onClick={() => this.interstitialAd.destroy()} />
+        {/* <RateModal /> */}
       </View>
     );
   }

@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View, Text, Slider } from '@tarojs/components';
+import { View, Text, Slider, ScrollView } from '@tarojs/components';
 import { observer, inject } from '@tarojs/mobx';
 
 import IconFont from '@/components/IconFont';
@@ -46,12 +46,6 @@ class NavBar extends Component<NavBarProps> {
       id: 'settings'
     }
   ];
-
-  componentWillMount() {}
-  componentDidMount() {}
-  componentWillUnmount() {}
-  componentDidShow() {}
-  componentDidHide() {}
 
   handleBottomClick = e => {
     const id = e.target.dataset.id;
@@ -101,7 +95,9 @@ class NavBar extends Component<NavBarProps> {
             animation={animation}
             style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
           >
-            <Text className="chapter">{chapters[currentChapter]}</Text>
+            <ScrollView scrollX enableFlex className="chapter">
+              {chapters[currentChapter]}
+            </ScrollView>
             <View className="slider-wrapper">
               <Text className="icon" onClick={() => onToggleChapterClick(false)}>
                 &#xe635;

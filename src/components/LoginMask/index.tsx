@@ -8,6 +8,7 @@ type Props = {
   userStore?: {
     token: string;
   };
+  onClick?: Function;
 };
 
 @inject('userStore')
@@ -18,17 +19,18 @@ class LoginMask extends PureComponent<Props> {
   };
 
   handleClick() {
-      Taro.showModal({
-        title: '提示',
-        content: '登录以继续',
-        confirmText: '登录',
-        confirmColor: '#f67280'
-      }).then(res => {
-        if (res.confirm)
-          Taro.navigateTo({
-            url: '/pages/user/login/index'
-          });
-      });
+    this.props.onClick && this.props.onClick();
+    Taro.showModal({
+      title: '提示',
+      content: '登录以继续',
+      confirmText: '登录',
+      confirmColor: '#f67280'
+    }).then(res => {
+      if (res.confirm)
+        Taro.navigateTo({
+          url: '/pages/user/login/index'
+        });
+    });
   }
 
   render() {

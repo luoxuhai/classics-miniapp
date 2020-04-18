@@ -87,7 +87,7 @@ class Catalogue extends PureComponent<Props> {
   render() {
     const { selectIndex, simple } = this.state;
     const {
-      bookPreviewStore: { bookmarks, chapters, book }
+      bookPreviewStore: { bookmarks, chapters, currentChapter, book }
     } = this.props;
 
     return (
@@ -112,14 +112,26 @@ class Catalogue extends PureComponent<Props> {
                 </View>
               ))}
             </View>
-            <Swiper className="swiper" onChange={this.handleSwiperChange} current={selectIndex} duration={300}>
+            <Swiper
+              className="swiper"
+              onChange={this.handleSwiperChange}
+              skipHiddenItemLayout
+              current={selectIndex}
+              duration={350}
+            >
               <SwiperItem className="swiper-item">
                 <CatalogueHeader chapters={chapters} />
-                <ScrollView scroll-y className="scorll-view" style="height: calc(100vh - 100rpx - 50px)">
+                <ScrollView
+                  scrollY
+                  className="scorll-view"
+                  scrollTop={currentChapter * 100 + 'rpx'}
+                  style="height: calc(100vh - 100rpx - 50px)"
+                >
                   <Chapter
                     simple={false}
                     list={chapters}
                     book={book}
+                    currentChapter={currentChapter}
                     selectIndex={selectIndex}
                     onChapterClick={this.handleChapterClick}
                   />
@@ -133,6 +145,7 @@ class Catalogue extends PureComponent<Props> {
                     list={bookmarks.map(item => ({ title: chapters[item], bookmarkIndex: item }))}
                     book={book}
                     selectIndex={selectIndex}
+                    currentChapter={currentChapter}
                     onChapterClick={this.handleChapterClick}
                   />
                 </ScrollView>

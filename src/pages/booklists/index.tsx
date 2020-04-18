@@ -3,9 +3,11 @@ import { View, Image, Navigator } from '@tarojs/components';
 import { observer, inject } from '@tarojs/mobx';
 
 import LoginMask from '@/components/LoginMask';
+import LoadMore from '@/components/LoadMore';
 import { shareMixin } from '@/utils/utils';
 import { State, Props } from './data';
 import { queryBooklists } from './services';
+import { queryRichContent } from '../rich_content/services';
 import './index.less';
 
 @shareMixin
@@ -13,15 +15,9 @@ import './index.less';
 @observer
 class BooklistsPage extends Component<Props, State> {
   config: Config = {
-    navigationBarTitleText: '书单',
-    navigationStyle: 'custom',
-    enablePullDownRefresh: true,
-    usingComponents: {
-      loading: '../../components/weui/loading/loading'
-    }
+    navigationBarTitleText: '书单推荐',
+    enablePullDownRefresh: true
   };
-
-  menuButton = global.menuButton;
 
   state: State = {
     booklists: [],
@@ -80,12 +76,23 @@ class BooklistsPage extends Component<Props, State> {
       });
   }
 
+  handleBookListsClick = (url, title) => {
+    queryRichContent({
+      url
+    }).then(res => {
+      Taro.setStorage({
+        key: title,
+        data: res
+      });
+    });
+  };
+
   render() {
     const { booklists, loading } = this.state;
     const { userStore } = this.props;
 
     return (
-      <View className="booklists" style={{ paddingTop: this.menuButton.bottom + 10 + 'px' }}>
+      <View className="booklists">
         {booklists.map(item => (
           <Navigator
             className="booklists__item"
@@ -95,11 +102,12 @@ class BooklistsPage extends Component<Props, State> {
                 : `/pages/rich_content/index?url=${item.content}&title=${item.title}`
             }
             key={item._id}
+            onClick={() => this.handleBookListsClick(item.content, item.title)}
           >
             <Image className="booklists__cover" src={item.cover} mode="aspectFill" lazyLoad />
           </Navigator>
         ))}
-        <loading show={loading} type="circle" tips="加载中..." />
+        <LoadMore loading={loading} />
         <LoginMask />
       </View>
     );

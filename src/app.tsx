@@ -43,7 +43,7 @@ class App extends Component {
       backgroundTextStyle: 'dark',
       navigationBarTextStyle: 'black',
       navigationBarBackgroundColor: '#fff',
-      onReachBottomDistance: 500
+      onReachBottomDistance: 100
     },
     style: 'v2',
     tabBar: {
@@ -83,27 +83,23 @@ class App extends Component {
   interval: any;
 
   componentWillMount() {
-    this.updateApp();
     try {
       this.getBackgroundFetchData();
     } catch (error) {}
     try {
       store.userStore.setToken(Taro.getStorageSync('token'));
     } catch (error) {}
-    global.menuButton = Taro.getMenuButtonBoundingClientRect();
+    this.setUser();
+    this.initTheme();
+    this.refreshToken();
+    this.updateApp();
     global.systemInfo = Taro.getSystemInfoSync();
     if (wx.setWindowSize)
       wx.setWindowSize({
         width: 500,
         height: 122
       });
-
-    this.setUser();
-    this.initTheme();
-    this.refreshToken();
   }
-
-  componentDidMount() {}
 
   componentDidShow() {
     this.queryFreeAD();

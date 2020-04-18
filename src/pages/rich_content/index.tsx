@@ -1,9 +1,11 @@
 import Taro, { PureComponent, Config } from '@tarojs/taro';
 import { View } from '@tarojs/components';
 
+import { shareMixin } from '@/utils/utils';
 import { queryRichContent } from './services';
 import './index.less';
 
+@shareMixin
 class RichContent extends PureComponent {
   config: Config = {
     usingComponents: {
@@ -11,16 +13,26 @@ class RichContent extends PureComponent {
     }
   };
 
+  shareConfig: ShareConfig = {};
+
   parser: any;
 
-  componentDidMount() {
+  componentWillMount() {
     const { url, title } = this.$router.params;
     Taro.showNavigationBarLoading();
     Taro.setNavigationBarTitle({ title });
+    this.shareConfig = {
+      title,
+      path: `/pages/rich_content/index?url=${url}&title=${title}`
+    };
+  }
+
+  componentDidMount() {
+    const { url, title } = this.$router.params;
     queryRichContent({
       url
     }).then(res => {
-      if (!this.parser.html) this.parser.setContent(res);
+      if (!this.parser.__data__.html) this.parser.setContent(res);
       Taro.setStorage({
         key: title,
         data: res

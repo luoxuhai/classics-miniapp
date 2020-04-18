@@ -29,9 +29,10 @@ class BookListViewPage extends Component<null, State> {
   bookType = '';
 
   componentWillMount() {
-    const { type } = this.$router.params;
-    this.bookType = type === '唐传奇' ? '传奇小说' : type;
-    Taro.setNavigationBarTitle({ title: type });
+    const { bookType } = this.$router.params;
+    if (!bookType) return;
+    this.bookType = bookType === '唐传奇' ? '传奇小说' : bookType;
+    Taro.setNavigationBarTitle({ title: bookType });
     this.handleLoadData(false);
   }
 

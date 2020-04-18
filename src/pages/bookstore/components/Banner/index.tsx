@@ -1,6 +1,7 @@
 import Taro, { PureComponent } from '@tarojs/taro';
 import { Swiper, SwiperItem, Image } from '@tarojs/components';
 
+import { queryRichContent } from '../../../rich_content/services';
 import './index.less';
 
 interface Props {
@@ -33,13 +34,21 @@ class Banner extends PureComponent<Props> {
 
   handleClick = ({ target }) => {
     const id = target.dataset.id;
-    const title = target.dataset.title;
     if (!id) return;
+    const title = target.dataset.title;
+    const url = `https://classics.oss-cn-beijing.aliyuncs.com/articles/contents/${id}.html`;
     Taro.navigateTo({
-      url: this.props.check
-        ? '/pages/book_detail/index'
-        : `/pages/rich_content/index?title=${title}&url=${`https://classics.oss-cn-beijing.aliyuncs.com/articles/contents/${id}.html`}`
+      url: this.props.check ? '/pages/book_detail/index' : `/pages/rich_content/index?title=${title}&url=${url}`
     });
+    if (!this.props.check)
+      queryRichContent({
+        url
+      }).then(res => {
+        Taro.setStorage({
+          key: title,
+          data: res
+        });
+      });
   };
 
   render() {
@@ -55,6 +64,8 @@ class Banner extends PureComponent<Props> {
         interval={10000}
         circular
         autoplay
+        indicatorDots
+        indicatorActiveColor="#f67280"
         onChange={this.handleSwiperChange}
         onClick={this.handleClick}
       >
@@ -66,7 +77,7 @@ class Banner extends PureComponent<Props> {
               src={item.bannerImg}
               data-title={item.title}
               data-id={item._id}
-            ></Image>
+            />
           </SwiperItem>
         ))}
       </Swiper>

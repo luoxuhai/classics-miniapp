@@ -15,6 +15,7 @@ const tagStyle = {
   p: 'margin: 1em 0;'
 };
 
+let scrollTop = 0;
 @shareMixin
 @inject('bookPreviewStore')
 @inject('globalStore')
@@ -34,7 +35,6 @@ class BookPreview extends Component<Props> {
   parser: any;
   videoAd: any;
   windowWidth = global.systemInfo.windowWidth;
-  scrollTop = 0;
   currentChapter = -1;
 
   componentDidMount() {
@@ -77,7 +77,8 @@ class BookPreview extends Component<Props> {
   componentWillUnmount() {
     const { bookPreviewStore } = this.props;
     const { book, currentChapter } = bookPreviewStore;
-    if (book.isStar) putProgress({ bookID: book._id, progress: [currentChapter, this.scrollTop, this.windowWidth] });
+    if (book.isStar) putProgress({ bookID: book._id, progress: [currentChapter, scrollTop, this.windowWidth] });
+    scrollTop = 0;
     bookPreviewStore.setCurrentChapter(null);
     if (Taro.getCurrentPages()[Taro.getCurrentPages().length - 2].route !== 'pages/catalogue/index') {
       bookPreviewStore.setChapters([]);
@@ -95,6 +96,7 @@ class BookPreview extends Component<Props> {
       bookPreviewStore: { currentChapter, chapters, book }
     } = this.props;
     if (this.currentChapter !== currentChapter && currentChapter !== null) {
+      Taro.showLoading({ title: '加载中', mask: true });
       this.currentChapter = currentChapter;
       Taro.setNavigationBarTitle({ title: chapters[Number(currentChapter)] });
       queryRichContent({
@@ -160,7 +162,7 @@ class BookPreview extends Component<Props> {
   };
 
   onPageScroll(e) {
-    this.scrollTop = e.scrollTop;
+    scrollTop = e.scrollTop;
   }
 
   handleContentClick = e => {
@@ -192,7 +194,6 @@ class BookPreview extends Component<Props> {
       (next && bookPreviewStore.currentChapter !== bookPreviewStore.chapters.length - 1) ||
       (!next && bookPreviewStore.currentChapter !== 0)
     ) {
-      Taro.showLoading({ title: '加载中', mask: true });
       bookPreviewStore.setCurrentChapter(
         next ? bookPreviewStore.currentChapter + 1 : bookPreviewStore.currentChapter - 1
       );

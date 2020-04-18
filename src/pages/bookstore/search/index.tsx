@@ -36,7 +36,7 @@ class SearchPage extends Component<Props, State> {
       this.setState({
         searchHistory: data || []
       });
-    });
+    }).catch(() => null)
   }
 
   handleClearClick = () => {
@@ -101,10 +101,14 @@ class SearchPage extends Component<Props, State> {
   };
 
   clearSearchHistory = () => {
+    if (!this.state.searchHistory.length) return;
     this.setState({
       searchHistory: []
     });
     Taro.removeStorage({ key: 'searchHistory' });
+    Taro.showToast({
+      title: '已清除搜索历史'
+    });
   };
 
   handleSearchHistoryClick = ({ target }) => {

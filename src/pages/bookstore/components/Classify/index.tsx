@@ -16,7 +16,7 @@ class Classify extends Component {
     return (
       <View className="book-type">
         {bookType.map((item) => (
-          <Navigator url={`/pages/book_list_view/index?type=${item}`} className="book-type__item" key={item}>
+          <Navigator url={`/pages/book_list_view/index?bookType=${item}`} className="book-type__item" key={item}>
             {item}
           </Navigator>
         ))}

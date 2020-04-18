@@ -4,6 +4,7 @@ import { observer, inject } from '@tarojs/mobx';
 import Skeleton from 'taro-skeleton';
 
 import LoginMask from '@/components/LoginMask';
+// import RateModal from '@/components/RateModal';
 import Collapse from '@/components/Collapse';
 import { fetchBookDetail, addBookrack } from '@/services/book';
 import { shareMixin } from '@/utils/utils';
@@ -42,10 +43,10 @@ class BookDetail extends Component<Props, State> {
   componentWillMount() {
     const { bookName, id, cover } = this.$router.params;
     Taro.setNavigationBarTitle({ title: bookName || '' });
+    Taro.showNavigationBarLoading();
     this.setState({
       book: { _id: id, bookCover: cover, bookName, ...this.state.book }
     });
-    Taro.showLoading({ title: '加载中', mask: true });
     fetchBookDetail({ id: id || bookName })
       .then(res => {
         if (res.book) {
@@ -60,7 +61,7 @@ class BookDetail extends Component<Props, State> {
         }
       })
       .finally(() => {
-        Taro.hideLoading();
+        Taro.hideNavigationBarLoading();
       });
     fetchBookRecommend({ bookName }).then(({ books }) => {
       this.setState({
@@ -71,6 +72,7 @@ class BookDetail extends Component<Props, State> {
 
   handleBookrackClick = () => {
     const { book } = this.state;
+    if (!book._id) return;
     Taro.showToast({
       title: '已加入书架',
       icon: 'success'
@@ -117,6 +119,7 @@ class BookDetail extends Component<Props, State> {
           onBookrackClick={this.handleBookrackClick}
         />
         <LoginMask />
+        {/* <RateModal /> */}
       </View>
     );
   }
