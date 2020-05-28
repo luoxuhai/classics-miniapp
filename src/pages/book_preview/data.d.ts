@@ -3,14 +3,14 @@ interface BookPreviewStore {
     book: {
       _id: string;
       bookName: string;
-      bookFile: string;
+      content: string;
       isStar: boolean;
     };
     animation: any;
     currentPane: string;
     chapters: any[];
     currentChapter: number;
-    bookMarkIndex: [];
+    bookmarkIndex: [];
     progress: any[];
     theme: {
       backgroundColor: any;
@@ -31,7 +31,7 @@ interface BookPreviewStore {
     setTheme: Function;
   };
   globalStore: {
-    freeAD: boolean;
+    freeAD: number;
   };
 }
 

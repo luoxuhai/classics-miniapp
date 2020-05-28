@@ -14,7 +14,7 @@ class User extends Component<Props> {
   };
 
   state = {
-    inputValue: this.props.userStore.user.nickName
+    inputValue: this.props.userStore.user.nickname
   };
 
   handleInput = e => {
@@ -38,11 +38,12 @@ class User extends Component<Props> {
     putUser({
       id: userStore.user._id,
       params: {
-        nickName: inputValue
+        nickname: inputValue
       }
     })
       .then(() => {
-        userStore.setUser({ nickName: inputValue });
+        Taro.hideLoading();
+        userStore.setUser({ nickname: inputValue });
         setTimeout(() => {
           Taro.navigateBack({
             delta: 1
@@ -50,6 +51,7 @@ class User extends Component<Props> {
         }, 500);
       })
       .catch(error => {
+        Taro.hideLoading();
         if (error.errcode === 87014) {
           Taro.showModal({
             title: '提示',
@@ -58,9 +60,6 @@ class User extends Component<Props> {
             confirmColor: '#f67280'
           });
         }
-      })
-      .finally(() => {
-        Taro.hideLoading();
       });
   };
 
@@ -71,7 +70,7 @@ class User extends Component<Props> {
       <View className="nickname">
         <Textarea
           className="nickname__input"
-          value={user.nickName}
+          value={user.nickname}
           placeholder="请输入昵称(最多16字)"
           autoFocus
           showConfirmBar={false}
@@ -80,7 +79,7 @@ class User extends Component<Props> {
         />
         <Button
           className="nickname__save"
-          disabled={inputValue === user.nickName}
+          disabled={inputValue === user.nickname}
           onClick={this.handleSubmit}
           type="primary"
           data-id="settings-4"

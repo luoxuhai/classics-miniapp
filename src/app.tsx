@@ -2,7 +2,6 @@ import Taro, { Component, Config } from '@tarojs/taro';
 import { Provider } from '@tarojs/mobx';
 
 import { refreshToken } from '@/services/user';
-import { queryFreeAD } from '@/services/servers';
 import Index from './pages/bookstore';
 import store from './store';
 import './app.less';
@@ -43,7 +42,7 @@ class App extends Component {
       backgroundTextStyle: 'dark',
       navigationBarTextStyle: 'black',
       navigationBarBackgroundColor: '#fff',
-      onReachBottomDistance: 100
+      onReachBottomDistance: 65
     },
     style: 'v2',
     tabBar: {
@@ -94,11 +93,6 @@ class App extends Component {
     this.refreshToken();
     this.updateApp();
     global.systemInfo = Taro.getSystemInfoSync();
-    if (wx.setWindowSize)
-      wx.setWindowSize({
-        width: 500,
-        height: 122
-      });
   }
 
   componentDidShow() {
@@ -109,23 +103,15 @@ class App extends Component {
     clearInterval(this.interval);
   }
 
-  componentDidCatchError() {}
-
   queryFreeAD() {
     try {
       const freeAD = Taro.getStorageSync('freeAD');
       if (freeAD) store.globalStore.setFreeAD(freeAD);
     } catch (error) {}
 
-    function _queryFreeAD() {
-      queryFreeAD().then(res => {
-        store.globalStore.setFreeAD(res.freeAD);
-      });
-    }
-
-    if (global.$token) _queryFreeAD();
+    if (global.$token) store.globalStore.queryFreeAD();
     this.interval = setInterval(() => {
-      if (global.$token) _queryFreeAD();
+      if (global.$token) store.globalStore.queryFreeAD();
     }, 1000 * 60 * 5);
   }
 
@@ -192,6 +178,13 @@ class App extends Component {
   getBackgroundFetchData = () => {
     wx.setBackgroundFetchToken({
       token: 'previous-v1'
+    });
+
+    wx.getBackgroundFetchData({
+      fetchType: 'periodic',
+      success: ({ fetchedData }: any) => {
+        store.bookstoreStore.saveData(JSON.parse(fetchedData));
+      }
     });
 
     wx.getBackgroundFetchData({

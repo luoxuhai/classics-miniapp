@@ -2,17 +2,17 @@
 import request from '../utils/http';
 
 export const queryBooklists = params => {
-  return request.get('/v1/articles', { params });
+  return request.get('/v2/articles', { params });
 };
 
 export const queryBookrack = params => {
-  return request.get('/v1/bookrack', { params });
+  return request.get('/v2/bookrack', { params });
 };
 
 export const setFreeAD = params => {
-  return request.post('/v1/free_ad', { params });
+  return request.post('/v2/free_ad', { params });
 };
 
 export const queryFreeAD = () => {
-  return request.get('/v1/free_ad');
+  return request.get('/v2/free_ad');
 };

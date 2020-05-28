@@ -23,6 +23,9 @@ export type Props = {
   userStore: {
     check: boolean;
   };
+  globalStore: {
+    freeAD: number;
+  };
 };
 
 export type FetchBookRecommendParams = {

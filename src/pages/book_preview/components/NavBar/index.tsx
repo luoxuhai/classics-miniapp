@@ -95,7 +95,7 @@ class NavBar extends Component<NavBarProps> {
             animation={animation}
             style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
           >
-            <ScrollView scrollX enableFlex className="chapter">
+            <ScrollView scrollX enableFlex className="chapter" style="width: calc(100vw - 40rpx)">
               {chapters[currentChapter]}
             </ScrollView>
             <View className="slider-wrapper">

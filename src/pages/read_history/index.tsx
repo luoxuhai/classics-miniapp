@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro';
-import { View} from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { observer, inject } from '@tarojs/mobx';
 
 import BookList from '@/components/BookList';
@@ -50,26 +50,27 @@ class ReadHistoryPage extends Component<Props, State> {
         loading: true
       });
 
+    const handleFinally = () => {
+      Taro.stopPullDownRefresh();
+      this.setState({
+        loading: false
+      });
+    };
+
     queryReadHistory({
       current: this.pagination.current,
       pageSize: this.pagination.pageSize
     })
       .then(res => {
+        handleFinally();
         const { books, current, pageTotal } = res;
-
         this.setState({
           books: reachBottom ? [...this.state.books, ...books] : books
         });
         this.pagination.current = current + 1;
         this.pagination.pageTotal = pageTotal || 1;
       })
-      .catch(() => null)
-      .finally(() => {
-        Taro.stopPullDownRefresh();
-        this.setState({
-          loading: false
-        });
-      });
+      .catch(handleFinally);
   }
 
   render() {

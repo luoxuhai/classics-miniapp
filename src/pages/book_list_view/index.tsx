@@ -1,5 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
+import { observer, inject } from '@tarojs/mobx';
 
 import BookList from '@/components/BookList';
 import { State } from './data';
@@ -7,23 +8,31 @@ import { queryBooks } from './services';
 
 import './index.less';
 
-class BookListViewPage extends Component<null, State> {
+interface Props {
+  globalStore: {
+    freeAD: number;
+  };
+}
+
+@inject('globalStore')
+@observer
+class BookListViewPage extends Component<Props, State> {
   config: Config = {
     navigationBarTitleText: '分类',
-    enablePullDownRefresh: true,
+    enablePullDownRefresh: true
   };
 
   state = {
     books: [],
     loading: true,
     sort: 'createdAt',
-    order: -1,
+    order: -1
   };
 
   pagination: Pagination = {
     current: 1,
     pageSize: 10,
-    pageTotal: 1,
+    pageTotal: 1
   };
 
   bookType = '';
@@ -45,80 +54,91 @@ class BookListViewPage extends Component<null, State> {
     this.handleLoadData(true);
   }
 
-  handleLoadData = (reachBottom) => {
+  handleLoadData = reachBottom => {
     if (this.pagination.current > this.pagination.pageTotal) {
       this.setState({
-        loading: false,
+        loading: false
       });
       return;
     } else
       this.setState({
-        loading: true,
+        loading: true
       });
+
+    const handleFinally = () => {
+      Taro.stopPullDownRefresh();
+      this.setState({
+        loading: false
+      });
+    };
 
     queryBooks({
       current: this.pagination.current,
       pageSize: this.pagination.pageSize,
       type: this.bookType,
-      sortMethod: `${this.state.sort}_${this.state.order}`,
+      sortMethod: `${this.state.sort}_${this.state.order}`
     })
-      .then((res) => {
+      .then(res => {
+        handleFinally();
         const { books, current, pageTotal } = res;
-
         this.setState({
-          books: reachBottom ? [...this.state.books, ...books] : books,
+          books: reachBottom
+            ? this.props.globalStore.freeAD !== 1
+              ? [...this.state.books, { isAd: true, unitId: 'adunit-0a1335b664532ee6' }, ...books]
+              : [...this.state.books, ...books]
+            : books
         });
         this.pagination.current = current + 1;
         this.pagination.pageTotal = pageTotal || 1;
       })
-      .catch(() => null)
-      .finally(() => {
-        Taro.stopPullDownRefresh();
-        this.setState({
-          loading: false,
-        });
-      });
+      .catch(handleFinally);
   };
 
   handleActionSheetSort = () => {
     Taro.showActionSheet({
-      itemList: ['上架时间', '评分', '书名'],
+      itemList: ['上架时间', '评分', '书名']
     })
       .then(({ errMsg, tapIndex }) => {
-        let sort = 'createdAt'
+        let sort = 'createdAt';
         if (errMsg === 'showActionSheet:ok')
           switch (tapIndex) {
             case 1:
-              sort = 'bookScore'
+              sort = 'bookScore';
               break;
             case 2:
-              sort = 'bookName'
+              sort = 'bookName';
               break;
           }
-          this.setState({
+        this.setState(
+          {
             sort,
             books: []
-          }, () => {
+          },
+          () => {
             this.pagination.current = 1;
             this.handleLoadData(false);
-          })
+          }
+        );
       })
       .catch(() => null);
   };
 
   handleActionSheetOrder = () => {
     Taro.showActionSheet({
-      itemList: ['倒序', '正序'],
+      itemList: ['倒序', '正序']
     })
       .then(({ errMsg, tapIndex }) => {
         if (errMsg === 'showActionSheet:ok')
-          this.setState({
-            order: tapIndex === 0 ? -1 : 1,
-            books: []
-          }, () => {
-            this.pagination.current = 1;
-            this.handleLoadData(false);
-          })
+          this.setState(
+            {
+              order: tapIndex === 0 ? -1 : 1,
+              books: []
+            },
+            () => {
+              this.pagination.current = 1;
+              this.handleLoadData(false);
+            }
+          );
       })
       .catch(() => null);
   };
@@ -130,20 +150,19 @@ class BookListViewPage extends Component<null, State> {
       <View className="book-list-view">
         <View className="book-list-view__header grey">
           <Text onClick={this.handleActionSheetSort}>
-          {
             {
-              'createdAt': '上架时间',
-              'bookScore': '评分',
-              'bookName': '书名',
-            }[sort]
-          }
-          <Text className="icon">
-            &#xe703;
-          </Text></Text>
-          <Text onClick={this.handleActionSheetOrder}>{order === -1 ? '倒序' : '正序'}
-          <Text className="icon">
-            &#xe703;
-          </Text></Text>
+              {
+                createdAt: '上架时间',
+                bookScore: '评分',
+                bookName: '书名'
+              }[sort]
+            }
+            <Text className="icon">&#xe703;</Text>
+          </Text>
+          <Text onClick={this.handleActionSheetOrder}>
+            {order === -1 ? '倒序' : '正序'}
+            <Text className="icon">&#xe703;</Text>
+          </Text>
         </View>
         <BookList books={books} loading={loading} />
       </View>

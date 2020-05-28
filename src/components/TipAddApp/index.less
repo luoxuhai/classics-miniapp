@@ -1,0 +1,36 @@
+.tip-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 2em;
+  padding: 10rpx 20rpx;
+  border-radius: 1em;
+  position: fixed;
+  top: 10px;
+  right: 45px;
+  z-index: 9999;
+  background-color: #f67280;
+  box-sizing: border-box;
+  color: white;
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-right: 0.2em;
+    font-size: 20px;
+    color: white;
+  }
+  &::after {
+    content: '';
+    width: 1em;
+    height: 1em;
+    background-color: #f67280;
+    position: absolute;
+    transform: rotateZ(45deg);
+    top: -1em / 2.5;
+    right: 25px;
+    border-radius: 2px;
+  }
+}

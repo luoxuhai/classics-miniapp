@@ -1,7 +1,7 @@
 interface UserData {
   _id: string;
-  nickName: string;
-  avatarUrl: string;
+  nickname: string;
+  avatar: string;
   gender: string;
 }
 

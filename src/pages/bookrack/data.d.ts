@@ -9,6 +9,9 @@ export interface Props {
     token: string;
     check: boolean;
   };
+  globalStore: {
+    freeAD: number;
+  };
 }
 
 interface Booklists {

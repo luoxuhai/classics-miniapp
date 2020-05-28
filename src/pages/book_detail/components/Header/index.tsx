@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro';
-import { View, Text, Image } from '@tarojs/components';
+import { View, Text } from '@tarojs/components';
 
 import { getDecimals } from '@/utils/utils';
 import BookCover from '@/components/BookCover';
@@ -7,7 +7,6 @@ import './index.less';
 
 type Props = {
   name: string | undefined;
-  cover: string | undefined;
   score: number | undefined;
   author: { name: string } | undefined;
 };

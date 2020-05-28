@@ -31,10 +31,10 @@ class Capsule extends PureComponent {
     if (!book.isStar) this.handleAddBookrackClick();
     if (bookmarks.includes(currentChapter)) {
       bookPreviewStore.setBookmarkIndex(bookmarks.filter(item => item !== currentChapter));
-      delBookmark(book._id, { bookID: book._id, bookMarkIndex: currentChapter });
+      delBookmark(book._id, { bookID: book._id, bookmarkIndex: currentChapter });
     } else {
       bookPreviewStore.setBookmarkIndex([currentChapter, ...bookmarks]);
-      addBookmark({ bookID: book._id, bookMarkIndex: currentChapter });
+      addBookmark({ bookID: book._id, bookmarkIndex: currentChapter });
       Taro.showToast({
         title: '已添加书签',
         icon: 'success'

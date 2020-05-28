@@ -82,7 +82,7 @@ class UserPage extends Component<Props> {
           target === 'panel-00'
             ? check
               ? 'https://classics.oss-cn-beijing.aliyuncs.com/app/pages/remove-ad-check.html'
-              : `${BASE_URL}/v1/pages/remove-ad`
+              : `${BASE_URL}/v2/pages/remove-ad`
             : 'https://classics.oss-cn-beijing.aliyuncs.com/app/pages/about.html';
         Taro.navigateTo({
           url: `/pages/rich_content/index?title=${title}&url=${url}`
@@ -112,13 +112,13 @@ class UserPage extends Component<Props> {
           <View className="cut">
             <View className="header__pane">
               <View className="pane__user" data-id="panel-02">
-                <Image className="pane__avatar" src={user.avatarUrl || avatar} mode="aspectFill" data-id="panel-02" />
+                <Image className="pane__avatar" src={user.avatar || avatar} mode="aspectFill" data-id="panel-02" />
                 <Text
                   className="pane__nickname"
                   style={{ color: freeAD === 1 ? '#f67280' : undefined }}
                   data-id="panel-02"
                 >
-                  {user.nickName}
+                  {user.nickname}
                 </Text>
               </View>
             </View>

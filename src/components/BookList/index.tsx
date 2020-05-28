@@ -1,5 +1,5 @@
 import Taro, { PureComponent, Config } from '@tarojs/taro';
-import { View, Text, Navigator } from '@tarojs/components';
+import { View, Text, Navigator, Ad } from '@tarojs/components';
 
 import { getDecimals } from '@/utils/utils';
 import BookCover from '@/components/BookCover';
@@ -35,32 +35,36 @@ class BookList extends PureComponent<Props> {
 
     return (
       <View className="book-list">
-        {books.map(item => (
-          <Navigator
-            className="book-list__item"
-            url={`/pages/book_detail/index?bookName=${item.bookName}&id=${item._id}&cover=${item.bookCover}`}
-            key={item._id}
-          >
-            <BookCover class-name="item__cover" text={item.bookName} />
-            <View className="item__desc">
-              <Text className="item__name black">{item.bookName}</Text>
-              <Text className="item__author grey">{item.author.name}</Text>
-              <View className="item__rate grey">
-                {item.bookScore + ' '}
-                <rate
-                  current={item.bookScore.toFixed(0)}
-                  disabled
-                  active="#ffca3e"
-                  normal="#ececec"
-                  score={getDecimals(item.bookScore)}
-                />
+        {books.map((item, index) =>
+          item.isAd ? (
+            <Ad unitId={item.unitId} adType="video" adTheme="white" key={index + 1} />
+          ) : (
+            <Navigator
+              className="book-list__item"
+              url={`/pages/book_detail/index?bookName=${item.bookName}&id=${item._id}`}
+              key={item._id}
+            >
+              <BookCover class-name="item__cover" text={item.bookName} />
+              <View className="item__desc">
+                <Text className="item__name black">{item.bookName}</Text>
+                <Text className="item__author grey">{item.author.name}</Text>
+                <View className="item__rate grey">
+                  {item.bookScore + ' '}
+                  <rate
+                    current={!item.isAd && item.bookScore.toFixed(0)}
+                    disabled
+                    active="#ffca3e"
+                    normal="#ececec"
+                    score={!item.isAd && getDecimals(item.bookScore)}
+                  />
+                </View>
               </View>
-            </View>
-            <View className="item__footer">
-              <Tag title={item.bookType || '其他'} />
-            </View>
-          </Navigator>
-        ))}
+              <View className="item__footer">
+                <Tag title={item.bookType || '其他'} />
+              </View>
+            </Navigator>
+          )
+        )}
         <LoadMore loading={loading} empty={!loading && !books.length} />
       </View>
     );

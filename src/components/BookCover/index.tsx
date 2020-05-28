@@ -6,7 +6,7 @@ import './index.less';
 interface Props {
   text: string;
   width?: string;
-  onClick?: () => any;
+  onClick?: (e) => any;
 }
 
 function BookCover({ width = '160rpx', text = '', onClick = undefined }: Props) {
@@ -27,7 +27,13 @@ function BookCover({ width = '160rpx', text = '', onClick = undefined }: Props) 
   }, [text]);
 
   return (
-    <View className="class-name cover" style={{ width, height: `calc(${width} / 0.73)` }} onClick={onClick}>
+    <View
+      className="class-name cover"
+      style={{ width, height: `calc(${width} / 0.73)` }}
+      onClick={e => {
+        if (onClick) onClick(e);
+      }}
+    >
       {texts.map(item => (
         <Text
           className="cover__text"

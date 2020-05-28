@@ -17,6 +17,7 @@ import './index.less';
 
 @shareMixin
 @inject('userStore')
+@inject('globalStore')
 @observer
 class BookDetail extends Component<Props, State> {
   config = {
@@ -31,9 +32,8 @@ class BookDetail extends Component<Props, State> {
       bookScore: 0,
       catalogueSum: 0,
       author: { name: '', intro: '' },
-      bookCover: '',
       bookName: '',
-      bookDesc: '',
+      description: '',
       isStar: false
     },
     recommend: [],
@@ -41,11 +41,11 @@ class BookDetail extends Component<Props, State> {
   };
 
   componentWillMount() {
-    const { bookName, id, cover } = this.$router.params;
+    const { bookName, id } = this.$router.params;
     Taro.setNavigationBarTitle({ title: bookName || '' });
     Taro.showNavigationBarLoading();
     this.setState({
-      book: { _id: id, bookCover: cover, bookName, ...this.state.book }
+      book: { _id: id, bookName, ...this.state.book }
     });
     fetchBookDetail({ id: id || bookName })
       .then(res => {
@@ -56,11 +56,12 @@ class BookDetail extends Component<Props, State> {
           });
           this.shareConfig = {
             title: res.book.bookName,
-            path: `/pages/book_detail/index?bookName=${res.book.bookName}&id=${res.book._id}&cover=${res.book.bookCover}`
+            path: `/pages/book_detail/index?bookName=${res.book.bookName}&id=${res.book._id}`
           };
         }
+        Taro.hideNavigationBarLoading();
       })
-      .finally(() => {
+      .catch(() => {
         Taro.hideNavigationBarLoading();
       });
     fetchBookRecommend({ bookName }).then(({ books }) => {
@@ -68,6 +69,12 @@ class BookDetail extends Component<Props, State> {
         recommend: books
       });
     });
+    if (this.props.globalStore.freeAD !== 1) {
+      const interstitialAd = Taro.createInterstitialAd({
+        adUnitId: 'adunit-499948561354a7b4'
+      });
+      interstitialAd.show().catch(() => null);
+    }
   }
 
   handleBookrackClick = () => {
@@ -91,7 +98,7 @@ class BookDetail extends Component<Props, State> {
     return (
       <View className="book-detail">
         <Skeleton title avatar avatarShape="square" row={2} loading={loading}>
-          <Header name={book.bookName} cover={book.bookCover} author={book.author} score={book.bookScore} />
+          <Header name={book.bookName} author={book.author} score={book.bookScore} />
         </Skeleton>
         {!check && (
           <Navigator className="catalogue" url={`/pages/catalogue/index?id=${book._id}`}>
@@ -102,7 +109,7 @@ class BookDetail extends Component<Props, State> {
         <Skeleton title row={3} loading={loading}>
           <Text className="title">简介</Text>
           <View id="collapse">
-            <Collapse _id="collapse" content={book.bookDesc} />
+            <Collapse _id="collapse" content={book.description} />
           </View>
         </Skeleton>
         <Text className="title">作者</Text>

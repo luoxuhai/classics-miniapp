@@ -93,9 +93,10 @@ class SettingsPage extends Component<Props, SettingsState> {
             }
           })
             .then(() => {
+              Taro.hideLoading();
               userStore.setUser({ gender: this.genderSelector[tapIndex] });
             })
-            .finally(() => {
+            .catch(() => {
               Taro.hideLoading();
             });
         }
@@ -114,7 +115,7 @@ class SettingsPage extends Component<Props, SettingsState> {
         mask: true
       });
       Taro.uploadFile({
-        url: BASE_URL + '/v1/upload',
+        url: BASE_URL + '/v2/upload',
         filePath: tempFilePaths[0],
         name: 'avatar',
         formData: {
@@ -125,20 +126,22 @@ class SettingsPage extends Component<Props, SettingsState> {
         }
       })
         .then((res: any) => {
+          Taro.hideLoading();
           if (res.statusCode !== 200) {
             return Promise.reject(JSON.parse(res.data));
           }
-          const { avatarUrl } = JSON.parse(res.data);
+          const { avatar } = JSON.parse(res.data);
           const { userStore } = this.props;
-          userStore.setUser({ avatarUrl });
+          userStore.setUser({ avatar });
           putUser({
             id: userStore.user._id,
             params: {
-              avatarUrl
+              avatar
             }
           });
         })
         .catch(error => {
+          Taro.hideLoading();
           if (error.errcode === 87014) {
             Taro.showModal({
               title: '提示',
@@ -147,9 +150,6 @@ class SettingsPage extends Component<Props, SettingsState> {
               confirmColor: '#f67280'
             });
           }
-        })
-        .finally(() => {
-          Taro.hideLoading();
         });
     });
   };
@@ -176,11 +176,11 @@ class SettingsPage extends Component<Props, SettingsState> {
       <View className="settings" onClick={this.handleClick}>
         <View className="settings__item black" data-id="settings-0">
           头像
-          <Image className="avatar" src={user.avatarUrl} mode="aspectFill" data-id="settings-0" />
+          <Image className="avatar" src={user.avatar} mode="aspectFill" data-id="settings-0" />
         </View>
         <View className="settings__item black" data-id="settings-1">
           昵称
-          <Text className="light">{user.nickName}</Text>
+          <Text className="light">{user.nickname}</Text>
         </View>
         <View className="settings__item black" data-id="settings-2">
           性别
@@ -193,7 +193,7 @@ class SettingsPage extends Component<Props, SettingsState> {
             {currentSize}KB
           </Text>
         </View>
-        {user.nickName === 'adminlxhclassics' && (
+        {user.nickname === 'adminlxhclassics' && (
           <View className="settings__item black" data-id="settings-5">
             管理员
             <Text className="clear-cache-icon red">&#xe605;</Text>

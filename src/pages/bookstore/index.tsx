@@ -4,6 +4,7 @@ import { observer, inject } from '@tarojs/mobx';
 
 import BookList from '@/components/BookList';
 import LoginMask from '@/components/LoginMask';
+import TipAddApp from '@/components/TipAddApp';
 // import RateModal from '@/components/RateModal';
 import { shareMixin } from '@/utils/utils';
 import Search from './components/Search';
@@ -45,36 +46,38 @@ class BookstorePage extends Component<Props, State> {
     }
   }
 
-  fetchData = () => {
+  fetchData = (refresh = false) => {
     fetchRecommend({
       current: 1,
       pageSize: 20
     })
       .then(res => {
+        Taro.stopPullDownRefresh();
         const { bookstoreStore } = this.props;
-        if (!bookstoreStore.data.books.length)
+        if (!bookstoreStore.data.books.length || refresh)
           bookstoreStore.saveData({
             books: res.books
           });
       })
-      .finally(() => {
+      .catch(() => {
         Taro.stopPullDownRefresh();
       });
     fetchBanner()
       .then(res => {
+        Taro.stopPullDownRefresh();
         const { bookstoreStore } = this.props;
-        if (!bookstoreStore.data.banners.length)
+        if (!bookstoreStore.data.banners.length || refresh)
           bookstoreStore.saveData({
             banners: res.banners
           });
       })
-      .finally(() => {
+      .catch(() => {
         Taro.stopPullDownRefresh();
       });
   };
 
   onPullDownRefresh() {
-    this.fetchData();
+    this.fetchData(true);
   }
 
   render() {
@@ -94,6 +97,7 @@ class BookstorePage extends Component<Props, State> {
         <BookList books={books} loading={loading} />
         <LoginMask onClick={() => this.interstitialAd.destroy()} />
         {/* <RateModal /> */}
+        <TipAddApp />
       </View>
     );
   }

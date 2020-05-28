@@ -34,8 +34,7 @@ class User extends Component<Props> {
     }
   };
 
-  getUserInfo = e => {
-    console.log(e);
+  getUserInfo = () => {
     Taro.getUserInfo({
       withCredentials: true,
       lang: 'zh_CN'
@@ -51,12 +50,7 @@ class User extends Component<Props> {
         if (code) {
           if (data.gender === 1 || data.gender === 0) data.gender = '男';
           else if (data.gender === 2) data.gender = '女';
-          const date = new Date();
-          const [year, month, day] = [date.getFullYear(), date.getMonth() + 1, date.getDate()];
-          Object.assign(data, {
-            birthday: `${year}-${month}-${day}`,
-            code
-          });
+          Object.assign(data, { code });
           const client = process.env.TARO_ENV === 'weapp' ? 'weixin' : 'qq';
           userStore.login({ code, client, data });
         }

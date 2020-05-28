@@ -11,13 +11,15 @@ import './index.less';
 
 @inject('bookrackStore')
 @inject('userStore')
+@inject('globalStore')
 @observer
 class Bookrack extends Component<Props, State> {
   config: Config = {
     navigationBarTitleText: '书架',
     navigationStyle: 'custom',
     enablePullDownRefresh: true,
-    navigationBarTextStyle: 'white'
+    navigationBarTextStyle: 'white',
+    onReachBottomDistance: 200
   };
 
   state = {
@@ -29,6 +31,15 @@ class Bookrack extends Component<Props, State> {
     pageSize: 10,
     pageTotal: 1
   };
+
+  componentWillMount() {
+    if (this.props.globalStore.freeAD !== 1) {
+      const interstitialAd = Taro.createInterstitialAd({
+        adUnitId: 'adunit-7f4f86b8ee2e788b'
+      });
+      interstitialAd.show().catch(() => null);
+    }
+  }
 
   componentDidShow() {
     if (global.$token) {

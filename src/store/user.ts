@@ -46,6 +46,7 @@ const userStore = observable({
           updateUser(userID, data);
           this.setUser({ _id: userID, ...data });
         } else this.fetchUser(userID);
+        globalStore.queryFreeAD();
         if (Taro.getCurrentPages().length > 1)
           Taro.navigateBack({
             delta: 1
@@ -60,7 +61,7 @@ const userStore = observable({
           showCancel: false,
           confirmText: '确认'
         });
-      })
+      });
   },
 
   logout() {

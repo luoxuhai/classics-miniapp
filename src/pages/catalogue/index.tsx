@@ -28,15 +28,16 @@ class Catalogue extends PureComponent<Props> {
     const { id } = this.$router.params;
     if (id) {
       Taro.showNavigationBarLoading();
-      fetchBookDetail({ id, select: 'catalogueList,bookName' })
+      fetchBookDetail({ id, select: 'catalogue,bookName' })
         .then(({ book }) => {
-          if (book.catalogueList.length) {
+          if (book.catalogue.length) {
             const { bookPreviewStore } = this.props;
-            bookPreviewStore.setChapters(book.catalogueList);
+            bookPreviewStore.setChapters(book.catalogue);
             bookPreviewStore.setBook({ _id: id, bookName: book.bookName });
           }
+          Taro.hideNavigationBarLoading();
         })
-        .finally(() => {
+        .catch(() => {
           Taro.hideNavigationBarLoading();
         });
     } else {

@@ -67,9 +67,9 @@ class BookPreview extends Component<Props> {
         _index = 0;
       }
       bookPreviewStore.setProgress(res.progress);
-      bookPreviewStore.setBookmarkIndex(res.bookMarkIndex);
-      bookPreviewStore.setChapters(res.catalogueList);
-      bookPreviewStore.setBook({ _id: id, bookName, isStar: res.isStar, bookFile: res.bookFile });
+      bookPreviewStore.setBookmarkIndex(res.bookmarkIndex);
+      bookPreviewStore.setChapters(res.catalogue);
+      bookPreviewStore.setBook({ _id: id, bookName, isStar: res.isStar, content: res.content });
       bookPreviewStore.setCurrentChapter(_index);
     });
   }
@@ -82,13 +82,12 @@ class BookPreview extends Component<Props> {
     bookPreviewStore.setCurrentChapter(null);
     if (Taro.getCurrentPages()[Taro.getCurrentPages().length - 2].route !== 'pages/catalogue/index') {
       bookPreviewStore.setChapters([]);
-      bookPreviewStore.setBook({ _id: '', bookName: '', isStar: false, bookFile: '' });
+      bookPreviewStore.setBook({ _id: '', bookName: '', isStar: false, content: '' });
     }
     bookPreviewStore.setProgress([]);
     bookPreviewStore.setBookmarkIndex([]);
     bookPreviewStore.setAnimation(null);
     this.currentChapter = -1;
-    this.videoAd && this.videoAd.destroy();
   }
 
   componentWillUpdate() {
@@ -100,7 +99,7 @@ class BookPreview extends Component<Props> {
       this.currentChapter = currentChapter;
       Taro.setNavigationBarTitle({ title: chapters[Number(currentChapter)] });
       queryRichContent({
-        url: `${book.bookFile}/${currentChapter}.html`
+        url: `${book.content}/${currentChapter}.html`
       })
         .then(content => {
           this.parser.setContent(content);
@@ -139,7 +138,7 @@ class BookPreview extends Component<Props> {
     // 激励广告调用失败后调用插屏广告
     this.videoAd.onError(() => {
       const interstitialAd = Taro.createInterstitialAd({
-        adUnitId: 'adunit-83c7d09dcd1bd671'
+        adUnitId: 'adunit-088b6992cc976c00'
       });
       interstitialAd.show().catch(() => null);
     });

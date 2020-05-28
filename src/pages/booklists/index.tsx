@@ -61,8 +61,8 @@ class BooklistsPage extends Component<Props, State> {
       pageSize: this.pagination.pageSize
     })
       .then(res => {
+        Taro.stopPullDownRefresh();
         const { articles, current, pageTotal } = res;
-
         this.setState({
           booklists: reachBottom ? [...this.state.booklists, ...articles] : articles,
           loading: false
@@ -70,8 +70,7 @@ class BooklistsPage extends Component<Props, State> {
         this.pagination.current = current + 1;
         this.pagination.pageTotal = pageTotal || 1;
       })
-      .catch(() => null)
-      .finally(() => {
+      .catch(() => {
         Taro.stopPullDownRefresh();
       });
   }
