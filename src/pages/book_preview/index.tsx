@@ -33,7 +33,6 @@ class BookPreview extends Component<Props> {
   shareConfig: ShareConfig = {};
 
   parser: any;
-  videoAd: any;
   windowWidth = global.systemInfo.windowWidth;
   currentChapter = -1;
 
@@ -41,7 +40,6 @@ class BookPreview extends Component<Props> {
     const { id, bookName, index } = this.$router.params;
     Taro.setNavigationBarTitle({ title: bookName });
     Taro.showLoading({ title: '加载中', mask: true });
-    // Taro.showLoading({ title: '加载中' });
     const {
       bookPreviewStore: { theme }
     } = this.props;
@@ -124,40 +122,6 @@ class BookPreview extends Component<Props> {
       duration: 0
     });
     bookPreviewStore.setProgress([0, 0, 0]);
-    if (!this.videoAd) this.loadAd();
-  };
-
-  loadAd = () => {
-    const {
-      globalStore: { freeAD }
-    } = this.props;
-    if (process.env.NODE_ENV === 'development' || freeAD) return;
-    this.videoAd = Taro.createRewardedVideoAd({
-      adUnitId: 'adunit-7f9e5a42537d055c'
-    });
-    // 激励广告调用失败后调用插屏广告
-    this.videoAd.onError(() => {
-      const interstitialAd = Taro.createInterstitialAd({
-        adUnitId: 'adunit-088b6992cc976c00'
-      });
-      interstitialAd.show().catch(() => null);
-    });
-
-    this.videoAd
-      .load()
-      .then(() => {
-        this.videoAd.show();
-        this.videoAd.onClose(({ isEnded }) => {
-          if (!isEnded) {
-            Taro.navigateBack({
-              delta: 1
-            });
-          }
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
   };
 
   onPageScroll(e) {

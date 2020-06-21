@@ -1,6 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
-import { observer, inject } from '@tarojs/mobx';
 
 import BookList from '@/components/BookList';
 import { State } from './data';
@@ -8,15 +7,7 @@ import { queryBooks } from './services';
 
 import './index.less';
 
-interface Props {
-  globalStore: {
-    freeAD: number;
-  };
-}
-
-@inject('globalStore')
-@observer
-class BookListViewPage extends Component<Props, State> {
+class BookListViewPage extends Component<null, State> {
   config: Config = {
     navigationBarTitleText: '分类',
     enablePullDownRefresh: true
@@ -82,11 +73,7 @@ class BookListViewPage extends Component<Props, State> {
         handleFinally();
         const { books, current, pageTotal } = res;
         this.setState({
-          books: reachBottom
-            ? this.props.globalStore.freeAD !== 1
-              ? [...this.state.books, { isAd: true, unitId: 'adunit-0a1335b664532ee6' }, ...books]
-              : [...this.state.books, ...books]
-            : books
+          books: reachBottom ? [...this.state.books, ...books] : books
         });
         this.pagination.current = current + 1;
         this.pagination.pageTotal = pageTotal || 1;

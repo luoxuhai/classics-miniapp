@@ -1,17 +1,14 @@
-/*
-  trees 递归子组件
-  github：https://github.com/jin-yufeng/Parser
-  docs：https://jin-yufeng.github.io/Parser
-  author：JinYufeng
-  update：2020/03/23
-*/
+const errorImg = require('../libs/config.js').errorImg;
+
 Component({
   data: {
-    canIUse: !!wx.chooseMessageFile
+    canIUse: !!wx.chooseMessageFile,
+    placeholder: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='225'/>"
   },
   properties: {
     nodes: Array,
-    lazyLoad: Boolean
+    lazyLoad: Boolean,
+    loading: String
   },
   methods: {
     // 视频播放事件
@@ -22,13 +19,13 @@ Component({
           if (this.top.videoContexts[i].id != e.currentTarget.id)
             this.top.videoContexts[i].pause();
     },
-    // 图片点击事件
+    // 图片事件
     imgtap(e) {
-      const attrs = e.target.dataset.attrs;
+      const attrs = e.currentTarget.dataset.attrs;
       if (!attrs.ignore) {
         let preview = true;
         this.top.triggerEvent('imgtap', {
-          id: e.target.id,
+          id: e.currentTarget.id,
           src: attrs.src,
           ignore: () => preview = false
         })
@@ -42,6 +39,17 @@ Component({
           })
         }
       }
+    },
+    loadImg(e) {
+      const i = e.target.dataset.i;
+      if (this.data.lazyLoad && !this.data.nodes[i].load)
+        this.setData({
+          [`nodes[${i}].load`]: 1
+        })
+      else if (this.data.loading && this.data.nodes[i].load != 2)
+        this.setData({
+          [`nodes[${i}].load`]: 2
+        })
     },
     // 链接点击事件
     linkpress(e) {
@@ -79,14 +87,18 @@ Component({
           else
             wx.navigateTo({
               url: attrs.href,
+              fail() {
+                wx.switchTab({
+                  url: attrs.href,
+                })
+              }
             })
         }
       }
     },
     // 错误事件
     error(e) {
-      let context, src = '',
-        source = e.target.dataset.source,
+      const source = e.target.dataset.source,
         i = e.target.dataset.i,
         node = this.data.nodes[i];
       if (source == 'video' || source == 'audio') {
@@ -96,40 +108,24 @@ Component({
           return this.setData({
             [`nodes[${i}].i`]: index
           })
-        if (this.top) context = this.top.getVideoContext(e.target.id);
-      } else if (source == 'img')
-        context = {
-          setSrc: (newSrc) => src = newSrc
-        }
+      } else if (source == 'img' && errorImg) {
+        this.top.imgList.setItem(e.target.dataset.index, errorImg);
+        this.setData({
+          [`nodes[${i}].attrs.src`]: errorImg
+        })
+      }
       this.top && this.top.triggerEvent('error', {
         source,
         target: e.target,
-        context,
-        ...e.detail
+        errMsg: e.detail.errMsg
       })
-      if (source == 'img') {
-        const data = {
-          [`nodes[${i}].attrs.src`]: src
-        }
-        if (!src) data[`nodes[${i}].err`] = 1;
-        this.setData(data);
-      }
     },
     // 加载视频
     loadVideo(e) {
       const i = e.target.dataset.i;
       this.setData({
-        [`nodes[${i}].lazyLoad`]: false,
         [`nodes[${i}].attrs.autoplay`]: true
       })
-    },
-    // 加载图片
-    loadImg(e) {
-      const data = e.target.dataset;
-      if (data.auto)
-        this.setData({
-          [`nodes[${data.i}].attrs.style`]: `${this.data.nodes[data.i].attrs.style};width:${e.detail.width}px`
-        })
     }
   }
 })

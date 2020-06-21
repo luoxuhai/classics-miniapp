@@ -9,7 +9,6 @@
   left: 0;
   right: 0;
   height: 50px;
-  background-color: #fff;
   .footer__share {
     .center;
     flex: 1;
@@ -21,6 +20,10 @@
     border-left: 1px solid #eee;
     @media (prefers-color-scheme: dark) {
       border-left: 1px solid #141414;
+      button[disabled]:not([type]) {
+        color: var(--light-border) !important;
+        background-color: var(--dark-border) !important;
+      }
     }
   }
 

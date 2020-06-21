@@ -63,7 +63,7 @@ class RichContent extends PureComponent<Props> {
   render() {
     return (
       <View className="rich-content">
-        <parser ref={e => (this.parser = e)} selectable onLoad={() => Taro.hideNavigationBarLoading()} />
+        <parser ref={e => (this.parser = e)} selectable use-cache onLoad={() => Taro.hideNavigationBarLoading()} />
       </View>
     );
   }

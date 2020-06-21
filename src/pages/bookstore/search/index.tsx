@@ -179,8 +179,7 @@ class SearchPage extends Component<Props, State> {
                 />
               ))}
             </View>
-            {!freeAD && <Ad unitId="adunit-e1a27ccddca8d7e7" adType="video" adTheme="white" />}
-            {!freeAD && <Ad unitId="adunit-c13ec7787695caea" adType="video" adTheme="white" />}
+            {!freeAD && <Ad unitId="adunit-4e312c3ed67b9128" adType="grid" />}
           </View>
         )}
       </View>
