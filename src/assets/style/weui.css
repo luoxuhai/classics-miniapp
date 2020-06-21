@@ -1,14 +1,62 @@
-.black {
-  color: #000;
+page {
+  --light: #fff;
+  --dark: #000;
+  --dark-border: #141414;
+  --light-border: #e8e8e8;
 }
+
+.title-color {
+  color: var(--dark);
+}
+
+.divider-color {
+  border-bottom-color: var(--light-border);
+}
+
+.secondary-text-color {
+  color: #b2b2b2;
+}
+
+.main-bg-color {
+  background-color: var(--light);
+}
+
+.bg-color {
+  background-color: #f6f7f9;
+}
+
 .semi {
   color: #353535;
 }
+
 .grey {
   color: #888;
 }
+
 .light {
   color: #b2b2b2;
+}
+
+@media (prefers-color-scheme: dark) {
+  page {
+    background-color: var(--dark) !important;
+  }
+
+  .title-color {
+    color: var(--light);
+  }
+
+  .main-bg-color {
+    background-color: var(--dark);
+  }
+
+  .bg-color {
+    background-color: #141414;
+  }
+
+  .divider-color {
+    border-bottom-color: var(--dark-border);
+  }
 }
 
 .blue {

@@ -13,7 +13,6 @@
     z-index: 9;
     padding: 0 140rpx;
     height: 100rpx;
-    background-color: #fff;
     .tab-bar__item {
       padding: 0 20rpx;
       font-size: 18px;
@@ -30,7 +29,7 @@
 }
 
 .scorll-view {
-  -webkit-overflow-scrolling: touch
+  -webkit-overflow-scrolling: touch;
 }
 
 .catalogue__header {
@@ -39,5 +38,7 @@
   height: 50px;
   padding: 0 30rpx;
   border-bottom: 20rpx solid #f6f7f9;
-  background-color: #fff;
+  @media (prefers-color-scheme: dark) {
+    border-bottom: 20rpx solid var(--dark-border);
+  }
 }

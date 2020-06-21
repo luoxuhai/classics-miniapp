@@ -12,5 +12,5 @@ export const HTTP_STATUS = {
   SERVICE_UNAVAILABLE: 503,
   GATEWAY_TIMEOUT: 504
 };
-export const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://127.0.0.1:8088' : 'https://classics.fastools.cn/api';
+export const BASE_URL = process.env.NODE_ENV === 'development1' ? 'http://127.0.0.1:8088' : 'https://classics.fastools.cn/api';
 // export const BASE_URL = 'https://classics.fastools.cn/api';

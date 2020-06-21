@@ -40,15 +40,18 @@ class App extends Component {
     ],
     window: {
       backgroundTextStyle: 'dark',
-      navigationBarTextStyle: 'black',
-      navigationBarBackgroundColor: '#fff',
+      backgroundColor: '@bgColor',
+      navigationBarTextStyle: '@navTxtStyle',
+      navigationBarBackgroundColor: '@navBgColor',
       onReachBottomDistance: 65
     },
     style: 'v2',
+    darkmode: true,
+    themeLocation: 'theme.json',
     tabBar: {
       color: '#6f7782',
       selectedColor: '#f67280',
-      backgroundColor: '#ffffff',
+      backgroundColor: '@tabBgColor',
       list: [
         {
           pagePath: 'pages/bookstore/index',
@@ -88,11 +91,15 @@ class App extends Component {
     try {
       store.userStore.setToken(Taro.getStorageSync('token'));
     } catch (error) {}
+    global.systemInfo = Taro.getSystemInfoSync();
     this.setUser();
     this.initTheme();
     this.refreshToken();
     this.updateApp();
-    global.systemInfo = Taro.getSystemInfoSync();
+    if (wx.onThemeChange)
+      wx.onThemeChange(({ theme }) => {
+        store.bookPreviewStore.setTheme(theme === 'dark' ? global.themes[3] : global.themes[0]);
+      });
   }
 
   componentDidShow() {
@@ -167,10 +174,33 @@ class App extends Component {
   }
 
   initTheme() {
+    global.themes = [
+      {
+        name: '默认',
+        backgroundColor: '#fff',
+        color: '#353535'
+      },
+      {
+        name: '护眼',
+        backgroundColor: '#F1E5C9',
+        color: '#353535'
+      },
+      {
+        name: '清新',
+        backgroundColor: '#C7EDCC',
+        color: '#353535'
+      },
+      {
+        name: '暗黑',
+        backgroundColor: '#000',
+        color: '#b2b2b2'
+      }
+    ];
     try {
-      const theme = Taro.getStorageSync('theme');
-      const font = Taro.getStorageSync('font');
+      const theme = global.systemInfo.theme === 'dark' ? global.themes[3] : Taro.getStorageSync('theme');
+      console.log(theme);
       if (theme) store.bookPreviewStore.setTheme(theme);
+      const font = Taro.getStorageSync('font');
       if (font) store.bookPreviewStore.setFont(font);
     } catch (error) {}
   }

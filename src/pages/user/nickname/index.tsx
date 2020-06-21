@@ -67,9 +67,9 @@ class User extends Component<Props> {
     const { user } = this.props.userStore;
     const { inputValue } = this.state;
     return (
-      <View className="nickname">
+      <View className="nickname bg-color">
         <Textarea
-          className="nickname__input"
+          className="nickname__input main-bg-color"
           value={user.nickname}
           placeholder="请输入昵称(最多16字)"
           autoFocus

@@ -56,9 +56,9 @@ class AdminPage extends Component {
     const { inputValue } = this.state;
 
     return (
-      <View className="nickname">
+      <View className="nickname bg-color">
         <Textarea
-          className="nickname__input"
+          className="nickname__input main-bg-color"
           value={inputValue}
           placeholder="请输入id"
           autoFocus

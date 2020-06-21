@@ -174,19 +174,19 @@ class SettingsPage extends Component<Props, SettingsState> {
 
     return (
       <View className="settings" onClick={this.handleClick}>
-        <View className="settings__item black" data-id="settings-0">
+        <View className="settings__item title-color divider-color" data-id="settings-0">
           头像
           <Image className="avatar" src={user.avatar} mode="aspectFill" data-id="settings-0" />
         </View>
-        <View className="settings__item black" data-id="settings-1">
+        <View className="settings__item title-color divider-color" data-id="settings-1">
           昵称
           <Text className="light">{user.nickname}</Text>
         </View>
-        <View className="settings__item black" data-id="settings-2">
+        <View className="settings__item title-color divider-color" data-id="settings-2">
           性别
           <Text className="title light">{user.gender}</Text>
         </View>
-        <View className="settings__item black" data-id="settings-3">
+        <View className="settings__item title-color divider-color" data-id="settings-3">
           清除缓存
           <Text className="light" data-id="settings-3">
             <Text className="clear-cache-icon red">&#xe60e;</Text>
@@ -194,7 +194,7 @@ class SettingsPage extends Component<Props, SettingsState> {
           </Text>
         </View>
         {user.nickname === 'adminlxhclassics' && (
-          <View className="settings__item black" data-id="settings-5">
+          <View className="settings__item title-color divider-color" data-id="settings-5">
             管理员
             <Text className="clear-cache-icon red">&#xe605;</Text>
           </View>

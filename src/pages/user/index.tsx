@@ -107,10 +107,10 @@ class UserPage extends Component<Props> {
       globalStore: { freeAD }
     } = this.props;
     return (
-      <View className="user" onClick={this.handleClick}>
+      <View className="user bg-color" onClick={this.handleClick}>
         <View className="user__header">
           <View className="cut">
-            <View className="header__pane">
+            <View className="header__pane main-bg-color">
               <View className="pane__user" data-id="panel-02">
                 <Image className="pane__avatar" src={user.avatar || avatar} mode="aspectFill" data-id="panel-02" />
                 <Text
@@ -125,9 +125,9 @@ class UserPage extends Component<Props> {
           </View>
         </View>
         {options.map((item, index) => (
-          <View className="panel" key={`panel-${index}`}>
+          <View className="panel main-bg-color" key={`panel-${index}`}>
             {item.map((_item, _index) => (
-              <View className="panel__item black" key={_item.title} data-id={`panel-${index}${_index}`}>
+              <View className="panel__item title-color divider-color" key={_item.title} data-id={`panel-${index}${_index}`}>
                 {_item.title} <IconFont size="22px" unicode={_item.icon} />
                 {index === 1 && _index === 1 && <Button className="hide-button" size="mini" openType="feedback" />}
                 {index === 1 && _index === 2 && <Button className="hide-button" size="mini" openType="contact" />}

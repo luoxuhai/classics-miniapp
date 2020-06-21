@@ -139,7 +139,7 @@ class Catalogue extends PureComponent<Props> {
                 </ScrollView>
               </SwiperItem>
               <SwiperItem className="swiper-item">
-                <View className="catalogue__header">共{bookmarks.length}个书签</View>
+                <View className="catalogue__header main-bg-color">共{bookmarks.length}个书签</View>
                 <ScrollView scroll-y className="scorll-view" style="height: calc(100vh - 100rpx - 50px)">
                   <Chapter
                     simple={false}

@@ -12,19 +12,12 @@ interface Props {
   onChapterClick: (index: number) => void;
 }
 
-export default ({
-  simple = true,
-  list = [],
-  book = {},
-  selectIndex = 0,
-  currentChapter = 0,
-  onChapterClick
-}: Props) => {
+function Chapter({ simple = true, list = [], book = {}, selectIndex = 0, currentChapter = 0, onChapterClick }: Props) {
   return (
     <View>
       {list.map((item, index) => (
         <Navigator
-          className="chapter"
+          className="chapter divider-color"
           url={`/pages/book_preview/index?id=${book._id}&bookName=${book.bookName}&index=${index}`}
           openType={simple ? 'navigate' : 'navigateBack'}
           delta={1}
@@ -40,4 +33,10 @@ export default ({
       ))}
     </View>
   );
+}
+
+Chapter.options = {
+  addGlobalClass: true
 };
+
+export default Chapter;

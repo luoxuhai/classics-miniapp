@@ -3,9 +3,11 @@
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  background-color: #fff;
   padding: 0 30rpx;
   border-bottom: 20rpx solid #f6f7f9;
+  @media (prefers-color-scheme: dark) {
+    border-bottom: 20rpx solid var(--dark-border);
+  }
   .order__button {
     width: 120rpx;
     margin: 0;

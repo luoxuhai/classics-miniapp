@@ -148,7 +148,7 @@ class BookListViewPage extends Component<Props, State> {
 
     return (
       <View className="book-list-view">
-        <View className="book-list-view__header grey">
+        <View className="book-list-view__header grey main-bg-color">
           <Text onClick={this.handleActionSheetSort}>
             {
               {

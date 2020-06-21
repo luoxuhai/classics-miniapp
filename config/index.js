@@ -18,7 +18,10 @@ const config = {
     '@/services': path.resolve(__dirname, '..', 'src/services')
   },
   copy: {
-    patterns: [{ from: 'src/sitemap.json', to: `dist/${process.env.TARO_ENV}/sitemap.json` }]
+    patterns: [
+      { from: 'src/sitemap.json', to: `dist/${process.env.TARO_ENV}/sitemap.json` },
+      { from: 'src/theme.json', to: `dist/${process.env.TARO_ENV}/theme.json` }
+    ]
   },
   babel: {
     sourceMap: true,

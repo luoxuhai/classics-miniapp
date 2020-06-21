@@ -1,11 +1,11 @@
 import Taro from '@tarojs/taro';
-import { View, Button } from '@tarojs/components';
+import { View } from '@tarojs/components';
 
 import './CatalogueHeader.less';
 
-export default ({ chapters }) => {
+function CatalogueHeader({ chapters }) {
   return (
-    <View className="catalogue__header">
+    <View className="catalogue__header main-bg-color">
       共{chapters.length}章
       {/* <Button
         className="order__button"
@@ -18,4 +18,10 @@ export default ({ chapters }) => {
       </Button> */}
     </View>
   );
+}
+
+CatalogueHeader.options = {
+  addGlobalClass: true
 };
+
+export default CatalogueHeader;

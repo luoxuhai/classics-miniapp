@@ -132,8 +132,8 @@ class SearchPage extends Component<Props, State> {
 
     return (
       <View className="search-page">
-        <View className="search">
-          <View className="search__wrapper light">
+        <View className="search main-bg-color">
+          <View className="search__wrapper secondary-text-color bg-color">
             <Text className="icon">&#xe666;</Text>
             <Input
               onInput={this.handleInputChange}
