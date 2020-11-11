@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View, Text, Navigator } from '@tarojs/components';
+import { View, Text, Navigator, Ad } from '@tarojs/components';
 import { observer, inject } from '@tarojs/mobx';
 import Skeleton from 'taro-skeleton';
 
@@ -95,6 +95,9 @@ class BookDetail extends Component<Props, State> {
     const {
       userStore: { check }
     } = this.props;
+    const {
+      globalStore: { freeAD }
+    } = this.props;
     return (
       <View className="book-detail">
         <Skeleton title avatar avatarShape="square" row={2} loading={loading}>
@@ -106,6 +109,7 @@ class BookDetail extends Component<Props, State> {
             <Text className="icon">&#xe636;</Text>
           </Navigator>
         )}
+        {!freeAD && <Ad unitId="adunit-4e312c3ed67b9128" adType="grid" />}
         <Skeleton title row={3} loading={loading}>
           <Text className="title">简介</Text>
           <View id="collapse">
@@ -118,13 +122,15 @@ class BookDetail extends Component<Props, State> {
         </View>
         <Text className="title">推荐</Text>
         <Recommend books={recommend} />
-        <Footer
-          isStar={book.isStar}
-          _id={book._id}
-          bookName={book.bookName}
-          check={check}
-          onBookrackClick={this.handleBookrackClick}
-        />
+        {!loading && (
+          <Footer
+            isStar={book.isStar}
+            _id={book._id}
+            bookName={book.bookName}
+            check={check}
+            onBookrackClick={this.handleBookrackClick}
+          />
+        )}
         <LoginMask />
         {/* <RateModal /> */}
       </View>

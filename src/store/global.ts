@@ -1,10 +1,11 @@
 import Taro from '@tarojs/taro';
 import { observable } from 'mobx';
 
-import { queryFreeAD } from '@/services/servers';
+import { queryFreeAD, queryAdCheck } from '@/services/servers';
 
 const globalStore = observable({
   freeAD: 0,
+  adCheck: false,
 
   setFreeAD(value) {
     this.freeAD = value;
@@ -14,6 +15,12 @@ const globalStore = observable({
   queryFreeAD() {
     queryFreeAD().then(res => {
       this.setFreeAD(res.freeAD);
+    });
+  },
+
+  setAdCheck() {
+    queryAdCheck().then(({ adCheck }: any) => {
+      this.adCheck = adCheck;
     });
   }
 });

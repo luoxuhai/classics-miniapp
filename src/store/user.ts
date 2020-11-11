@@ -7,7 +7,7 @@ import globalStore from './global';
 const userStore = observable({
   user: {},
   token: '',
-  check: false,
+  check: true,
 
   setUser(data) {
     this.user = { ...this.user, ...data };

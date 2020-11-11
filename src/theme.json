@@ -3,12 +3,14 @@
     "navBgColor": "#fff",
     "navTxtStyle": "black",
     "tabBgColor": "#fff",
-    "bgColor": "#fff"
+    "bgColor": "#fff",
+    "baTextStyle": "dark"
   },
   "dark": {
     "navBgColor": "#000",
     "navTxtStyle": "white",
     "tabBgColor": "#000",
-    "bgColor": "#000"
+    "bgColor": "#000",
+    "baTextStyle": "light"
   }
 }

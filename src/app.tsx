@@ -2,6 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro';
 import { Provider } from '@tarojs/mobx';
 
 import { refreshToken } from '@/services/user';
+import { queryCheck } from '@/services/servers';
 import Index from './pages/bookstore';
 import store from './store';
 import './app.less';
@@ -39,7 +40,7 @@ class App extends Component {
       'pages/user/admin/index'
     ],
     window: {
-      backgroundTextStyle: 'dark',
+      backgroundTextStyle: '@baTextStyle',
       backgroundColor: '@bgColor',
       navigationBarTextStyle: '@navTxtStyle',
       navigationBarBackgroundColor: '@navBgColor',
@@ -198,7 +199,6 @@ class App extends Component {
     ];
     try {
       const theme = global.systemInfo.theme === 'dark' ? global.themes[3] : Taro.getStorageSync('theme');
-      console.log(theme);
       if (theme) store.bookPreviewStore.setTheme(theme);
       const font = Taro.getStorageSync('font');
       if (font) store.bookPreviewStore.setFont(font);
@@ -213,14 +213,18 @@ class App extends Component {
     wx.getBackgroundFetchData({
       fetchType: 'periodic',
       success: ({ fetchedData }: any) => {
-        store.bookstoreStore.saveData(JSON.parse(fetchedData));
+        try {
+          store.bookstoreStore.saveData(JSON.parse(fetchedData));
+        } catch (error) {}
       }
     });
 
     wx.getBackgroundFetchData({
       fetchType: 'pre',
       success: ({ fetchedData }: any) => {
-        store.bookstoreStore.saveData(JSON.parse(fetchedData));
+        try {
+          store.bookstoreStore.saveData(JSON.parse(fetchedData));
+        } catch (error) {}
       }
     });
   };
@@ -234,6 +238,10 @@ class App extends Component {
       store.userStore.setToken(token);
       store.userStore.setCheck(check);
     } catch (error) {}
+    queryCheck().then(({ check }: any) => {
+      store.userStore.setCheck(check);
+    });
+    store.globalStore.setAdCheck();
   }
 
   // 在 App 类中的 render() 函数没有实际作用

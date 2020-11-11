@@ -18,6 +18,7 @@ export interface Props {
   };
   globalStore: {
     freeAD: number;
+    adCheck: boolean;
   };
 }
 

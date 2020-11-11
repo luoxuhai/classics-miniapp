@@ -1,6 +1,5 @@
 import Taro from '@tarojs/taro';
 import { HTTP_STATUS } from './config';
-import userStore from '../store/user';
 
 let count = 0;
 
@@ -33,14 +32,17 @@ const customInterceptor = chain => {
     } else if (res.statusCode >= 200 && res.statusCode <= 204) {
       return res.data;
     } else if (res.statusCode >= 500) {
+      Taro.setClipboardData({
+        data: JSON.stringify(res.data)
+      });
       Taro.showModal({
         title: '提示',
-        content: '小程序出错了!',
-        confirmText: '重新启动',
-        confirmColor: '#f67280'
-      }).then(({ confirm }) => {
-        if (confirm) userStore.logout();
-        else Taro.navigateBack({ delta: 1 });
+        content: '出错了,错误信息已复制',
+        confirmText: '返回',
+        confirmColor: '#f67280',
+        showCancel: false
+      }).then(() => {
+        Taro.navigateBack({ delta: 1 });
       });
       return Promise.reject(res.data);
     } else {

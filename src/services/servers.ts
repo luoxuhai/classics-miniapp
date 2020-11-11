@@ -16,3 +16,11 @@ export const setFreeAD = params => {
 export const queryFreeAD = () => {
   return request.get('/v2/free_ad');
 };
+
+export const queryCheck = () => {
+  return request.get('/v2/app/check');
+};
+
+export const queryAdCheck = () => {
+  return request.get('/v2/app/ad_check');
+};

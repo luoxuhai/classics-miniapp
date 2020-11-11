@@ -14,7 +14,7 @@ interface State {
 }
 interface Props {
   globalStore: {
-    freeAD: boolean;
+    freeAD: number;
   };
 }
 
@@ -32,11 +32,19 @@ class SearchPage extends Component<Props, State> {
   };
 
   componentWillMount() {
-    Taro.getStorage({ key: 'searchHistory' }).then(({ data }) => {
-      this.setState({
-        searchHistory: data || []
+    Taro.getStorage({ key: 'searchHistory' })
+      .then(({ data }) => {
+        this.setState({
+          searchHistory: data || []
+        });
+      })
+      .catch(() => null);
+    if (this.props.globalStore.freeAD !== 1) {
+      const interstitialAd = Taro.createInterstitialAd({
+        adUnitId: 'adunit-83c7d09dcd1bd671'
       });
-    }).catch(() => null)
+      interstitialAd.show().catch(() => null);
+    }
   }
 
   handleClearClick = () => {
@@ -180,6 +188,9 @@ class SearchPage extends Component<Props, State> {
               ))}
             </View>
             {!freeAD && <Ad unitId="adunit-4e312c3ed67b9128" adType="grid" />}
+            {!freeAD && <Ad unitId="adunit-d8eabbe98ab034b9" adType="grid" />}
+            {!freeAD && <Ad unitId="adunit-a053d354970d58d6" adType="grid" />}
+            {!freeAD && <Ad unitId="adunit-83a2d356a525d43e" />}
           </View>
         )}
       </View>

@@ -23,7 +23,11 @@ export const pageToLogin = () => {
 export const shareMixin = (Comp): any => {
   return class extends Comp {
     onShareAppMessage() {
-      const { title = '古典文学名著阅读-免费看海量中国古典小说', path = '/pages/bookstore/index', imageUrl } = this.shareConfig;
+      const {
+        title = '古典文学名著阅读-免费看海量中国古典小说',
+        path = '/pages/bookstore/index',
+        imageUrl
+      } = this.shareConfig;
       return {
         title,
         path,
@@ -32,3 +36,41 @@ export const shareMixin = (Comp): any => {
     }
   };
 };
+
+/**
+ *
+ * @param {String} adUnitId 广告id
+ * @param {Function} success 广告看完后触发的函数
+ */
+export function rewardedVideoAd(adUnitId, success) {
+  Taro.showLoading({
+    title: '加载广告中',
+    mask: true
+  });
+  const videoAd = Taro.createRewardedVideoAd({
+    adUnitId
+  });
+
+  videoAd.onError(() => {
+    Taro.hideLoading();
+    Taro.showToast({
+      title: '广告调用失败,请稍后再试',
+      icon: 'none'
+    });
+  });
+
+  videoAd
+    .load()
+    .then(() => {
+      Taro.hideLoading();
+      videoAd.show();
+      videoAd.onClose(({ isEnded }) => {
+        if (isEnded) success();
+        videoAd.offClose();
+      });
+    })
+    .catch(error => {
+      Taro.hideLoading();
+      console.log(error);
+    });
+}

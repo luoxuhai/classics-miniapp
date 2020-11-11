@@ -41,6 +41,9 @@ class Catalogue extends PureComponent<Props> {
           Taro.hideNavigationBarLoading();
         });
     } else {
+      Taro.setNavigationBarTitle({
+        title: this.props.bookPreviewStore.book.bookName
+      });
       this.setState({
         simple: false
       });

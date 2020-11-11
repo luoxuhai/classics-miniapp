@@ -36,6 +36,15 @@ class BookPreview extends Component<Props> {
   windowWidth = global.systemInfo.windowWidth;
   currentChapter = -1;
 
+  componentWillMount() {
+    if (this.props.globalStore.freeAD !== 1) {
+      const interstitialAd = Taro.createInterstitialAd({
+        adUnitId: 'adunit-83c7d09dcd1bd671'
+      });
+      interstitialAd.show().catch(() => null);
+    }
+  }
+
   componentDidMount() {
     const { id, bookName, index } = this.$router.params;
     Taro.setNavigationBarTitle({ title: bookName });

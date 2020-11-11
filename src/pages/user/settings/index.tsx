@@ -109,7 +109,28 @@ class SettingsPage extends Component<Props, SettingsState> {
       count: 1,
       sizeType: ['original'],
       sourceType: ['album', 'camera']
-    }).then(({ tempFilePaths }) => {
+    }).then(async ({ tempFilePaths, tempFiles }) => {
+      if (tempFiles[0].size / 1024 > 1024) {
+        Taro.showModal({
+          title: '提示',
+          content: '图片大小不得超过1M',
+          confirmColor: '#f67280',
+          showCancel: false
+        });
+        return;
+      }
+      const { width, height } = await Taro.getImageInfo({
+        src: tempFilePaths[0]
+      });
+      if (width > 750 || height > 750) {
+        Taro.showModal({
+          title: '提示',
+          content: '图片尺寸不得超过750',
+          confirmColor: '#f67280',
+          showCancel: false
+        });
+        return;
+      }
       Taro.showLoading({
         title: '上传中',
         mask: true

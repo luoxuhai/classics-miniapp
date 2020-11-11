@@ -13,7 +13,7 @@ type Props = {
 
 function Footer({ isStar = false, _id = '', bookName = '', onBookrackClick, check = false }: Props) {
   return (
-    <View className="footer main-bg-color ">
+    <View className="footer main-bg-color">
       <Button className="footer__share" openType="share">
         分享
       </Button>
